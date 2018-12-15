@@ -88,7 +88,7 @@
 <meta property="og:description" content="Invoke-PSImage复现遇到的一些问题PSimage具体介绍可以移步：传送门 Github地址：传送门 环境配置：测试环境：Win10 Enterprise x64 测试杀软：小红伞(Avira)/360安全卫士免杀 描述：Invoke-PSImage可以将一个PowerShell脚本中的字节嵌入到PNG图像文件的像素之中，并生成一行执行命令来帮助我们从文件或Web（传递-Web标记）执行">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/12/15/Invoke-PSImage复现遇到的一些问题/1.png">
-<meta property="og:updated_time" content="2018-12-15T12:44:57.435Z">
+<meta property="og:updated_time" content="2018-12-15T14:17:22.971Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Invoke-PSImage复现遇到的一些问题">
 <meta name="twitter:description" content="Invoke-PSImage复现遇到的一些问题PSimage具体介绍可以移步：传送门 Github地址：传送门 环境配置：测试环境：Win10 Enterprise x64 测试杀软：小红伞(Avira)/360安全卫士免杀 描述：Invoke-PSImage可以将一个PowerShell脚本中的字节嵌入到PNG图像文件的像素之中，并生成一行执行命令来帮助我们从文件或Web（传递-Web标记）执行">
@@ -309,6 +309,7 @@
 <h2 id="描述："><a href="#描述：" class="headerlink" title="描述："></a>描述：</h2><p>Invoke-PSImage可以将一个PowerShell脚本中的字节嵌入到PNG图像文件的像素之中，并生成一行执行命令来帮助我们从文件或Web（传递-Web标记）执行它们。</p>
 <p>它会利用图片中每个像素点最后4位有效位的2个颜色值来存储Payload数据，虽然图片质量会受到影响，但是一般来说是看不出来有多大区别的。图片需要存储为PNG格式，由于Payload数据存储在颜色值中，因此这种格式可以进行无损压缩并且不会影响到Payload的执行。它可以接受目前绝大多数的图片类型作为输入，但输出必须为PNG格式，因为输出的图片数据需要是无损的。</p>
 <p>图片的每一个像素都需要存储脚本的一个字节，所以你需要根据脚本中的字节数据大小来选择图片（尽可能多的像素点）。例如，Invoke-Mimikatz需要一张1920×1200的图片来存储。</p>
+<a id="more"></a>
 <h2 id="复现过程："><a href="#复现过程：" class="headerlink" title="复现过程："></a>复现过程：</h2><p>直接执行，会出现这样的问题：无法加载文件 <strong>**</strong>.ps1，因为在此系统中禁止执行脚本。有关详细信息，请参阅 “get-help about_signing”。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PS&gt;Import-Module .\\Invoke-PSImage.ps1</span><br></pre></td></tr></table></figure>
 <p>我们需要在powershell设置下即可：</p>
