@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="YoungRichOG">
 <meta property="og:description" content="Docker&amp;amp;AWVS批量部署转载请注明出处：https://youngrichog.github.io/ 描述初心是想要批量部署AWVS进行批量扫描，以这个为出发点。最后确定为使用Docker进行批量部署AWVS，然后在配合一个批量扫描的脚本完成。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-27T15:29:41.926Z">
+<meta property="og:updated_time" content="2019-08-27T15:40:56.637Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker&amp;AWVS批量部署">
 <meta name="twitter:description" content="Docker&amp;amp;AWVS批量部署转载请注明出处：https://youngrichog.github.io/ 描述初心是想要批量部署AWVS进行批量扫描，以这个为出发点。最后确定为使用Docker进行批量部署AWVS，然后在配合一个批量扫描的脚本完成。">
@@ -312,7 +312,8 @@
 <li>进入到docker容器内执行命令：mv patch_awvs /home/acunetix/.acunetix_trial/v_190325161/scanner/</li>
 <li>cd /home/acunetix/.acunetix_trial/v_190325161/scanner/</li>
 <li>./patch_awvs </li>
-<li>chattr +i /home/acunetix/.acunetix_trial/data/license/license_info.json和rm -rf  /home/acunetix/.acunetix_trial/data/license/wa_data.dat</li>
+<li>chattr +i /home/acunetix/.acunetix_trial/data/license/license_info.json</li>
+<li>rm -rf  /home/acunetix/.acunetix_trial/data/license/wa_data.dat</li>
 <li>systemctl stop acunetix_trial.service</li>
 <li>vim /home/acunetix/.acunetix_trial/wvs.ini 修改监听端口 server.port=1111</li>
 <li>systemctl start acunetix_trial.service</li>
