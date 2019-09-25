@@ -303,8 +303,7 @@
 
       
         
-          
-            <h1 id="windows降权记录"><a href="#windows降权记录" class="headerlink" title="windows降权记录"></a>windows降权记录</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+          <h1 id="windows降权记录"><a href="#windows降权记录" class="headerlink" title="windows降权记录"></a>windows降权记录</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
 <p>降权模式:</p>
 <ul>
 <li>SYSTEM -&gt; 普通用户</li>
@@ -318,27 +317,13 @@
 <li>切会话</li>
 <li>进程迁移/进程注入</li>
 </ol>
-<h4 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h4><p>Ubuntu - 攻击者</p>
-<p>Windows10 x64 - 受害者</p>
-<p>Widnows7 x64 - 受害者</p>
-<h3 id="令牌窃取"><a href="#令牌窃取" class="headerlink" title="令牌窃取"></a>令牌窃取</h3><p>典型工具：incognito</p>
-<p>下载地址：<a href="https://labs.mwrinfosecurity.com/tools/incognito/" target="_blank" rel="noopener">https://labs.mwrinfosecurity.com/tools/incognito/</a></p>
-<p><img src="/2019/09/24/windows降权记录/1.png" alt="img"></p>
-<p><img src="/2019/09/24/windows降权记录/2.png" alt="img"></p>
-<p>结果：成功</p>
-<h3 id="模拟用户"><a href="#模拟用户" class="headerlink" title="模拟用户"></a>模拟用户</h3><p>典型工具：RunAs</p>
-<p>下载地址：<a href="https://www.verydoc.com/exeshell.html#CmdAsUser_Command_Line_Tool" target="_blank" rel="noopener">https://www.verydoc.com/exeshell.html#CmdAsUser_Command_Line_Tool</a></p>
-<p>还有其他的，如:<a href="https://github.com/JetBrains/runAs" target="_blank" rel="noopener">https://github.com/JetBrains/runAs</a>，这里有一个点就是，利用系统自带的runas目前没有找到合适解决自动输入密码的方式。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JetBrains runAS:</span><br><span class="line">JetBrains.runAs.exe -u:testlab\test -p:mysql123. whoami</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/09/24/windows降权记录/3.png" alt="img"></p>
-<p><img src="/2019/09/24/windows降权记录/4.png" alt="img"></p>
-<p>结果：成功</p>
-<h3 id="切会话"><a href="#切会话" class="headerlink" title="切会话"></a>切会话</h3><p>从上面令牌窃取和模拟用户看到，我们都无法和真正的用户在同一个Session里，那么就会存在一些问题，例如：键盘记录、屏幕截图、屏幕监控等，这些都是没有办法实现的。当需要这样场景的时候就需要进行切会话，切到同Session下就可以完成上述行为。</p>
-<h3 id="进程迁移-进程注入"><a href="#进程迁移-进程注入" class="headerlink" title="进程迁移/进程注入"></a>进程迁移/进程注入</h3><p>目前还没有进行了解，后续会进行添加</p>
-<h2 id="思考🤔"><a href="#思考🤔" class="headerlink" title="思考🤔"></a>思考🤔</h2><p>目前脑子里只有这些东西</p>
-<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p>&lt;<a href="https://3gstudent.github.io/3gstudent.github.io/渗透技巧-程序的降权启动/" target="_blank" rel="noopener">https://3gstudent.github.io/3gstudent.github.io/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7-%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%99%8D%E6%9D%83%E5%90%AF%E5%8A%A8/</a>&gt;</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/24/windows降权记录/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
