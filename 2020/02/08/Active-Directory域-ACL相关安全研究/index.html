@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Active Directory 域安全 ACL安全,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Active Directory域-ACL相关安全研究转载请注明出处：https://youngrichog.github.io/ 描述从攻击者的角度进行ACL相关安全研究，主要从ACL基础、ACL解析、ACL枚举、ACL利用、ACL自动化攻击、ACL防御几个角度，可能会有不准确和不正确的地方。 ACL基础ACL什么是ACL(Access Control List)？ ACL是访问控制列表，用于定">
+<meta name="keywords" content="Active Directory 域安全 ACL安全">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Active Directory域-ACL相关安全研究">
+<meta property="og:url" content="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/index.html">
+<meta property="og:site_name" content="YoungRichOG">
+<meta property="og:description" content="Active Directory域-ACL相关安全研究转载请注明出处：https://youngrichog.github.io/ 描述从攻击者的角度进行ACL相关安全研究，主要从ACL基础、ACL解析、ACL枚举、ACL利用、ACL自动化攻击、ACL防御几个角度，可能会有不准确和不正确的地方。 ACL基础ACL什么是ACL(Access Control List)？ ACL是访问控制列表，用于定">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/5.png">
+<meta property="og:updated_time" content="2020-02-08T06:16:30.006Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Active Directory域-ACL相关安全研究">
+<meta name="twitter:description" content="Active Directory域-ACL相关安全研究转载请注明出处：https://youngrichog.github.io/ 描述从攻击者的角度进行ACL相关安全研究，主要从ACL基础、ACL解析、ACL枚举、ACL利用、ACL自动化攻击、ACL防御几个角度，可能会有不准确和不正确的地方。 ACL基础ACL什么是ACL(Access Control List)？ ACL是访问控制列表，用于定">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/">
+
+
+
+
+
+  <title>Active Directory域-ACL相关安全研究 | YoungRichOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungRichOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Web Pentester</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Active Directory域-ACL相关安全研究</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-08T12:15:36+08:00">
+                2020-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Active-Directory域-ACL相关安全研究"><a href="#Active-Directory域-ACL相关安全研究" class="headerlink" title="Active Directory域-ACL相关安全研究"></a>Active Directory域-ACL相关安全研究</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>从攻击者的角度进行ACL相关安全研究，主要从ACL基础、ACL解析、ACL枚举、ACL利用、ACL自动化攻击、ACL防御几个角度，可能会有不准确和不正确的地方。</p>
+<h2 id="ACL基础"><a href="#ACL基础" class="headerlink" title="ACL基础"></a>ACL基础</h2><h3 id="ACL"><a href="#ACL" class="headerlink" title="ACL"></a>ACL</h3><p>什么是ACL(Access Control List)？</p>
+<p>ACL是访问控制列表，用于定义谁可以访问哪些对象，这些设置称为访问控制项（ACE），ACL分为DACL和SACL，DACL主要记录访问权限的相关内容，SACL主要记录访问对象日志。DACL可以大致理解为A-&gt;B、B-A，意为谁对我有权限，我对谁有权限。有关于ACL的详细内容，可以参考微软文档。</p>
+<blockquote>
+<p>当进程尝试访问安全对象时，系统将检查该对象的DACL中的ACE，以确定是否授予对该对象的访问权限。如果对象没有DACL，则系统将授予所有人完全访问权限。如果对象的DACL没有ACE，则系统将拒绝所有尝试访问该对象的尝试，因为DACL不允许任何访问权限。系统依次检查ACE，直到找到一个或多个允许所有请求的访问权限的ACE，或者直到拒绝任何请求的访问权限为止。</p>
+</blockquote>
+<p>我觉得这个很有意思，贴出来方便看 :-)</p>
+<p><a href="https://docs.microsoft.com/en-us/windows/win32/secauthz/access-control-lists" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/windows/win32/secauthz/access-control-lists</a></p>
+<h3 id="ACL场景"><a href="#ACL场景" class="headerlink" title="ACL场景"></a>ACL场景</h3><p><img src="/2020/02/08/Active-Directory域-ACL相关安全研究/1.png" alt="1"></p>
+<p>安全描述符(Security Descriptors)</p>
+<p>这里我们关注点放到DACL中的ACE，以便理解是如何存储复杂的ACL访问控制关系。</p>
+<p><img src="/2020/02/08/Active-Directory域-ACL相关安全研究/2.png" alt="2"></p>
+<p>ACE的结构分为：</p>
+<p><img src="/2020/02/08/Active-Directory域-ACL相关安全研究/3.png" alt="3"></p>
+<p>type：主要说明是什么类型的ACE</p>
+<p>flags：主要是设置一些标识符</p>
+<p>rights：主要说明是什么权限，可读？可写？等等</p>
+<p>object_guid：主要说明对象的guid值</p>
+<p>inherit_object_guid：主要说明继承对象的guid值</p>
+<p>sid：主要说明对象的sid值</p>
+<p>resource_attribute：主要说明数据类型，是一个可选项</p>
+<p>那么现在来看一条ACE，就能清楚的了解ACE</p>
+<p>OA;;RP;46a9b11d-60ae-405a-b7e8-ff8a58d456d2;;S-1-5-32-560</p>
+<p>OA=type，flags没有设置，RP=权限，46a9b11d-60ae-405a-b7e8-ff8a58d456d2=object_guid，inherit_object_guid没有设置，S-1-5-32-560=sid，resource_attribute没有设置</p>
+<p>那么每个属性的意思是什么呢？这个就涉及到ACL解析</p>
+<h2 id="ACL解析"><a href="#ACL解析" class="headerlink" title="ACL解析"></a>ACL解析</h2><p>每个属性的意思在微软官方都有明确的定义，这样我们就可以解析出这条ACE是什么意思</p>
+<p>ace_type</p>
+<table>
+<thead>
+<tr>
+<th>ACE type string</th>
+<th>Constant in Sddl.h</th>
+<th>AceType value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“A”</td>
+<td>SDDL_ACCESS_ALLOWED</td>
+<td>ACCESS_ALLOWED_ACE_TYPE</td>
+</tr>
+<tr>
+<td>“D”</td>
+<td>SDDL_ACCESS_DENIED</td>
+<td>ACCESS_DENIED_ACE_TYPE</td>
+</tr>
+<tr>
+<td>“OA”</td>
+<td>SDDL_OBJECT_ACCESS_ALLOWED</td>
+<td>ACCESS_ALLOWED_OBJECT_ACE_TYPE</td>
+</tr>
+<tr>
+<td>“OD”</td>
+<td>SDDL_OBJECT_ACCESS_DENIED</td>
+<td>ACCESS_DENIED_OBJECT_ACE_TYPE</td>
+</tr>
+<tr>
+<td>“AU”</td>
+<td>SDDL_AUDIT</td>
+<td>SYSTEM_AUDIT_ACE_TYPE</td>
+</tr>
+<tr>
+<td>“AL”</td>
+<td>SDDL_ALARM</td>
+<td>SYSTEM_ALARM_ACE_TYPE</td>
+</tr>
+<tr>
+<td>“OU”</td>
+<td>SDDL_OBJECT_AUDIT</td>
+<td>SYSTEM_AUDIT_OBJECT_ACE_TYPE</td>
+</tr>
+<tr>
+<td>“OL”</td>
+<td>SDDL_OBJECT_ALARM</td>
+<td>SYSTEM_ALARM_OBJECT_ACE_TYPE</td>
+</tr>
+<tr>
+<td>“ML”</td>
+<td>SDDL_MANDATORY_LABEL</td>
+<td>SYSTEM_MANDATORY_LABEL_ACE_TYPE</td>
+</tr>
+<tr>
+<td>“XA”</td>
+<td>SDDL_CALLBACK_ACCESS_ALLOWED</td>
+<td>ACCESS_ALLOWED_CALLBACK_ACE_TYPE<strong>Windows Vista and Windows Server 2003:</strong> Not available.</td>
+</tr>
+<tr>
+<td>“XD”</td>
+<td>SDDL_CALLBACK_ACCESS_DENIED</td>
+<td>ACCESS_DENIED_CALLBACK_ACE_TYPE<strong>Windows Vista and Windows Server 2003:</strong> Not available.</td>
+</tr>
+<tr>
+<td>“RA”</td>
+<td>SDDL_RESOURCE_ATTRIBUTE</td>
+<td>SYSTEM_RESOURCE_ATTRIBUTE_ACE_TYPE<strong>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista and Windows Server 2003:</strong> Not available.</td>
+</tr>
+<tr>
+<td>“SP”</td>
+<td>SDDL_SCOPED_POLICY_ID</td>
+<td>SYSTEM_SCOPED_POLICY_ID_ACE_TYPE<strong>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista and Windows Server 2003:</strong> Not available.</td>
+</tr>
+<tr>
+<td>“XU”</td>
+<td>SDDL_CALLBACK_AUDIT</td>
+<td>SYSTEM_AUDIT_CALLBACK_ACE_TYPE<strong>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista and Windows Server 2003:</strong> Not available.</td>
+</tr>
+<tr>
+<td>“ZA”</td>
+<td>SDDL_CALLBACK_OBJECT_ACCESS_ALLOWED</td>
+<td>ACCESS_ALLOWED_CALLBACK_ACE_TYPE<strong>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista and Windows Server 2003:</strong> Not available.</td>
+</tr>
+</tbody>
+</table>
+<p>OA：ACCESS_ALLOWED_OBJECT_ACE_TYPE</p>
+<p>ace_flags</p>
+<table>
+<thead>
+<tr>
+<th>ACE flags string</th>
+<th>Constant in Sddl.h</th>
+<th>AceFlag value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“CI”</td>
+<td>SDDL_CONTAINER_INHERIT</td>
+<td>CONTAINER_INHERIT_ACE</td>
+</tr>
+<tr>
+<td>“OI”</td>
+<td>SDDL_OBJECT_INHERIT</td>
+<td>OBJECT_INHERIT_ACE</td>
+</tr>
+<tr>
+<td>“NP”</td>
+<td>SDDL_NO_PROPAGATE</td>
+<td>NO_PROPAGATE_INHERIT_ACE</td>
+</tr>
+<tr>
+<td>“IO”</td>
+<td>SDDL_INHERIT_ONLY</td>
+<td>INHERIT_ONLY_ACE</td>
+</tr>
+<tr>
+<td>“ID”</td>
+<td>SDDL_INHERITED</td>
+<td>INHERITED_ACE</td>
+</tr>
+<tr>
+<td>“SA”</td>
+<td>SDDL_AUDIT_SUCCESS</td>
+<td>SUCCESSFUL_ACCESS_ACE_FLAG</td>
+</tr>
+<tr>
+<td>“FA”</td>
+<td>SDDL_AUDIT_FAILURE</td>
+<td>FAILED_ACCESS_ACE_FLAG</td>
+</tr>
+</tbody>
+</table>
+<p>ace_rights</p>
+<table>
+<thead>
+<tr>
+<th>Access rights string</th>
+<th>Constant in Sddl.h</th>
+<th>Access right value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“RP”</td>
+<td>SDDL_READ_PROPERTY</td>
+<td>ADS_RIGHT_DS_READ_PROP</td>
+</tr>
+<tr>
+<td>“WP”</td>
+<td>SDDL_WRITE_PROPERTY</td>
+<td>ADS_RIGHT_DS_WRITE_PROP</td>
+</tr>
+<tr>
+<td>“CC”</td>
+<td>SDDL_CREATE_CHILD</td>
+<td>ADS_RIGHT_DS_CREATE_CHILD</td>
+</tr>
+<tr>
+<td>“DC”</td>
+<td>SDDL_DELETE_CHILD</td>
+<td>ADS_RIGHT_DS_DELETE_CHILD</td>
+</tr>
+<tr>
+<td>“LC”</td>
+<td>SDDL_LIST_CHILDREN</td>
+<td>ADS_RIGHT_ACTRL_DS_LIST</td>
+</tr>
+<tr>
+<td>“SW”</td>
+<td>SDDL_SELF_WRITE</td>
+<td>ADS_RIGHT_DS_SELF</td>
+</tr>
+<tr>
+<td>“LO”</td>
+<td>SDDL_LIST_OBJECT</td>
+<td>ADS_RIGHT_DS_LIST_OBJECT</td>
+</tr>
+<tr>
+<td>“DT”</td>
+<td>SDDL_DELETE_TREE</td>
+<td>ADS_RIGHT_DS_DELETE_TREE</td>
+</tr>
+<tr>
+<td>“CR”</td>
+<td>SDDL_CONTROL_ACCESS</td>
+<td>ADS_RIGHT_DS_CONTROL_ACCESS</td>
+</tr>
+</tbody>
+</table>
+<p>RP：ADS_RIGHT_DS_READ_PROP</p>
+<p>object_guid</p>
+<p>由于guid太多了，这里我就不列出来了</p>
+<p>46a9b11d-60ae-405a-b7e8-ff8a58d456d2：tokenGroupsGlobalAndUniversal</p>
+<p><img src="/2020/02/08/Active-Directory域-ACL相关安全研究/4.png" alt="4"></p>
+<p>sid</p>
+<p>由于这个sid是内置的，可以直接找到什么意思</p>
+<p>S-1-5-32-560：Builtin\Windows Authorization Access Group</p>
+<p>通过解析，已经知道了该条ace的含义 :-)</p>
+<p>ace详细的内容：</p>
+<p><a href="https://docs.microsoft.com/en-us/windows/win32/secauthz/ace-strings" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/windows/win32/secauthz/ace-strings</a></p>
+<p>内置sid：</p>
+<p><a href="https://support.microsoft.com/en-us/help/243330/well-known-security-identifiers-in-windows-operating-systems" target="_blank" rel="noopener">https://support.microsoft.com/en-us/help/243330/well-known-security-identifiers-in-windows-operating-systems</a></p>
+<p>guid：<br><a href="https://docs.microsoft.com/en-us/windows/win32/adschema/attributes-all" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/windows/win32/adschema/attributes-all</a></p>
+<p><a href="https://docs.microsoft.com/en-us/windows/win32/adschema/extended-rights" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/windows/win32/adschema/extended-rights</a></p>
+<h2 id="ACL枚举"><a href="#ACL枚举" class="headerlink" title="ACL枚举"></a>ACL枚举</h2><p>已经了解了如何去进行ACL解析，接下来就是如何进行ACL枚举，通过ACL枚举，可以清楚</p>
+<p>的知道”谁对我有权限，我对谁有权限”。域中的ACL是存储在LDAP的nTSecurityDescriptor属性中，那么只需要读取该属性，然后进行解析，便可完成。</p>
+<p>任何经过域身份认证的用户都可以通过LDAP进行枚举，那么连接到LDAP，然后进行读取</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- cofing:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> ldap3</span><br><span class="line"><span class="keyword">from</span> ldap3 <span class="keyword">import</span> Server,Connection,SIMPLE,SYNC,ALL,NTLM,MODIFY_ADD,MODIFY_ADD,MODIFY_REPLACE</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ldap_query</span><span class="params">(c)</span>:</span></span><br><span class="line">    search_filter = <span class="string">'(&#123;search_filter&#125;)'</span>.format(search_filter=<span class="string">'cn=test'</span>)</span><br><span class="line">    print(search_filter)</span><br><span class="line">    search_scope = <span class="string">'SUBTREE'</span></span><br><span class="line">    c.search(<span class="string">'dc=domain,dc=local'</span>,search_filter,search_scope,attributes=[<span class="string">'sn'</span>,<span class="string">'nTSecurityDescriptor'</span>])</span><br><span class="line">    entry = c.entries[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    print(entry.nTSecurityDescriptor.values)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    s = Server(<span class="string">'ldap://ip'</span>,get_info=ALL)</span><br><span class="line">    c = Connection(s,user=<span class="string">'domain\\user'</span>,password=<span class="string">'******'</span>,authentication=<span class="keyword">None</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> c.bind():</span><br><span class="line">        print(<span class="string">'bind failed...'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ldap_query(c)</span><br><span class="line">        print(<span class="string">'ok...'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p>发现无法读取到test对象的nTSecurityDescriptor属性的值，这是为什么？然后开始研究，通过全局目录(Global Catalog) 去读取，失败:-(，通过域管账户(Domain Admins)去读取，成功:-)，难道是权限的原因吗？普通域用户无法读取？</p>
+<p>经过研究发现：非特权账户无法访问SACL，导致读取不到SACL返回空值</p>
+<p>去参考了一些国外的工具，其中代码的一部分引发我的思考🤔</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Set SD flags to only query for DACL</span><br><span class="line">controls = security_descriptor_control(sdflags=0x04)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>要选择ntSecurityDescriptor，因为你需要使用LDAP_SERVER_SD_FLAGS_OID服务器控件与值7表示要在安全描述符减去SACL的所有部分非特权帐户。默认值（包括SACL）似乎是导致该属性不被返回的原因，因为大多数非特权帐户将无法访问SACL，并且由于此AD似乎只是不返回任何内容。</p>
+</blockquote>
+<p>根据这些分析，我们只需要把枚举SACL的部分ban掉就可以了，设置为：LDAP_SERVER_SD_FLAGS_OID为0x04</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Bit flag name and value</th>
+<th style="text-align:left">Portion of security descriptor to retrieve/update</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">OWNER_SECURITY_INFORMATION (OSI)0x1</td>
+<td style="text-align:left">Owner identifier of the <a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-adts/b645c125-a7da-4097-84a1-2fa7cea07714#gt_8bb43a65-7a8c-4585-a7ed-23044772f8ca" target="_blank" rel="noopener">object</a>.</td>
+</tr>
+<tr>
+<td style="text-align:left">GROUP_SECURITY_INFORMATION (GSI)0x2</td>
+<td style="text-align:left"><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-adts/b645c125-a7da-4097-84a1-2fa7cea07714#gt_e5134397-f946-4acc-a593-46c04c52774f" target="_blank" rel="noopener">Primary group</a> identifier.</td>
+</tr>
+<tr>
+<td style="text-align:left">DACL_SECURITY_INFORMATION (DSI)0x4</td>
+<td style="text-align:left"><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-adts/b645c125-a7da-4097-84a1-2fa7cea07714#gt_d727f612-7a45-48e4-9d87-71735d62b321" target="_blank" rel="noopener">Discretionary access control list (DACL)</a> of the object.</td>
+</tr>
+<tr>
+<td style="text-align:left">SACL_SECURITY_INFORMATION (SSI)0x8</td>
+<td style="text-align:left"><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-adts/b645c125-a7da-4097-84a1-2fa7cea07714#gt_c189801e-3752-4715-88f4-17804dad5782" target="_blank" rel="noopener">System access control list (SACL)</a> of the object.</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://gist.github.com/dirkjanm/a2087c27888a15410b4622009c7f2d41" target="_blank" rel="noopener">https://gist.github.com/dirkjanm/a2087c27888a15410b4622009c7f2d41</a></p>
+<p><a href="https://github.com/fox-it/aclpwn.py/blob/master/aclpwn/exploitation.py" target="_blank" rel="noopener">https://github.com/fox-it/aclpwn.py/blob/master/aclpwn/exploitation.py</a></p>
+<p><a href="http://www.harmj0y.net/blog/redteaming/a-guide-to-attacking-domain-trusts/" target="_blank" rel="noopener">http://www.harmj0y.net/blog/redteaming/a-guide-to-attacking-domain-trusts/</a></p>
+<p><a href="https://stackoverflow.com/questions/40771503/selecting-the-ad-ntsecuritydescriptor-attribute-as-a-non-admin" target="_blank" rel="noopener">https://stackoverflow.com/questions/40771503/selecting-the-ad-ntsecuritydescriptor-attribute-as-a-non-admin</a></p>
+<p><a href="http://cn.voidcc.com/question/p-xxdskkma-nh.html" target="_blank" rel="noopener">http://cn.voidcc.com/question/p-xxdskkma-nh.html</a></p>
+<p>接下来修改我们的代码，便可以实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- cofing:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> ldap3,argparse,getpass</span><br><span class="line"><span class="keyword">from</span> ldap3 <span class="keyword">import</span> Server,Connection,SIMPLE,SYNC,ALL,NTLM,MODIFY_ADD,MODIFY_ADD,MODIFY_REPLACE</span><br><span class="line"><span class="keyword">from</span> ldap3.protocol.microsoft <span class="keyword">import</span> security_descriptor_control</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ldap_query</span><span class="params">(c)</span>:</span></span><br><span class="line">    search_filter = <span class="string">'(&#123;search_filter&#125;)'</span>.format(search_filter=<span class="string">'cn=test'</span>)</span><br><span class="line">    controls = security_descriptor_control(sdflags=<span class="number">0x04</span>)</span><br><span class="line">    print(search_filter)</span><br><span class="line">    search_scope = <span class="string">'SUBTREE'</span></span><br><span class="line">    c.search(<span class="string">'dc=domain,dc=local'</span>,search_filter,search_scope,attributes=[<span class="string">'sn'</span>,<span class="string">'nTSecurityDescriptor'</span>],controls=controls)</span><br><span class="line">    entry = c.entries[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    print(entry.nTSecurityDescriptor.values)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    s = Server(<span class="string">'ldap://ip'</span>,get_info=ALL)</span><br><span class="line">    c = Connection(s,user=<span class="string">'domain\\user'</span>,password=<span class="string">'*******'</span>,authentication=<span class="keyword">None</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> c.bind():</span><br><span class="line">        print(<span class="string">'bind failed...'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ldap_query(c)</span><br><span class="line">        print(<span class="string">'ok...'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p>成功:-)</p>
+<h2 id="ACL利用"><a href="#ACL利用" class="headerlink" title="ACL利用"></a>ACL利用</h2><p>可以参考Powerview，这里就不在说明了。例如：Set-DomainUserPassword，Set-DomainObject等等</p>
+<p><a href="https://powersploit.readthedocs.io/en/latest/Recon/" target="_blank" rel="noopener">https://powersploit.readthedocs.io/en/latest/Recon/</a></p>
+<h2 id="ACL自动化利用"><a href="#ACL自动化利用" class="headerlink" title="ACL自动化利用"></a>ACL自动化利用</h2><p>这里我简单的看了下BloodHound的一些功能，膜拜！</p>
+<table>
+<thead>
+<tr>
+<th><strong>Collection Method</strong></th>
+<th><strong>API Call</strong></th>
+<th><strong>Default Targets</strong></th>
+<th><strong>Stealth Targets</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Session</td>
+<td>NetSessionEnum</td>
+<td>All Computers</td>
+<td>Domain Controllers + “Share Servers”</td>
+</tr>
+<tr>
+<td>LocalGroup</td>
+<td>Modified NetLocalGroupGetMembers</td>
+<td>All Computers</td>
+<td>GPO Files</td>
+</tr>
+<tr>
+<td>Group</td>
+<td>Ldap</td>
+<td>All User,Group, and Computer Objects</td>
+<td>All User,Group, and Computer Objects</td>
+</tr>
+<tr>
+<td>Trusts</td>
+<td>DsEnumerateDomainTrusts NETAPI32</td>
+<td>All Domain and TrustedDomain objects</td>
+<td>All Domain and TrustedDomain objects</td>
+</tr>
+<tr>
+<td>LoggedOn</td>
+<td>NetWkstaUserEnum NETAPI32 + Remote Registry</td>
+<td>All Computers</td>
+<td>Domain Controllers + “Share Servers”</td>
+</tr>
+<tr>
+<td>ACL</td>
+<td>Ldap</td>
+<td>All user, group, computer, and domain objects</td>
+<td>All user, group, computer, and domain objects</td>
+</tr>
+<tr>
+<td>ObjectProps</td>
+<td>Ldap</td>
+<td>All user and computer objects</td>
+<td>All user and computer objects</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/2020/02/08/Active-Directory域-ACL相关安全研究/5.png" alt="5"></p>
+<p>类似的ACL自动化攻击工具还有很多，例如：aclpwn</p>
+<p>如果感兴趣可以深入探索下 :-)</p>
+<h2 id="ACL防御"><a href="#ACL防御" class="headerlink" title="ACL防御"></a>ACL防御</h2><p>关于ACL防御，感觉是一个很复杂的活，在域中存在各种交叉的权限。</p>
+<p>不过我这里有一个想法，和域攻击相关的技术都要涉及到LDAP，那么如果监控LDAP，是否可以进行防御？🤔</p>
+<p>希望有兴趣的朋友可以交流下</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>为什么要这样做呢？</p>
+<p><strong>规划最短攻击路径，减少横向移动</strong></p>
+<p>后续还会继续更新该文，让文章更细致一些</p>
+<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p>Microsoft</p>
+<p>BloodHound</p>
+<p>dirkjanm</p>
+<p>harmj0y</p>
+<p>…</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Active-Directory-域安全-ACL安全/" rel="tag"># Active Directory 域安全 ACL安全</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/22/webdav搭建小记/" rel="next" title="webdav搭建小记">
+                <i class="fa fa-chevron-left"></i> webdav搭建小记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">YoungRichOG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Active-Directory域-ACL相关安全研究"><span class="nav-number">1.</span> <span class="nav-text">Active Directory域-ACL相关安全研究</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#描述"><span class="nav-number">1.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACL基础"><span class="nav-number">1.2.</span> <span class="nav-text">ACL基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACL"><span class="nav-number">1.2.1.</span> <span class="nav-text">ACL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ACL场景"><span class="nav-number">1.2.2.</span> <span class="nav-text">ACL场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACL解析"><span class="nav-number">1.3.</span> <span class="nav-text">ACL解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACL枚举"><span class="nav-number">1.4.</span> <span class="nav-text">ACL枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACL利用"><span class="nav-number">1.5.</span> <span class="nav-text">ACL利用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACL自动化利用"><span class="nav-number">1.6.</span> <span class="nav-text">ACL自动化利用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACL防御"><span class="nav-number">1.7.</span> <span class="nav-text">ACL防御</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">1.8.</span> <span class="nav-text">最后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Respect"><span class="nav-number">1.9.</span> <span class="nav-text">Respect</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungRichOG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

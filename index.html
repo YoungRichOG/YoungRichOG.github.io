@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关研究/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="YoungRichOG">
@@ -252,7 +252,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/02/08/Active-Directory域-ACL相关研究/" itemprop="url">Active Directory域-ACL相关研究</a></h2>
+                <a class="post-title-link" href="/2020/02/08/Active-Directory域-ACL相关安全研究/" itemprop="url">Active Directory域-ACL相关安全研究</a></h2>
         
 
         <div class="post-meta">
@@ -313,12 +313,12 @@
 </blockquote>
 <p>我觉得这个很有意思，贴出来方便看 :-)</p>
 <p><a href="https://docs.microsoft.com/en-us/windows/win32/secauthz/access-control-lists" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/windows/win32/secauthz/access-control-lists</a></p>
-<h3 id="ACL场景"><a href="#ACL场景" class="headerlink" title="ACL场景"></a>ACL场景</h3><p><img src="/2020/02/08/Active-Directory域-ACL相关研究/1.png" alt="1"></p>
+<h3 id="ACL场景"><a href="#ACL场景" class="headerlink" title="ACL场景"></a>ACL场景</h3><p><img src="/2020/02/08/Active-Directory域-ACL相关安全研究/1.png" alt="1"></p>
 <p>安全描述符(Security Descriptors)</p>
 <p>这里我们关注点放到DACL中的ACE，以便理解是如何存储复杂的ACL访问控制关系。</p>
-<p><img src="/2020/02/08/Active-Directory域-ACL相关研究/2.png" alt="2"></p>
+<p><img src="/2020/02/08/Active-Directory域-ACL相关安全研究/2.png" alt="2"></p>
 <p>ACE的结构分为：</p>
-<p><img src="/2020/02/08/Active-Directory域-ACL相关研究/3.png" alt="3"></p>
+<p><img src="/2020/02/08/Active-Directory域-ACL相关安全研究/3.png" alt="3"></p>
 <p>type：主要说明是什么类型的ACE</p>
 <p>flags：主要是设置一些标识符</p>
 <p>rights：主要说明是什么权限，可读？可写？等等</p>
@@ -527,7 +527,7 @@
 <p>object_guid</p>
 <p>由于guid太多了，这里我就不列出来了</p>
 <p>46a9b11d-60ae-405a-b7e8-ff8a58d456d2：tokenGroupsGlobalAndUniversal</p>
-<p><img src="/2020/02/08/Active-Directory域-ACL相关研究/4.png" alt="4"></p>
+<p><img src="/2020/02/08/Active-Directory域-ACL相关安全研究/4.png" alt="4"></p>
 <p>sid</p>
 <p>由于这个sid是内置的，可以直接找到什么意思</p>
 <p>S-1-5-32-560：Builtin\Windows Authorization Access Group</p>
@@ -641,7 +641,7 @@
 </tr>
 </tbody>
 </table>
-<p><img src="/2020/02/08/Active-Directory域-ACL相关研究/5.png" alt="5"></p>
+<p><img src="/2020/02/08/Active-Directory域-ACL相关安全研究/5.png" alt="5"></p>
 <p>类似的ACL自动化攻击工具还有很多，例如：aclpwn</p>
 <p>如果感兴趣可以深入探索下 :-)</p>
 <h2 id="ACL防御"><a href="#ACL防御" class="headerlink" title="ACL防御"></a>ACL防御</h2><p>关于ACL防御，感觉是一个很复杂的活，在域中存在各种交叉的权限。</p>
