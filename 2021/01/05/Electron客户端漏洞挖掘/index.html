@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/01/05/Electron客户端漏洞挖掘/1.png">
 <meta property="og:image" content="http://yoursite.com/2021/01/05/Electron客户端漏洞挖掘/2.png">
 <meta property="og:image" content="http://yoursite.com/2021/01/05/Electron客户端漏洞挖掘/3.png">
-<meta property="og:updated_time" content="2021-01-09T13:41:54.649Z">
+<meta property="og:updated_time" content="2021-01-09T13:44:34.337Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Electron客户端漏洞挖掘">
 <meta name="twitter:description" content="Electron客户端漏洞挖掘转载请注明出处：https://youngrichog.github.io/ 描述最近一段时间都在研究客户端相关的漏洞，想着能在客户端漏洞挖掘方向有所突破，做为一个多年混迹于Web安全的🐶来说，换换口味去尝试新的方向也不错，2018年看到大佬没用多长时间就挖掘到客户端RCE漏洞的我眼红了，2019年偶然间和大佬撞洞了，从此激发了我对客户端漏洞的向往。 本文中基本不含">
@@ -350,7 +350,7 @@
 <p>第二条路：URL Scheme</p>
 <p>第三条路：混合攻击</p>
 <p>第四条路：监听端口(调试端口、RPC等)</p>
-<p>我们在对客户端进行漏洞挖掘的时候，首先需要进行XSS的漏洞挖掘，寻找XSS触发的点。这里在发现XSS的过程中可以借助客户端自带的代理设置或者我们自行设置，通过Burp进行一些自动化的XSS发现，当然也是黑盒方向。白盒的话，通过可以在应用目录下找到asar包，通过解压得到打包前的文件<code>asar extract xxx.asar ./</code>然后就是对输入可控的地方进行代码审计。这里在挖掘XSS的时候，有个大家都容易忽略的点，<strong>location.hash()</strong>，例如:<a href="http://www.baidu.com/index/message#parameter" target="_blank" rel="noopener">http://www.baidu.com/index/message#parameter</a>，document.write(location.hash)，输出#parameter，<a href="http://www.baidu.com/index/message" target="_blank" rel="noopener">http://www.baidu.com/index/message</a>#<scr1pt>a1ert(1)</scr1pt>。</p>
+<p>我们在对客户端进行漏洞挖掘的时候，首先需要进行XSS的漏洞挖掘，寻找XSS触发的点。这里在发现XSS的过程中可以借助客户端自带的代理设置或者我们自行设置，通过Burp进行一些自动化的XSS发现，当然也是黑盒方向。白盒的话，通过可以在应用目录下找到asar包，通过解压得到打包前的文件<code>asar extract xxx.asar ./</code>然后就是对输入可控的地方进行代码审计。这里在挖掘XSS的时候，有个大家都容易忽略的点，<strong>location.hash()</strong>，例如:<a href="http://www.baidu.com/index/message#parameter" target="_blank" rel="noopener">http://www.baidu.com/index/message#parameter</a>，document.write(location.hash)，输出#parameter，<a href="http://www.baidu.com/index/message" target="_blank" rel="noopener">http://www.baidu.com/index/message</a>#<3r1pt>a1ert(1)。</3r1pt></p>
 <p>当我们得到XSS后，我们需要判断该应用是否有<strong>特权域</strong>，在我挖掘的过程中暂时没有发现应用存在特权域的情况，可能是我刚开始接触的原因？在浏览器中会存在特权域，例如Chrome浏览器中chrome://extensions/、chrome://settings/、chrome://downloads/等等都是特权域，有些厂商的浏览器还会将自己的部分域名设置为特权域，例如早些时候的百度浏览器会将baidu.com设置为特权域，除此之外浏览器的信任站点(Trusted sites Intranet Zone)也是特权域。那么为什么有些浏览器会将自己的域名设置为特权域，或者说为什么会有特权域？由于业务需要，或者说需要调用某些功能、某些操作、API等就会用到特权域。<strong>file://也是特权域</strong></p>
 <p>这里有一个逻辑：如果应用存在特权域，而我们的XSS不在特权域内，那么我们需要挖掘一个特权域内的XSS或直接进行高危API的寻找，如果说API不在特权域内我们就可以随便进行调用。如果应用不存在特权域，那就开始杀戮就好了。</p>
 <p>URL Scheme，应用为了方便自己，会注册自定义的协议，URL Scheme经常用于：应用间的互相跳转、唤醒应用、跳转页面、唤起应用传参。我们可以经常见到，我们在网页上打开某页面的时候会提示我们是否在打开链接，当我们点击是之后就会唤醒应用，如下面我们在浏览器输入ssh://123.123.123.123，就会唤起终端进行ssh链接。</p>
