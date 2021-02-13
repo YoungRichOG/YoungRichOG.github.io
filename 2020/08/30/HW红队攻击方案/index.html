@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/6.png">
 <meta property="og:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/7.png">
 <meta property="og:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/8.png">
-<meta property="og:updated_time" content="2020-08-30T16:55:53.898Z">
+<meta property="og:updated_time" content="2021-02-13T02:07:18.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HW红队攻击方案">
 <meta name="twitter:description" content="HW红队攻击方案转载请注明出处：https://youngrichog.github.io/** 描述HW行动近些年关注度持续提升，站在攻击方的角度，我们应该如何完成HW任务。对标真实战争的红方和蓝方，指挥部都会有对应的作战手册，例如：美国海军陆战队。那么回到HW中的红队，我们也应该有相应的作战手册，一个完整的作战手册可以让队伍有序战斗，可以有效提高队伍的攻击效率。因此作战手册尤为重要。 HW防守">
@@ -312,6 +312,7 @@
         <h1 id="HW红队攻击方案"><a href="#HW红队攻击方案" class="headerlink" title="HW红队攻击方案"></a>HW红队攻击方案</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del><em>**</em></strong></p>
 <h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>HW行动近些年关注度持续提升，站在攻击方的角度，我们应该如何完成HW任务。对标真实战争的红方和蓝方，指挥部都会有对应的作战手册，例如：美国海军陆战队。那么回到HW中的红队，我们也应该有相应的作战手册，一个完整的作战手册可以让队伍有序战斗，可以有效提高队伍的攻击效率。因此作战手册尤为重要。</p>
 <p>HW防守方目标众多，如何对目标进行快速的信息搜集？根据以往的渗透来说，前期的信息搜集是一个非常耗时间的工作，需要人工参与的场景比较多，那么我们就需要思考如果缩短时间，提高效率。</p>
+<p>基础设施建设+作战手册·····</p>
 <a id="more"></a>
 <h2 id="作战手册"><a href="#作战手册" class="headerlink" title="作战手册"></a>作战手册</h2><h3 id="0x01-信息搜集"><a href="#0x01-信息搜集" class="headerlink" title="0x01 信息搜集"></a>0x01 信息搜集</h3><p>前期的信息搜集涉猎点：</p>
 <ol>
@@ -369,6 +370,21 @@
 <p>网段资产-&gt;Masscan+Nmap-&gt;httpx-&gt;nuclei</p>
 <p>子域名资产-&gt;naabu-&gt;httpx-&gt;nuclei</p>
 <p>有时间在把完整的流程完善 :-)</p>
+<hr>
+<p>不定期更新，本次更新时间：2021年2月6日</p>
+<p>这里延伸一个点“发现自域名最大化”，如何尽可能多的发现子域名？对于真正的黑客而言，<strong>字典</strong>是首选，其次就是<strong>第三方公司数据</strong>。</p>
+<p>如何组成字典？字典数据的构成要从那些点出发？要从主动和被动两个方向出发，主动搜集可以从：英文单词字典、工具内嵌字典、结合大数据（例如从github爬取）等，被动搜集可以从日常积累中，例如Domain Hunter就是一个不错的被动搜集，当然还可以这样，手机和电脑的所有应用流量都进行截取，然后从而进行被动搜集，当然还有很多想法，这里就随便举举例子。</p>
+<p>搜集完成之后，我们就需要对子域名字典数据进行清洗，那么需要根据<strong>域名定义的规则</strong>来清洗</p>
+<blockquote>
+<p>1.对于每一级域名长度的限制是63个字符，域名总长度则不能超过253个字符（当每个标签使用单个字符时，限制为127个级别：127个字符加126个点的总长度为253，127*126个点=253 a.b.c.d.e······example.com不能超过253）</p>
+<p>2.域名中不进行大小写的区分</p>
+<p>3.-和.符号不能单独出现，不能放在开头和结尾</p>
+<p>4.域名中不能使用空格及特殊符号!$&amp;?等，域名由一个或多个标签组成，每个标签由一组ASCII字母，数字和连字符（az，AZ，0-9，-）组成</p>
+<p><a href="https://en.wikipedia.org/wiki/Domain_name" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Domain_name</a></p>
+</blockquote>
+<p>原始字典数据：<a href="https://github.com/dwyl/english-words" target="_blank" rel="noopener">https://github.com/dwyl/english-words</a>  <a href="https://www.wordfrequency.info/samples.asp" target="_blank" rel="noopener">https://www.wordfrequency.info/samples.asp</a></p>
+<p>根据域名定义的规则简单造了脚本：<a href="https://github.com/YoungRichOG/HVV/blob/main/Subdomains/handle_dict.py" target="_blank" rel="noopener">https://github.com/YoungRichOG/HVV/blob/main/Subdomains/handle_dict.py</a></p>
+<p>处理后的子域名字典：<a href="https://github.com/YoungRichOG/HVV/blob/main/Subdomains/%E5%A4%84%E7%90%86%E5%90%8E%E7%9A%84%E5%AD%90%E5%9F%9F%E5%90%8D%E5%AD%97%E5%85%B8.zip" target="_blank" rel="noopener">https://github.com/YoungRichOG/HVV/blob/main/Subdomains/%E5%A4%84%E7%90%86%E5%90%8E%E7%9A%84%E5%AD%90%E5%9F%9F%E5%90%8D%E5%AD%97%E5%85%B8.zip</a></p>
 
       
     </div>
