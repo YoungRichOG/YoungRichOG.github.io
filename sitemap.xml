@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2021-06-18T14:41:07.897Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2021/06/16/Macos-Office%E6%94%BB%E9%98%B2/</loc>
+    
+    <lastmod>2021-06-16T16:25:45.694Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2021/06/16/sqlmap-fresh-queries%E5%B0%8F%E8%AE%B0/</loc>
     
     <lastmod>2021-06-16T15:24:11.633Z</lastmod>

