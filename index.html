@@ -1,0 +1,1942 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Security Vulnerability">
+<meta name="keywords" content="YoungRichOG">
+<meta property="og:type" content="website">
+<meta property="og:title" content="YoungRichOG">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="YoungRichOG">
+<meta property="og:description" content="Security Vulnerability">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="YoungRichOG">
+<meta name="twitter:description" content="Security Vulnerability">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/">
+
+
+
+
+
+  <title>YoungRichOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungRichOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Web Pentester</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/09/11/Hexo清空commits/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/09/11/Hexo清空commits/" itemprop="url">Hexo清空commits</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-11T16:07:57+08:00">
+                2021-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Hexo清空commits"><a href="#Hexo清空commits" class="headerlink" title="Hexo清空commits"></a>Hexo清空commits</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>由于不小心把敏感信息传上去，想要删掉存在敏感信息的commits，发现使用<a href="https://youngrichog.github.io/2019/09/26/git%E5%88%A0%E9%99%A4%E8%BF%9C%E7%A8%8Bcommit/" target="_blank" rel="noopener">之前记录</a>的命令出现点问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br><span class="line"></span><br><span class="line">fatal: ambiguous argument &apos;HEAD^&apos;: unknown revision or path not in the working tree.</span><br><span class="line">Use &apos;--&apos; to separate paths from revisions, like this:</span><br><span class="line">&apos;git &lt;command&gt; [&lt;revision&gt;...] -- [&lt;file&gt;...]&apos;</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/09/11/Hexo清空commits/1.png" alt="1"></p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><h3 id="办法1"><a href="#办法1" class="headerlink" title="办法1"></a>办法1</h3><p>1.先把远程的git项目拉回来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/YoungRichOG/YoungRichOG.github.io.git</span><br></pre></td></tr></table></figure>
+<p>2.根据自己的需要选择退回来那个commits</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD~2</span><br></pre></td></tr></table></figure>
+<p>3.push上去，现在不支持账号密码了，该用token</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -f https://你的token@github.com/YoungRichOG/YoungRichOG.github.io.git</span><br></pre></td></tr></table></figure>
+<h3 id="办法2"><a href="#办法2" class="headerlink" title="办法2"></a>办法2</h3><p>这个办法有点暴力，导致把我github commits全给删除了 :-(</p>
+<p>1.删除.deploy_git和public目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf .deploy_git/</span><br><span class="line">rm -rf public/</span><br></pre></td></tr></table></figure>
+<p>2.清理缓存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+<p>3.部署发布</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/09/04/刻意练习-如何从新手到大师-读后感/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/09/04/刻意练习-如何从新手到大师-读后感/" itemprop="url">刻意练习:如何从新手到大师-读后感</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-09-04T21:27:19+08:00">
+                2021-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="刻意练习-如何从新手到大师-读后感"><a href="#刻意练习-如何从新手到大师-读后感" class="headerlink" title="刻意练习:如何从新手到大师-读后感"></a>刻意练习:如何从新手到大师-读后感</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>​    最近在看刻意练习:如何从新手到大师这本书，感觉这本书还是蛮有意思的，书里的内容可以运用到各行各业以及生活的各个方面。可以有效的提升我们对知识的捕获能力、解决问题的能力等等，复杂事物背后的逻辑都很简单，因为这些复杂的事物都是由简单的事物堆积起来的，好比”如何从新手到大师”，新手给我们的刻板印象是小白、新人等关键字，这些关键字都是对简单的诠释，大师给我们的刻板印象是老练、牛人等关键字，这些关键字都是对复杂的诠释。</p>
+<p>​    读到目前为止，自己想到的一句话刻在了自己的脑袋中，这句话为：书籍里面的知识并不是赋予每个人的，仅仅是给那些能看懂的人。为什么这样说呢，在上学期间比我学习好的人有很多，比我学习差的人也有很多，那为什么会产生这样的差异呢？当时的我可能觉得自己不如别人聪明，不如别人努力，悟性不如别人高，但是现在我悟到了<strong>书籍里面的知识并不是赋予每个人的，仅仅是给那些能看懂的人</strong>，同样的课本别人可以考80分 90分，而你只能考 50 60分，是你不努力吗？也不是，每天也学到很晚。是你不如别人聪明吗？也不是，别人可能还没你聪明。是你不如别人悟性高吗？也不是，别人不能解决的事情，你可以解决。那是为什么？我现在想了想，是因为笨，笨在对知识的捕获能力，笨在方式、方法，笨在心理没有预期，笨在…</p>
+<p>​    目前根据这本书总结了几点，不妨试试从以下几点进行”刻意练习”。</p>
+<ul>
+<li>学习方式（学习方法）</li>
+</ul>
+<ul>
+<li>阶段目标（心理预期）</li>
+</ul>
+<ul>
+<li>心理活动</li>
+</ul>
+<p>至2021年9月10日读后感</p>
+<hr>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/08/07/python列表组合/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/07/python列表组合/" itemprop="url">python列表组合</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-07T22:49:19+08:00">
+                2021-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="python列表组合"><a href="#python列表组合" class="headerlink" title="python列表组合"></a>python列表组合</h1><h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>主要记录下两个及多个列表的组合，我们想把两个列表进行组合生成所有可能性。例如：</p>
+<p>a = [‘1’,’2’,’3’]</p>
+<p>b = [‘a’,’b’,’c’]</p>
+<p>期望得到的结果：[‘1’,’a’],[‘1’,’b’],[‘1’,’c’],[‘2’,’a’],[‘2’,’b’]··········</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>笨办法的话就是for循环，但是写起来不美观。下面学习到几种写法，记录下。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="string">"foo"</span>,<span class="string">"melon"</span>]</span><br><span class="line">b = [<span class="keyword">True</span>, <span class="keyword">False</span>]</span><br><span class="line">c = list(itertools.product(a, b))</span><br><span class="line">print(c) --&gt; [("foo", True), ("foo", False), ("melon", True), ("melon", False)]</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="string">"foo"</span>,<span class="string">"bar"</span>]</span><br><span class="line">b = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">c = [(x,y) <span class="keyword">for</span> x <span class="keyword">in</span> a <span class="keyword">for</span> y <span class="keyword">in</span> b]</span><br><span class="line">print(c) --&gt; [('foo', 1), ('foo', 2), ('foo', 3), ('bar', 1), ('bar', 2), ('bar', 3)]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"></span><br><span class="line">a = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">b = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>]</span><br><span class="line">c = [<span class="string">'@@'</span>, <span class="string">'$$'</span>]</span><br><span class="line"><span class="comment">#简化了参数, 增加了参数类型声明</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">combination</span><span class="params">(*args:list)</span>:</span></span><br><span class="line">    config = [e <span class="keyword">for</span> e <span class="keyword">in</span> args]</span><br><span class="line">    res = []</span><br><span class="line">    tmp = []</span><br><span class="line">    dfs(res, tmp, config, <span class="number">0</span>)</span><br><span class="line">    print(res)</span><br><span class="line">    print(<span class="string">'combination num:'</span>, len(res))</span><br><span class="line"><span class="comment"># dfs没变动</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(res=[], tmp=[], config=[], i=<span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> i == len(config):</span><br><span class="line">        res.append(tmp.copy())</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> e <span class="keyword">in</span> config[i]:</span><br><span class="line">            <span class="comment"># change spot</span></span><br><span class="line">            tmp.append(e)</span><br><span class="line">            <span class="comment"># new condition,new recursion</span></span><br><span class="line">            dfs(res, tmp, config, i + <span class="number">1</span>)</span><br><span class="line">            <span class="comment"># restore spot</span></span><br><span class="line">            tmp.pop(len(tmp) - <span class="number">1</span>)</span><br><span class="line"><span class="comment"># 执行主体函数         </span></span><br><span class="line">combination(a,b,c)</span><br></pre></td></tr></table></figure>
+<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p><a href="https://www.codenong.com/12935194/" target="_blank" rel="noopener">https://www.codenong.com/12935194/</a><br><a href="https://blog.csdn.net/littlehaes/article/details/103461622" target="_blank" rel="noopener">https://blog.csdn.net/littlehaes/article/details/103461622</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/08/07/敏感信息关键字集合/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/07/敏感信息关键字集合/" itemprop="url">敏感信息关键字集合</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-07T01:07:16+08:00">
+                2021-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="敏感信息关键字集合"><a href="#敏感信息关键字集合" class="headerlink" title="敏感信息关键字集合"></a>敏感信息关键字集合</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>攻防世界里面缺少不了敏感信息的泄漏，多数的攻击案例里敏感信息泄漏是突破的小利器，为什么想要做一个这样的敏感信息关键字集合，是因为它可以辐射很多场景，其次就是好像没有人在做这件事？目前看好像是这样的。当然，不仅仅是关键字，如果没有关键字覆盖到，难道它是真的没有敏感信息泄漏吗？<strong>那不妨去思考敏感信息路径，有些凭据是泄漏在callback中</strong></p>
+<p>我简单罗列几个场景：</p>
+<ol>
+<li>拿到目标机器权限后，通过自动化脚本快速完成目标机器上的敏感信息搜集。</li>
+<li>本地对一些文件进行分析的时候，例如批量分析github。</li>
+<li>扫描器的规则，被动识别，通过对request/response识别存在敏感信息泄漏的情况。</li>
+</ol>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>目前还没有做优化，忽略大小写，后面会做一下，有想法的朋友可以私聊我。 :-)</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AWS_ACCESS_KEY_ID</td>
+<td>AWS</td>
+</tr>
+<tr>
+<td>AWS_SECRET_ACCESS_KEY</td>
+<td>AWS</td>
+</tr>
+<tr>
+<td>AWS_DEFAULT_REGION</td>
+<td>AWS</td>
+</tr>
+<tr>
+<td>END OPENSSH PRIVATE KEY</td>
+<td>SSH证书</td>
+</tr>
+<tr>
+<td>_authToken</td>
+<td>npm token</td>
+</tr>
+<tr>
+<td>AccessKeySecret</td>
+<td>阿里云AK</td>
+</tr>
+<tr>
+<td>accessKeyId</td>
+<td>阿里云AK</td>
+</tr>
+<tr>
+<td>access_key_secret</td>
+<td>阿里云AK</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_TOKEN</td>
+<td>nacos token</td>
+</tr>
+<tr>
+<td>kms_access_secret</td>
+<td>阿里云KMS</td>
+</tr>
+<tr>
+<td>kms_access_key</td>
+<td>阿里云KMS</td>
+</tr>
+<tr>
+<td>kms_endpoint</td>
+<td>阿里云KMS</td>
+</tr>
+<tr>
+<td>aliyuncs.com</td>
+<td>阿里云OSS</td>
+</tr>
+<tr>
+<td>GITHUB_TOKEN</td>
+<td>github token</td>
+</tr>
+<tr>
+<td>BEGIN RSA PRIVATE KEY</td>
+<td>证书</td>
+</tr>
+<tr>
+<td>BEGIN CERTIFICATE</td>
+<td>证书</td>
+</tr>
+<tr>
+<td>jdbc:mysql:</td>
+<td>数据库链接</td>
+</tr>
+<tr>
+<td>jdbc:sqlserver</td>
+<td>数据库链接</td>
+</tr>
+<tr>
+<td>jdbc:oracle:thin</td>
+<td>数据库链接</td>
+</tr>
+<tr>
+<td>jdbc:postgresql</td>
+<td>数据库链接</td>
+</tr>
+<tr>
+<td>jdbc:hive</td>
+<td>数据库链接</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>其他</td>
+</tr>
+<tr>
+<td>PRIVATE-TOKEN</td>
+<td>其他</td>
+</tr>
+<tr>
+<td>OAUTH-TOKEN</td>
+<td>其他</td>
+</tr>
+<tr>
+<td>accessKey</td>
+<td>其他</td>
+</tr>
+<tr>
+<td>accessToken</td>
+<td>其他</td>
+</tr>
+<tr>
+<td>AizaSy开头</td>
+<td>GOOGLE_PLACE_API_KEY</td>
+</tr>
+</tbody>
+</table>
+<p>更新：2021/8/7</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/08/02/mysql无密码登录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/08/02/mysql无密码登录/" itemprop="url">mysql无密码登录</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-02T23:12:08+08:00">
+                2021-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="mysql无密码登录"><a href="#mysql无密码登录" class="headerlink" title="mysql无密码登录"></a>mysql无密码登录</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<p>今天ubuntu在装mysql的时候，发现装完使用mysql -u root -p，密码随便写/空都可以直接登录，后面在配数据库配置的时候，发现虽然我修改了root的密码，但是还是连接不上，去数据库一看mysql.user表，root对应的password为空，后面才发现是由于auth_socket插件导致的。</p>
+<blockquote>
+<ul>
+<li>首先，这种验证方式不要求输入密码，即使输入了密码也不验证。</li>
+<li>只能用 UNIX 的 socket 方式登陆，这就保证了只能本地登陆，用户在使用这种登陆方式时已经通过了操作系统的安全验证；</li>
+<li>操作系统的用户和 MySQL 数据库的用户名必须一致，例如你要登陆  MySQL 的 root 用户，必须用操作系统的 root 用户登陆。</li>
+</ul>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select user,host,plugin  from mysql.user; //查看使用的插件</span><br><span class="line">mysql&gt; update user set plugin="mysql_native_password" where user='root'; //修改插件</span><br></pre></td></tr></table></figure>
+<p>简单记录下</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/07/03/BurpSuite技巧大全/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/07/03/BurpSuite技巧大全/" itemprop="url">BurpSuite技巧大全</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-03T23:54:45+08:00">
+                2021-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="BurpSuite技巧大全"><a href="#BurpSuite技巧大全" class="headerlink" title="BurpSuite技巧大全"></a>BurpSuite技巧大全</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del><em>**</em></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>主要记录下自己在使用BurpSuite遇到的问题，顺便给出自己的解法，算不上“技巧大全”。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/07/03/BurpSuite技巧大全/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/06/16/Macos-Office攻防/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/06/16/Macos-Office攻防/" itemprop="url">Macos Office攻防</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-16T23:32:29+08:00">
+                2021-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Macos-Office攻防"><a href="#Macos-Office攻防" class="headerlink" title="Macos Office攻防"></a>Macos Office攻防</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<p>(本文还没有写完，施工中👷‍♀️👷)</p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>最近看了看Macos下的攻防视角都有什么，之前的话有做过AppleScript，在mac &lt;10.15还是屡试不爽的，舒服至极。但是针对于&gt;10.15版本，好像自己没有什么积累，索性就开始研究研究，主要涉及到SYLK利用、权限维持、沙箱跳出等。</p>
+<p>什么是SYLK？</p>
+<blockquote>
+<p>SYLK 代表 SYmbolic LinkK，一种于 1980 年代引入的文件格式。通常，SYLK 文件的文件扩展名为 .slk。SYLK 是一种仅使用可显示的 ANSI 字符的文件格式，创建它是为了在应用程序（例如电子表格和数据库）之间交换数据。</p>
+<p>尽管是一种古老的文件格式，但文件扩展名 .slk 在最新的 MS Office 版本（在 2010、2013 、2016和2019）仍然默认映射到 Excel。</p>
+</blockquote>
+<p>说说SYLK的优点？</p>
+<blockquote>
+<p>SYLK 格式吸引攻击者的一个重要原因是：<a href="https://support.office.com/en-us/article/what-is-protected-view-d6f09ac7-e6b9-4495-8e43-2bbcdbcb6653" target="_blank" rel="noopener">受保护的视图沙箱</a>不适用于这种文件格式。这意味着，如果武器化 SYLK 文件是通过电子邮件或 Web 传送的，并且应用了<a href="https://textslashplain.com/2016/04/04/downloads-and-the-mark-of-the-web/" target="_blank" rel="noopener">Web 标记标记</a>，则目标用户不会被此警告消息打扰。</p>
+<p>此外，扩展名为 .slk 的 SYLK 文件具有以下特征。</p>
+<ul>
+<li>SYLK 不包括在<a href="https://support.office.com/en-us/article/blocked-attachments-in-outlook-434752e1-02d3-4e90-9124-8b81e49a8519" target="_blank" rel="noopener">MS Outlook 阻止的附件列表中</a>。</li>
+<li>SYLK 不包括在<a href="https://www.zdnet.com/article/microsoft-bans-38-file-extensions-in-outlook-for-the-web/" target="_blank" rel="noopener">默认的 OWA 阻止扩展列表中</a>。</li>
+<li>SYLK 在<a href="https://cs.chromium.org/chromium/src/chrome/browser/resources/safe_browsing/download_file_types.asciipb" target="_blank" rel="noopener">Chrome 的安全浏览文件类型列表中</a>未标记为危险。</li>
+</ul>
+</blockquote>
+<p>嗯，的确是一个武器化的理想选择。简单点说SYLK就是一个old school，可以兼容新版Office，并且不在大众的视野里。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/06/16/Macos-Office攻防/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/06/16/sqlmap-fresh-queries小记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/06/16/sqlmap-fresh-queries小记/" itemprop="url">sqlmap --fresh-queries小记</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-16T23:12:00+08:00">
+                2021-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="sqlmap-–fresh-queries小记"><a href="#sqlmap-–fresh-queries小记" class="headerlink" title="sqlmap –fresh-queries小记"></a>sqlmap –fresh-queries小记</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>好几周之前遇到一个这样的问题，每次我想–dump一遍新的数据或者想–count一遍新的数量，会把对应的log等删除掉或者使用–flush-session，那会遇到一个问题，就是注入会重新跑一遍包括一系列各种测试，后续查阅sqlmap文档发现了–fresh-queries参数</p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p>–fresh-queries参数会忽略session缓存，重新查询</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/02/06/sqlmap-eval小记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/02/06/sqlmap-eval小记/" itemprop="url">sqlmap --eval小记</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-02-06T15:52:42+08:00">
+                2021-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="sqlmap-–eval小记"><a href="#sqlmap-–eval小记" class="headerlink" title="sqlmap –eval小记"></a>sqlmap –eval小记</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>偶然机会接触到了sqlmap –eval参数，特意记录一下，感觉以前都没有用到过 :-(</p>
+<p>注入点是这样的：<a href="http://xxxxxx.com/?id=一段bas64" target="_blank" rel="noopener">http://xxxxxx.com/?id=一段bas64</a></p>
+<p>base64解开是{“a”:”1”,”b”:”2”,”c”:”3”}</p>
+<p>注入点发生在a这个值上，思前想后貌似sqlmap tamper中没有，然后bingo</p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://xxxxxx.com/?id=&quot; --eval &quot;import base64; p=base64.b64encode(&apos;&#123;\&quot;a\&quot;:\&quot;%s\&quot;,\&quot;b\&quot;:\&quot;2\&quot;,\&quot;c\&quot;:\&quot;3\&quot;&#125;&apos;%p)&quot;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/05/Electron客户端漏洞挖掘/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2021/01/05/Electron客户端漏洞挖掘/" itemprop="url">Electron客户端漏洞挖掘</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-05T23:19:35+08:00">
+                2021-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Electron客户端漏洞挖掘"><a href="#Electron客户端漏洞挖掘" class="headerlink" title="Electron客户端漏洞挖掘"></a>Electron客户端漏洞挖掘</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>最近一段时间都在研究客户端相关的漏洞，想着能在客户端漏洞挖掘方向有所突破，做为一个多年混迹于Web安全的🐶来说，换换口味去尝试新的方向也不错，2018年看到大佬没用多长时间就挖掘到客户端RCE漏洞的我眼红了，2019年偶然间和大佬撞洞了，从此激发了我对客户端漏洞的向往。</p>
+<p>本文中基本不含二进制安全相关内容，主要是从Web安全的视角去学习挖掘使用Electron做跨平台桌面的应用。</p>
+<p>基本的学习思路：乌云漏洞镜像–&gt;搜索关键字“客户端命令执行”、“客户端漏洞”、“客户端远程命令执行”–&gt;遇到不懂的名词进行搜索和学习–&gt;遇到需要学习的内容记录下来，然后后续进行学习–&gt;对一些漏洞发现和漏洞利用的点进行思考</p>
+<p>前前后后记录了一些：</p>
+<p>1.UXSS是什么？如何利用？</p>
+<p>2.文件名如何修改为../../../../../../xxx/xxxx这种？</p>
+<p>3.特权域如何查找？例如百度浏览器baidu.com都是特权域</p>
+<p>4.RFD攻击是什么？</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/01/05/Electron客户端漏洞挖掘/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">YoungRichOG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungRichOG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv"><br>本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

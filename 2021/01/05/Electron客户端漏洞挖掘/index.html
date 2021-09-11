@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Electron Electron漏洞 客户端漏洞,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Electron客户端漏洞挖掘转载请注明出处：https://youngrichog.github.io/ 描述最近一段时间都在研究客户端相关的漏洞，想着能在客户端漏洞挖掘方向有所突破，做为一个多年混迹于Web安全的🐶来说，换换口味去尝试新的方向也不错，2018年看到大佬没用多长时间就挖掘到客户端RCE漏洞的我眼红了，2019年偶然间和大佬撞洞了，从此激发了我对客户端漏洞的向往。 本文中基本不含">
+<meta name="keywords" content="Electron Electron漏洞 客户端漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Electron客户端漏洞挖掘">
+<meta property="og:url" content="http://yoursite.com/2021/01/05/Electron客户端漏洞挖掘/index.html">
+<meta property="og:site_name" content="YoungRichOG">
+<meta property="og:description" content="Electron客户端漏洞挖掘转载请注明出处：https://youngrichog.github.io/ 描述最近一段时间都在研究客户端相关的漏洞，想着能在客户端漏洞挖掘方向有所突破，做为一个多年混迹于Web安全的🐶来说，换换口味去尝试新的方向也不错，2018年看到大佬没用多长时间就挖掘到客户端RCE漏洞的我眼红了，2019年偶然间和大佬撞洞了，从此激发了我对客户端漏洞的向往。 本文中基本不含">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2021/01/05/Electron客户端漏洞挖掘/1.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/05/Electron客户端漏洞挖掘/2.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/05/Electron客户端漏洞挖掘/3.png">
+<meta property="og:updated_time" content="2021-01-09T13:49:04.587Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Electron客户端漏洞挖掘">
+<meta name="twitter:description" content="Electron客户端漏洞挖掘转载请注明出处：https://youngrichog.github.io/ 描述最近一段时间都在研究客户端相关的漏洞，想着能在客户端漏洞挖掘方向有所突破，做为一个多年混迹于Web安全的🐶来说，换换口味去尝试新的方向也不错，2018年看到大佬没用多长时间就挖掘到客户端RCE漏洞的我眼红了，2019年偶然间和大佬撞洞了，从此激发了我对客户端漏洞的向往。 本文中基本不含">
+<meta name="twitter:image" content="http://yoursite.com/2021/01/05/Electron客户端漏洞挖掘/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/01/05/Electron客户端漏洞挖掘/">
+
+
+
+
+
+  <title>Electron客户端漏洞挖掘 | YoungRichOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungRichOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Web Pentester</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/05/Electron客户端漏洞挖掘/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Electron客户端漏洞挖掘</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-01-05T23:19:35+08:00">
+                2021-01-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Electron客户端漏洞挖掘"><a href="#Electron客户端漏洞挖掘" class="headerlink" title="Electron客户端漏洞挖掘"></a>Electron客户端漏洞挖掘</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>最近一段时间都在研究客户端相关的漏洞，想着能在客户端漏洞挖掘方向有所突破，做为一个多年混迹于Web安全的🐶来说，换换口味去尝试新的方向也不错，2018年看到大佬没用多长时间就挖掘到客户端RCE漏洞的我眼红了，2019年偶然间和大佬撞洞了，从此激发了我对客户端漏洞的向往。</p>
+<p>本文中基本不含二进制安全相关内容，主要是从Web安全的视角去学习挖掘使用Electron做跨平台桌面的应用。</p>
+<p>基本的学习思路：乌云漏洞镜像–&gt;搜索关键字“客户端命令执行”、“客户端漏洞”、“客户端远程命令执行”–&gt;遇到不懂的名词进行搜索和学习–&gt;遇到需要学习的内容记录下来，然后后续进行学习–&gt;对一些漏洞发现和漏洞利用的点进行思考</p>
+<p>前前后后记录了一些：</p>
+<p>1.UXSS是什么？如何利用？</p>
+<p>2.文件名如何修改为../../../../../../xxx/xxxx这种？</p>
+<p>3.特权域如何查找？例如百度浏览器baidu.com都是特权域</p>
+<p>4.RFD攻击是什么？</p>
+<a id="more"></a>
+<h4 id="UXSS"><a href="#UXSS" class="headerlink" title="UXSS"></a>UXSS</h4><p>UXSS(Universal Cross-Site Scripting Attacks)通用跨站脚本攻击，利用浏览器本身或浏览器扩展中的漏洞来实现XSS。攻击者可以访问浏览器中当前打开的任何页面，包括内部浏览器页面，即使是不同域的情况。从攻击者的角度来看，UXSS漏洞同远程命令执行漏洞一样有价值。UXSS和XSS的区别就是范围不同、漏洞对象的不同。</p>
+<p>研究方向：</p>
+<ul>
+<li>浏览器插件</li>
+</ul>
+<p>例子：<a href="https://blog.neargle.com/2018/02/14/hacking-chrome-extensions-chapter-one-a-uxss/" target="_blank" rel="noopener">https://blog.neargle.com/2018/02/14/hacking-chrome-extensions-chapter-one-a-uxss/</a></p>
+<ul>
+<li>探针</li>
+</ul>
+<p>通过探测目标使用插件情况，对其进行安全研究，做到点对点攻击。我们应该脑图下在定点攻击一个目标的时候到底有多少种攻击路径 :-)</p>
+<p>例子：<a href="https://mp.weixin.qq.com/s/HHPxGTk55oEw0Pj4TRg6FA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/HHPxGTk55oEw0Pj4TRg6FA</a></p>
+<ul>
+<li>浏览器本身</li>
+</ul>
+<p>例如：IE8跨站脚本过滤器缺陷/IE6或火狐浏览器扩展程序Adobe Acrobat的漏洞/Flash Player UXSS 漏洞</p>
+<p>一份不错的参考：<a href="https://research.google/pubs/pub48028/" target="_blank" rel="noopener">https://research.google/pubs/pub48028/</a></p>
+<h4 id="RFD"><a href="#RFD" class="headerlink" title="RFD"></a>RFD</h4><p>RFD(Reflected-File-Download-Attack)为反射文件下载漏洞，攻击者可以通过受信任的域名中下载文件从而控制受害者。</p>
+<p>看起来这句话，好像就是一个下载文件的意思 😂</p>
+<p>这个漏洞触发的几个关键点：</p>
+<ul>
+<li>文件名和文件拓展名是可控的</li>
+<li>命令注入，用户可以在url中注入; | &amp;等</li>
+<li>文件内容可控</li>
+<li>域名可信度较高</li>
+</ul>
+<p>例如：</p>
+<p><a href="http://www.xxxx.com/download/filename=1.php&amp;content=test" target="_blank" rel="noopener">http://www.xxxx.com/download/filename=1.php&amp;content=test</a></p>
+<p><a href="http://www.xxxx.com/download/filename=1.bat&amp;content=test||calc" target="_blank" rel="noopener">http://www.xxxx.com/download/filename=1.bat&amp;content=test||calc</a></p>
+<p>这样就完成了漏洞的触发，可能我这里也是描述的不是很准确 QaQ</p>
+<p>学习过程当中遇到不懂的了解完成后，就开始回到正题 Electron客户端漏洞挖掘</p>
+<hr>
+<h2 id="漏洞发现"><a href="#漏洞发现" class="headerlink" title="漏洞发现"></a>漏洞发现</h2><p>如何发现客户端漏洞？</p>
+<p>第一条路：XSS</p>
+<p>第二条路：URL Scheme</p>
+<p>第三条路：混合攻击</p>
+<p>第四条路：监听端口(调试端口、RPC等)</p>
+<p>我们在对客户端进行漏洞挖掘的时候，首先需要进行XSS的漏洞挖掘，寻找XSS触发的点。这里在发现XSS的过程中可以借助客户端自带的代理设置或者我们自行设置，通过Burp进行一些自动化的XSS发现，当然也是黑盒方向。白盒的话，通过可以在应用目录下找到asar包，通过解压得到打包前的文件<code>asar extract xxx.asar ./</code>然后就是对输入可控的地方进行代码审计。这里在挖掘XSS的时候，有个大家都容易忽略的点，<strong>location.hash()</strong>，例如:<a href="http://www.baidu.com/index/message#parameter" target="_blank" rel="noopener">http://www.baidu.com/index/message#parameter</a>，document.write(location.hash)，输出#parameter，<code>http://www.baidu.com/index/messag#&lt;script&gt;a1ert(1)&lt;/script&gt;</code></p>
+<p>当我们得到XSS后，我们需要判断该应用是否有<strong>特权域</strong>，在我挖掘的过程中暂时没有发现应用存在特权域的情况，可能是我刚开始接触的原因？在浏览器中会存在特权域，例如Chrome浏览器中chrome://extensions/、chrome://settings/、chrome://downloads/等等都是特权域，有些厂商的浏览器还会将自己的部分域名设置为特权域，例如早些时候的百度浏览器会将baidu.com设置为特权域，除此之外浏览器的信任站点(Trusted sites Intranet Zone)也是特权域。那么为什么有些浏览器会将自己的域名设置为特权域，或者说为什么会有特权域？由于业务需要，或者说需要调用某些功能、某些操作、API等就会用到特权域。<strong>file://也是特权域</strong></p>
+<p>这里有一个逻辑：如果应用存在特权域，而我们的XSS不在特权域内，那么我们需要挖掘一个特权域内的XSS或直接进行高危API的寻找，如果说API不在特权域内我们就可以随便进行调用。如果应用不存在特权域，那就开始杀戮就好了。</p>
+<p>URL Scheme，应用为了方便自己，会注册自定义的协议，URL Scheme经常用于：应用间的互相跳转、唤醒应用、跳转页面、唤起应用传参。我们可以经常见到，我们在网页上打开某页面的时候会提示我们是否在打开链接，当我们点击是之后就会唤醒应用，如下面我们在浏览器输入ssh://123.123.123.123，就会唤起终端进行ssh链接。</p>
+<p><img src="/2021/01/05/Electron客户端漏洞挖掘/1.png" alt="img"></p>
+<p>应用注册URL Scheme有两种办法：</p>
+<p>1.应用在安装过程中进行注册表创建(HKEY_CLASSES_ROOT)</p>
+<p>2.Electron API进行注册 <code>app.setAsDefaultProtocolClient(protocol[, path, args])</code></p>
+<p>注册表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HKEY_CLASSES_ROOT</span><br><span class="line">   alert</span><br><span class="line">      (Default) = &quot;URL:Alert Protocol&quot;</span><br><span class="line">      URL Protocol = &quot;&quot;</span><br><span class="line">      DefaultIcon</span><br><span class="line">         (Default) = &quot;alert.exe,1&quot;</span><br><span class="line">      shell</span><br><span class="line">         open</span><br><span class="line">            command</span><br><span class="line">               (Default) = &quot;C:\Program Files\Alert\alert.exe&quot; &quot;%1&quot;</span><br></pre></td></tr></table></figure>
+<p>其中%1表示占位符，可以用来进行参数的传递，如果我们想运行alert.exe，那么我就可以通过伪协议打开，alert:就会启动，此外我们想知道哪些应用注册了伪协议就可以遍历注册表HKEY_CLASSES_ROOT。</p>
+<p>这里提供几个自动化发现的脚本：</p>
+<p><a href="https://images.seebug.org/archive/duh4win.vbs" target="_blank" rel="noopener">https://images.seebug.org/archive/duh4win.vbs</a></p>
+<p><a href="https://images.seebug.org/archive/duh4mac.m" target="_blank" rel="noopener">https://images.seebug.org/archive/duh4mac.m</a></p>
+<p><a href="https://images.seebug.org/archive/duh4linux.sh" target="_blank" rel="noopener">https://images.seebug.org/archive/duh4linux.sh</a></p>
+<p><a href="https://github.com/ChiChou/LookForSchemes" target="_blank" rel="noopener">https://github.com/ChiChou/LookForSchemes</a></p>
+<p>这里我引用下其他大佬写的文章</p>
+<blockquote>
+<p>链接地址：<a href="https://paper.seebug.org/515/" target="_blank" rel="noopener">https://paper.seebug.org/515/</a></p>
+<p>HKEY_CLASSES_ROOT 下不仅保存了伪协议的列表，还有文件扩展名的关联数据。事实上 Win32 程序处理本地文件和 url 的打开是类似的，甚至可以使用同一套 Win32 API —— ShellExecute(Ex) 。算上 ANSI 和 Unicode 的版本，一共 4 个函数。</p>
+<p>打开一个本地文件：</p>
+<p>ShellExecuteW(NULL, L”open”, L”c:\hello.txt”, NULL, NULL , SW_SHOW );</p>
+<p>通过系统默认浏览器访问淘宝：</p>
+<p>ShellExecuteW(NULL, L”open”, L”<a href="https://www.taobao.com&quot;" target="_blank" rel="noopener">https://www.taobao.com&quot;</a>, NULL, NULL , SW_SHOW );</p>
+<p>可以看到除了 lpFile 之外其他参数可以保持完全一致。ShellExecuteExW 也是类似的情况。</p>
+<p>ShellExecute 系列函数在这里埋了两个坑。首先是可能存在开发者原本打算传入 url，却被解析成本地路径而变成打开文件甚至运行可执行文件；其次是关联命令行里包裹参数 “%1” 的双引号竟然是可以被闭合掉的。</p>
+<p>在 MSDN 中直接说明了闭合引号这一行为：</p>
+<p>To mitigate this issue:</p>
+<p>Avoid spaces, quotes, or backslashes in your URI<br>Quote the %1 in the registration (“%1” as written in the ‘alert’ example registration) However, avoidance doesn’t completely solve the problem of quotes in the URI or a backslash at the end of the URI.<br>再回到注册表关联的字符串部分。既然可以用双引号闭合 “%1”，这意味着可以通过伪造 argv 来向应用程序插入多个参数开关。</p>
+<p>例如 alert:1” –this-is-the-new “what</p>
+<p>最终创建的命令行变成了：</p>
+<p>“C:\Program Files\Alert\alert.exe” “alert:1” –this-is-the-new “what”<br>Electron 生成的应用发行包包括两部分——预编译好的 Electron 运行时和应用本身的 Web 资源文件打包（*.asar）。由于 Electron 基于 Chromium 开发，一些 Chromium 的命令行开关对于 Electron 的主执行文件同样起作用。</p>
+</blockquote>
+<p>我们可以发现如果在对%1处理不妥时就可以进行参数注入，最终可结合Chromium的命令造成命令注入。</p>
+<p>可利用的Chromium命令：</p>
+<ul>
+<li>–renderer-cmd-prefix</li>
+<li>–gpu-launcher</li>
+<li>–utility-cmd-prefix</li>
+<li>–ppapi-plugin-launcher</li>
+<li>–nacl-gdb</li>
+<li>–ppapi-flash-path</li>
+<li>–ppapi-flash-args</li>
+</ul>
+<p>好像还有其他的，不过太长时间不记得了。</p>
+<p>突发奇想，其实我们可以进行自动化的漏洞挖掘，我们通过程序进行批量遍历url scheme然后进行批量化的执行伪协议并注入恶意命令，然后谁弹计算器就是谁有问题😂可能略显笨拙，但是只要能解决问题就好了。当然有些url scheme是通过app.setAsDefaultProtocolClient注册的，其实我们就可以去尝试批量提取。YY结束！！</p>
+<p>混合攻击，这样的攻击场景我们经常看到，例如在Web方向，黑客通过构造恶意SQL的xlsx表格上传至平台导致SQL注入，还有ssrf、xml等。当然还可以看到有很多可以引用第三方文档、pdf、excel、视频、音乐等，这样的话就会造成混合攻击。</p>
+<p>《Hacking: The Next Generation: The Next Generation》在这本书中有提到混合攻击，<a href="https://www.amazon.com/Hacking-Next-Generation-Animal-Guide/dp/0596154577" target="_blank" rel="noopener">https://www.amazon.com/Hacking-Next-Generation-Animal-Guide/dp/0596154577</a>，混合攻击因涉及多个应用，也是最容易出问题。</p>
+<p>监听端口(调试端口、RPC等)，有些应用为方便调用和开发人员调试，会在本地监听一些奇怪的端口，这些端口上可能就会存在一些接口可以进行利用。有些应用的API可以在开发文档里面找到。</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>当我们挖掘到XSS后，我们要确定有无特权域，然后进行后续操作。<strong>特权域里面的XSS称为XCS</strong></p>
+<p>无特权域-&gt;寻找特权API(下载、执行等)-&gt;写POC</p>
+<p>有特权域-&gt;寻找不在特权域内的高危API-&gt;写POC</p>
+<p>有特权域-&gt;寻找特权域XSS-&gt;寻找特权API-&gt;写POC</p>
+<p>这里有4个问题需要关注，如何寻找应用自己的API？如何执行使用child_process进行命令执行？应用内如何打开调试模式？信任站点(Trusted sites Intranet Zone)的漏洞利用？</p>
+<p>如何寻找应用自己的API？</p>
+<p>我们可以根据目标应用浏览器内核相应对比，这里以Chrome为例，Chrome Console-&gt;window，发现大量函数，然后在目标应用也进行相同操作，两者进行对比就可以发现那些是应用独有的。然后针对应用自有的进行分析看是否有可利用的函数。如果有require那是最好的，<strong>有可能require会被重命名</strong>，这里要注意下。<strong>window.parent会返回当前窗口父窗户的函数，说不定就会有惊喜</strong></p>
+<p><img src="/2021/01/05/Electron客户端漏洞挖掘/2.png" alt="img"></p>
+<p>如何执行使用child_process进行命令执行？</p>
+<p><strong>当Electron应用的nodeIntegration属性设置为True，就可以直接调用child_proccess直接命令执行</strong>，除了这个属性，<strong>contextIsolation属性也会存在安全风险</strong>，在contextIsolation值设置为false的时候，一个普通web页面上的js代码可以通过preload的方式(预加载)影响到Electron内部renderer上的js代码执行，使得RCE有可能在nodeIntegration被设置为false的情况下实现利用。<strong>该属性默认就是false！！</strong></p>
+<p>应用内如何打开调试模式？</p>
+<p>打开DevTools的方式，默认是Ctrl+Shift+I，如果不对需要查看源码找到electron.globalShortcut.register，具体看注册了什么键值</p>
+<p>这里假设我们发现特权API，可以进行下载，但是没有执行的办法，我们有什么利用方式吗？</p>
+<p>可下载，无法执行：</p>
+<p>1.DLL劫持</p>
+<p>2.系统启动目录</p>
+<p>3.覆盖常用软件(例如覆盖终端，然后使用伪协议进行执行)</p>
+<p>4.文件加载</p>
+<p>还有<strong>利用浏览器缓存+伪协议</strong>，这里有一个例子：<a href="http://wy.zone.ci/bug_detail.php?wybug_id=wooyun-2016-0175902" target="_blank" rel="noopener">http://wy.zone.ci/bug_detail.php?wybug_id=wooyun-2016-0175902</a></p>
+<p><strong>特权API除了可能包含下载、执行，还可以读文件、删除文件、获取敏感信息如读cookie文件、判断补丁信息、软件安装等</strong></p>
+<p>信任站点(Trusted sites Intranet Zone)的漏洞利用？</p>
+<ul>
+<li>信任站点XSS</li>
+<li>域名控制权(还有额外彩蛋：中间人攻击，例如可控DNS)</li>
+<li>网站权限</li>
+</ul>
+<p>当我们发现应用存在URL Scheme后，尝试进行命令注入，这里会遇到一个问题就是在Chrome、Firefox浏览器下进行测试的时候，会对URL进行urlencode，<strong>CEF框架不会对URL进行urlencode</strong>，这样就可以触发漏洞。在进行命令注入的时候，我们需要根据情况对%1的参数进行闭合。</p>
+<p><code>&quot;c:\Windows\\System32\cmd.exe&quot; %1</code></p>
+<p>%1 则payload：href=’cmd://123 –renderer-cmd-prefix=”cmd.exe /c start calc.exe” ‘</p>
+<p><code>&quot;c:\Windows\\System32\cmd.exe&quot; &quot;%1&quot;</code></p>
+<p>“%1”则payload：href=’cmd://123” –renderer-cmd-prefix=”cmd.exe /c start calc.exe ‘</p>
+<p><img src="/2021/01/05/Electron客户端漏洞挖掘/3.png" alt="img"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=&apos;cmd://? --renderer-cmd-prefix=&quot;cmd.exe /c start calc.exe&quot;&apos;&gt;</span><br></pre></td></tr></table></figure>
+<p>写累了，暂时先这样吧 :-)</p>
+<p>反正是按照自己理解写的，写错了就写错了吧，但是得给我指出来呀，不能让我一直错下去。</p>
+<p>欢迎指点与交流！</p>
+<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p><a href="https://paper.seebug.org/515/" target="_blank" rel="noopener">https://paper.seebug.org/515/</a></p>
+<p>去年跨过的浏览器PPT</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Electron-Electron漏洞-客户端漏洞/" rel="tag"># Electron Electron漏洞 客户端漏洞</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/23/巧用OSS对抗记/" rel="next" title="巧用OSS对抗记">
+                <i class="fa fa-chevron-left"></i> 巧用OSS对抗记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/02/06/sqlmap-eval小记/" rel="prev" title="sqlmap --eval小记">
+                sqlmap --eval小记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">YoungRichOG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Electron客户端漏洞挖掘"><span class="nav-number">1.</span> <span class="nav-text">Electron客户端漏洞挖掘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#描述"><span class="nav-number">1.1.</span> <span class="nav-text">描述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UXSS"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">UXSS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RFD"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">RFD</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞发现"><span class="nav-number">1.2.</span> <span class="nav-text">漏洞发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞利用"><span class="nav-number">1.3.</span> <span class="nav-text">漏洞利用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Respect"><span class="nav-number">1.4.</span> <span class="nav-text">Respect</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungRichOG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv"><br>本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

