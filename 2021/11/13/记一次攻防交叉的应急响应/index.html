@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/6.jpg">
 <meta property="og:image" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/7.jpg">
 <meta property="og:image" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/8.jpg">
-<meta property="og:updated_time" content="2021-11-14T13:32:50.152Z">
+<meta property="og:updated_time" content="2021-11-14T13:38:41.756Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次攻防交叉的应急响应">
 <meta name="twitter:description" content="记一次攻防交叉的应急响应转载请注明出处：https://youngrichog.github.io/ 描述最近一个朋友找到我，说访问公司网站总跳转到赌博页面想让我帮忙看一下，由此故事就展开了。 但我很少涉及到防守方的工作，对于应急响应也不是很懂。不过我还是对这些比较感兴趣，偶尔换换口味也是蛮好的。 这次算一次入门级的应急响应，因为涉及到的内容和流程我觉得还是蛮简单的，没有涉及到一些标准流程和工具等">
@@ -334,7 +334,7 @@
 </li>
 <li><p>Thinkphp RCE漏洞修复</p>
 <ol>
-<li>代码修复参考：<a href="https://github.com/top-think/framework/commit/4a4b5e64fa4c46f851b4004005bff5f3196de003#diff-d971bc61249787ff68eeb622c554fc47" target="_blank" rel="noopener">https://github.com/top-think/framework/commit/4a4b5e64fa4c46f851b4004005bff5f3196de003#diff-d971bc61249787ff68eeb622c554fc47</a></li>
+<li>代码修复参考：<a href="https://github.com/top-think/framework/commit/4a4b5e64fa4c46f851b4004005bff5f3196de003#diff-d971bc61249787ff68eeb622c554fc47" target="_blank" rel="noopener">Thinkphp代码修复</a></li>
 </ol>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">library/think/Request.php</span><br><span class="line"></span><br><span class="line"><span class="keyword">$this</span>-&gt;method = strtoupper($_POST[Config::get(<span class="string">'var_method'</span>)]);</span><br><span class="line"><span class="keyword">$this</span>-&gt;&#123;<span class="keyword">$this</span>-&gt;method&#125;($_POST);</span><br></pre></td></tr></table></figure>
 <p>修改为</p>
