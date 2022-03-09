@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="IP查询CDN IP反查CDN IP查询,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="IP查询对应CDN转载请注明出处：https://youngrichog.github.io/ 在写扫描器的时候遇到一个问题，我有大批量的IP列表，但是里面有很多IP都是CDN，需要确定IP是否是CDN。这一步也是为了减少对数据的污染，提升扫描器的效率，也是为了缩小目标范围，让扫描范围更加精准。简单调研了下目前国内CDN使用量较为靠前的，大部分厂商都有对应API可供查询。可能这只是识别CDN IP">
+<meta name="keywords" content="IP查询CDN IP反查CDN IP查询">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IP查询对应CDN">
+<meta property="og:url" content="http://yoursite.com/2022/02/22/IP查询对应CDN/index.html">
+<meta property="og:site_name" content="YoungRichOG">
+<meta property="og:description" content="IP查询对应CDN转载请注明出处：https://youngrichog.github.io/ 在写扫描器的时候遇到一个问题，我有大批量的IP列表，但是里面有很多IP都是CDN，需要确定IP是否是CDN。这一步也是为了减少对数据的污染，提升扫描器的效率，也是为了缩小目标范围，让扫描范围更加精准。简单调研了下目前国内CDN使用量较为靠前的，大部分厂商都有对应API可供查询。可能这只是识别CDN IP">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2022-03-09T15:49:47.226Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IP查询对应CDN">
+<meta name="twitter:description" content="IP查询对应CDN转载请注明出处：https://youngrichog.github.io/ 在写扫描器的时候遇到一个问题，我有大批量的IP列表，但是里面有很多IP都是CDN，需要确定IP是否是CDN。这一步也是为了减少对数据的污染，提升扫描器的效率，也是为了缩小目标范围，让扫描范围更加精准。简单调研了下目前国内CDN使用量较为靠前的，大部分厂商都有对应API可供查询。可能这只是识别CDN IP">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2022/02/22/IP查询对应CDN/">
+
+
+
+
+
+  <title>IP查询对应CDN | YoungRichOG</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YoungRichOG</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Web Pentester</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/22/IP查询对应CDN/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="YoungRichOG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YoungRichOG">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">IP查询对应CDN</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-22T17:16:14+08:00">
+                2022-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="IP查询对应CDN"><a href="#IP查询对应CDN" class="headerlink" title="IP查询对应CDN"></a>IP查询对应CDN</h1><p><strong><del>转载请注明出处：<a href="https://youngrichog.github.io/" target="_blank" rel="noopener">https://youngrichog.github.io/</a></del></strong></p>
+<p>在写扫描器的时候遇到一个问题，我有大批量的IP列表，但是里面有很多IP都是CDN，需要确定IP是否是CDN。这一步也是为了减少对数据的污染，提升扫描器的效率，也是为了缩小目标范围，让扫描范围更加精准。简单调研了下目前国内CDN使用量较为靠前的，大部分厂商都有对应API可供查询。可能这只是识别CDN IP的办法之一。</p>
+<p>国内CDN：百度云、腾讯云、阿里云、华为云、知道创宇、网宿、金山云</p>
+<p>清洗后的数据对比：</p>
+<p>使用接口：阿里云、腾讯云、百度云、网宿</p>
+<p>清洗前，子域名数量：4万+，目标C段：3000+</p>
+<p>清洗后，子域名数量：2万+，目标C段：1000+</p>
+<p>数字看起来还是有些庞大，主要有下面几个原因：</p>
+<ol>
+<li>接口还不是很全面，例如：华为云、金山云等等还没有加进去</li>
+<li>官方的接口数据也存在偏差，可能有些CDN IP识别不到</li>
+<li>数据中存在大量内网网段，172.16，192.168等等</li>
+</ol>
+<p><strong>扫描器会直接去扫描1000+的C段吗？显然不会的，我还会从其他维度把数据再次清洗</strong>  :-)</p>
+<h2 id="百度云"><a href="#百度云" class="headerlink" title="百度云"></a>百度云</h2><p>API接口：<a href="https://cloud.baidu.com/doc/CDN/s/8jwvyeunq" target="_blank" rel="noopener">https://cloud.baidu.com/doc/CDN/s/8jwvyeunq</a></p>
+<p>API接口：<a href="https://cloud.baidu.com/apiexplorer/index.html?Product=GWSE-NpzkofmAemw&amp;Api=GWAI-CtZXuckU2Ad" target="_blank" rel="noopener">https://cloud.baidu.com/apiexplorer/index.html?Product=GWSE-NpzkofmAemw&amp;Api=GWAI-CtZXuckU2Ad</a></p>
+<p>API接口没有限制，跑起来很舒服</p>
+<h2 id="腾讯云"><a href="#腾讯云" class="headerlink" title="腾讯云"></a>腾讯云</h2><p>API接口：<a href="https://cloud.tencent.com/document/api/228/37868" target="_blank" rel="noopener">https://cloud.tencent.com/document/api/228/37868</a></p>
+<p>每秒20个，跑起来不太舒服</p>
+<h2 id="阿里云"><a href="#阿里云" class="headerlink" title="阿里云"></a>阿里云</h2><p>API接口：<a href="https://help.aliyun.com/document_detail/146385.htm" target="_blank" rel="noopener">https://help.aliyun.com/document_detail/146385.htm</a></p>
+<p>API接口没有限制，跑起来很舒服</p>
+<h2 id="华为云"><a href="#华为云" class="headerlink" title="华为云"></a>华为云</h2><p>API接口：<a href="https://support.huaweicloud.com/api-cdn/ShowIpInfo.html" target="_blank" rel="noopener">https://support.huaweicloud.com/api-cdn/ShowIpInfo.html</a></p>
+<h2 id="网宿"><a href="#网宿" class="headerlink" title="网宿"></a>网宿</h2><p>API接口：<a href="https://www.wangsu.com/document/api-doc/22779" target="_blank" rel="noopener">https://www.wangsu.com/document/api-doc/22779</a></p>
+<p>目前测试，跑快了貌似会限制API :-(</p>
+<h2 id="金山云"><a href="#金山云" class="headerlink" title="金山云"></a>金山云</h2><p>API接口：<a href="https://docs.ksyun.com/documents/5718" target="_blank" rel="noopener">https://docs.ksyun.com/documents/5718</a></p>
+<p>为此造了个工具：<a href="https://github.com/YoungRichOG/ip2cdn" target="_blank" rel="noopener">https://github.com/YoungRichOG/ip2cdn</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IP查询CDN-IP反查CDN-IP查询/" rel="tag"># IP查询CDN IP反查CDN IP查询</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/01/15/heapdump后利用/" rel="next" title="heapdump后利用">
+                <i class="fa fa-chevron-left"></i> heapdump后利用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/03/03/企业安全建设-办公网安全-一/" rel="prev" title="企业安全建设-办公网安全(一)">
+                企业安全建设-办公网安全(一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">YoungRichOG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IP查询对应CDN"><span class="nav-number">1.</span> <span class="nav-text">IP查询对应CDN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#百度云"><span class="nav-number">1.1.</span> <span class="nav-text">百度云</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#腾讯云"><span class="nav-number">1.2.</span> <span class="nav-text">腾讯云</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阿里云"><span class="nav-number">1.3.</span> <span class="nav-text">阿里云</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#华为云"><span class="nav-number">1.4.</span> <span class="nav-text">华为云</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网宿"><span class="nav-number">1.5.</span> <span class="nav-text">网宿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#金山云"><span class="nav-number">1.6.</span> <span class="nav-text">金山云</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">YoungRichOG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container_site_pv"><br>本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
